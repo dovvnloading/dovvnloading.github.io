@@ -87,8 +87,8 @@
         #approach { animation-delay: 0.3s; }
         #services { animation-delay: 0.4s; }
         #projects { animation-delay: 0.5s; }
-        #journey { animation-delay: 0.6s; }
-        #datasets { animation-delay: 0.7s; }
+        #datasets { animation-delay: 0.6s; }
+        #journey { animation-delay: 0.7s; }
         #why-work-together { animation-delay: 0.8s; }
 
 
@@ -336,6 +336,32 @@
             color: var(--accent-2);
         }
 
+        /* Datasets */
+        .datasets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .dataset-item {
+            padding: 20px;
+            background: var(--bg-interactive);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-2);
+            transition: background var(--transition-speed) ease;
+        }
+        .dataset-item:hover {
+            background: var(--accent-light-2);
+        }
+        .dataset-item strong {
+            color: var(--text-primary);
+            font-size: 1.05em;
+        }
+        .dataset-item p {
+            color: var(--text-tertiary);
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
         /* Why Work Together */
         .benefits-grid {
             display: grid;
@@ -411,6 +437,27 @@
             width: 28px;
             height: 28px;
         }
+
+        /* Utility */
+        .centered-link-wrapper {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .button-link {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .button-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.5);
+        }
         
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -445,11 +492,11 @@
             <h2>About Me</h2>
             <div class="text-block">
                 <p>
-A dedicated and relentlessly driven developer with a deep passion for building innovative AI and machine learning systems. My creative journey spans over 16+ years — from professional music and sound design to 3D art, animation, and now, advanced AI development.
-</p>
-<p>
-My approach to mastering development is intensely hands-on; I believe the best way to learn is to build. This philosophy has guided me through an intensive period of creating a wide range of applications, each serving as a practical exploration of new technologies. This process is driven by a singular purpose: to build tools that <strong>think, help, and inspire.</strong> My background in the arts gives me an intuitive edge in designing these systems to feel <em>alive</em> — blending creativity with precision.
-</p>
+                    A dedicated and relentlessly driven developer with a deep passion for building innovative AI and machine learning systems. My creative journey spans over 16 years — from professional music and sound design to 3D art, animation, and now, advanced AI development.
+                </p>
+                <p>
+                    My approach to mastering development is intensely hands-on; I believe the best way to learn is to build. This philosophy has guided me through an intensive period of creating a wide range of applications, each serving as a practical exploration of new technologies. This process is driven by a singular purpose: to build tools that <strong>think, help, and inspire.</strong> My background in the arts gives me an intuitive edge in designing these systems to feel <em>alive</em> — blending creativity with precision.
+                </p>
             </div>
         </section>
 
@@ -471,7 +518,7 @@ My approach to mastering development is intensely hands-on; I believe the best w
         <section id="services">
             <h2>Services</h2>
             <div class="services-banner">
-                
+                <img src="https://github.com/user-attachments/assets/2befcc18-cf9e-4517-ae7d-be4c7c143e0c" alt="A banner showcasing services by Matthew Robert Wesney">
             </div>
             <div class="services-grid">
                 <div class="service-category">
@@ -582,6 +629,39 @@ My approach to mastering development is intensely hands-on; I believe the best w
                 </div>
             </div>
         </section>
+        
+        <section id="datasets">
+            <h2>Datasets & Training Resources</h2>
+            <div class="datasets-grid">
+                <div class="dataset-item">
+                    <strong>Reasoning_Problem_Solving_Dataset</strong>
+                    <p>151k Q&A pairs (STEM, applied reasoning)</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>ToT_Reasoning_Problem_Solving_V2</strong>
+                    <p>72.1k structured Q&A</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>General_Inquiry_Thinking-Chain-Of-Thought</strong>
+                    <p>6k Q&A (broad reasoning)</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>ToT-Math-V1</strong>
+                    <p>26.8k pairs (math problem-solving)</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>ToT-Biology</strong>
+                    <p>23k pairs (biology reasoning)</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>CoT_Music_Production_DAW</strong>
+                    <p>7k pairs (music production & AI)</p>
+                </div>
+            </div>
+             <div class="centered-link-wrapper">
+                <a href="https://huggingface.co/moremilk" target="_blank" class="button-link">Explore All Datasets on Hugging Face</a>
+            </div>
+        </section>
 
         <section id="journey">
             <h2>A Lifelong Creator</h2>
@@ -686,5 +766,3 @@ My approach to mastering development is intensely hands-on; I believe the best w
     </script>
 </body>
 </html>
-
-
