@@ -122,6 +122,21 @@
             text-align: center;
         }
 
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 25px auto;
+            border: 4px solid var(--bg-card);
+            box-shadow: 0 8px 25px var(--shadow-lg);
+            transition: transform var(--transition-speed) ease;
+        }
+
+        .profile-picture:hover {
+            transform: scale(1.05);
+        }
+
         h1 {
             font-size: 3.5em;
             font-weight: 700;
@@ -435,6 +450,11 @@
                 padding: 40px 20px;
             }
             
+            .profile-picture {
+                width: 100px;
+                height: 100px;
+            }
+
             h1 { font-size: 2.5em; }
             h2 { font-size: 1.8em; }
             section { padding: 30px 25px; }
@@ -466,6 +486,7 @@
 
     <div class="container">
         <header>
+            <img src="./assets/dsp_ico_1.png" alt="A circular profile photo of Matt Wesney" class="profile-picture">
             <h1>Matt Wesney</h1>
             <p class="subtitle">An innovative AI Developer and Full-Stack Engineer crafting production-ready systems that bridge research with real-world application.</p>
             <div class="contact-links">
@@ -616,7 +637,7 @@
                 </div>
                 <div class="benefit-item">
                     <div class="benefit-icon-wrapper">
-                        <svg class="benefit-icon" xmlns="http://www.w.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     </div>
                     <h3>Production Mindset</h3>
                     <p>Every project ships with clean code, clear documentation, and a user-focused experience at the forefront.</p>
