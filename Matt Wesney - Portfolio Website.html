@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matt Wesney | AI Developer & Full-Stack Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #f5f7fa;
+            --bg-secondary: #eef2f7;
+            --bg-card: #ffffff;
+            --bg-interactive: #f9fafb;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --text-tertiary: #718096;
+            --accent-1: #667eea;
+            --accent-2: #764ba2;
+            --border: #e2e8f0;
+            --shadow-md: rgba(0, 0, 0, 0.06);
+            --shadow-lg: rgba(0, 0, 0, 0.1);
+            --accent-light-1: #667eea15;
+            --accent-light-2: #764ba215;
+            --transition-speed: 0.3s;
+        }
+
+        body.dark-mode {
+            --bg-primary: #121212;
+            --bg-secondary: #1a1a2e;
+            --bg-card: #1e1e2e;
+            --bg-interactive: #2a2a3a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #a0aec0;
+            --text-tertiary: #718096;
+            --accent-1: #8c9eff;
+            --accent-2: #b388ff;
+            --border: #2d3748;
+            --shadow-md: rgba(0, 0, 0, 0.2);
+            --shadow-lg: rgba(0, 0, 0, 0.3);
+            --accent-light-1: #8c9eff1a;
+            --accent-light-2: #b388ff1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::selection {
+            background-color: var(--accent-1);
+            color: white;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            min-height: 100vh;
+            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section, header {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        header { animation-delay: 0.1s; }
+        #profile { animation-delay: 0.2s; }
+        #competencies { animation-delay: 0.3s; }
+        #projects { animation-delay: 0.4s; }
+        #datasets { animation-delay: 0.5s; }
+        #why-work-together { animation-delay: 0.6s; }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px var(--shadow-md);
+            transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 8px 25px var(--shadow-lg);
+        }
+
+        /* Header */
+        header {
+            background: transparent;
+            padding: 60px 0;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.25em;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            background-color: var(--bg-card);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px var(--shadow-md);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .contact-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px var(--shadow-lg);
+            background-image: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Main Content Section */
+        section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+        
+        h2 {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+            display: inline-block;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(to right, var(--accent-1), var(--accent-2)) 1;
+        }
+
+        .profile-text {
+            font-size: 1.1em;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Core Competencies */
+        .competencies {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .competency-box {
+            padding: 25px;
+            background: var(--bg-interactive);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+        
+        .competency-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px var(--shadow-md);
+        }
+
+        .competency-box h3 {
+            color: var(--accent-1);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+        }
+
+        .competency-box h3::before {
+            content: '›';
+            margin-right: 8px;
+            font-weight: bold;
+            color: var(--accent-2);
+        }
+
+        .competency-box p {
+            color: var(--text-tertiary);
+            font-size: 0.95em;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            transition: transform var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px var(--shadow-lg);
+        }
+
+        .project-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-size: 1.3em;
+        }
+        
+        .project-card .project-type {
+            color: var(--accent-2);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 1em;
+            flex-grow: 1;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--accent-1);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all var(--transition-speed) ease;
+            align-self: flex-start;
+        }
+
+        .project-link .arrow {
+            transition: transform var(--transition-speed) ease;
+            margin-left: 5px;
+        }
+
+        .project-link:hover {
+            color: var(--accent-2);
+        }
+        
+        .project-link:hover .arrow {
+            transform: translateX(5px);
+        }
+
+        /* Datasets */
+        .datasets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .dataset-item {
+            padding: 20px;
+            background: var(--bg-interactive);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-2);
+            transition: background var(--transition-speed) ease;
+        }
+        
+        .dataset-item:hover {
+            background: var(--accent-light-2);
+        }
+
+        .dataset-item strong {
+            color: var(--text-primary);
+            font-size: 1.05em;
+        }
+
+        .dataset-item p {
+            color: var(--text-tertiary);
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        /* --- Why Work Together (Corrected 2x2 Grid) --- */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Set 2x2 grid */
+            gap: 30px;
+        }
+
+        .benefit-item {
+            background: var(--bg-interactive);
+            border-radius: 12px;
+            padding: 40px 35px; /* Generous padding */
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px var(--shadow-lg);
+            background: var(--bg-card);
+            border-color: var(--accent-1);
+        }
+
+        .benefit-icon-wrapper {
+            margin: 0 auto 25px auto;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-light-1), var(--accent-light-2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .benefit-icon {
+            width: 32px;
+            height: 32px;
+            stroke: var(--accent-2);
+            stroke-width: 1.5px;
+        }
+
+        .benefit-item h3 {
+            margin-bottom: 12px;
+            font-size: 1.25em;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .benefit-item p {
+            font-size: 1em;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-tertiary);
+            font-size: 0.9em;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+        
+        .footer-link {
+            color: var(--accent-1);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-speed) ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent-2);
+            text-decoration: underline;
+        }
+        
+        /* Utility */
+        .centered-link-wrapper {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button-link {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .button-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.5);
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+            
+            h1 { font-size: 2.5em; }
+            h2 { font-size: 1.8em; }
+            section { padding: 30px 25px; }
+            header { padding: 40px 0; }
+
+            .projects-grid, .datasets-grid, .competencies {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-toggle {
+                width: 44px;
+                height: 44px;
+                top: 15px;
+                right: 15px;
+                font-size: 1.3em;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .benefits-grid {
+                grid-template-columns: 1fr; /* Stack to 1 column on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</div>
+
+    <div class="container">
+        <header>
+            <h1>Matt Wesney</h1>
+            <p class="subtitle">An innovative AI Developer and Full-Stack Engineer crafting production-ready systems that bridge research with real-world application.</p>
+            <div class="contact-links">
+                <a href="mailto:devaux.mail@gmail.com">📧 Email</a>
+                <a href="https://github.com/dovvnloading" target="_blank">🔗 GitHub</a>
+                <a href="https://huggingface.co/moremilk" target="_blank">🤗 Hugging Face</a>
+            </div>
+        </header>
+
+        <section id="profile">
+            <h2>About Me</h2>
+            <p class="profile-text">
+                With proven expertise in AI/ML, full-stack development, and creative software engineering, I specialize in designing and deploying elegant, end-to-end solutions. My work is defined by clean architecture, thoughtful UX, and measurable impact. I thrive both independently and in leading cross-functional efforts across AI, backend, frontend, and audio/graphics domains.
+            </p>
+        </section>
+
+        <section id="competencies">
+            <h2>Core Competencies</h2>
+            <div class="competencies">
+                <div class="competency-box">
+                    <h3>AI & Machine Learning</h3>
+                    <p>LLM fine-tuning, RAG systems, autonomous agents, model integration, prompt engineering, and dataset creation.</p>
+                </div>
+                <div class="competency-box">
+                    <h3>Full-Stack Development</h3>
+                    <p>Python, JavaScript, HTML/CSS, desktop applications (PySide6/PyQt5), scalable web platforms, and robust backend systems.</p>
+                </div>
+                <div class="competency-box">
+                    <h3>Specialized Domains</h3>
+                    <p>3D rendering & animation, real-time audio signal processing, VST plugin development, and applied reinforcement learning.</p>
+                </div>
+                <div class="competency-box">
+                    <h3>DevOps & Infrastructure</h3>
+                    <p>Local model deployment (Ollama), CI/CD pipelines, version control, collaborative development, and rapid prototyping.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Cortex</h3>
+                    <p class="project-type">Desktop AI Assistant</p>
+                    <p>A secure, modular desktop application for local LLM interaction, built with a production-ready architecture and extensible utilities.</p>
+                    <a href="https://github.com/dovvnloading/Cortex" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+                </div>
+                <div class="project-card">
+                    <h3>Tree-Graph-MindMap</h3>
+                    <p class="project-type">Interactive Knowledge Visualizer</p>
+                    <p>Transforms unstructured text into dynamic, explorable mind maps, aiding researchers in structuring complex information.</p>
+                    <a href="https://github.com/dovvnloading/Tree-Graph-MindMap" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+                </div>
+                <div class="project-card">
+                    <h3>Autonomous Web Search Assistant</h3>
+                    <p class="project-type">Verified Research Agent</p>
+                    <p>A real-time web research agent with automatic source validation, providing trustworthy answers by filtering results against reliability criteria.</p>
+                    <a href="https://github.com/dovvnloading/Autonomous-AI-Web-Search-Assistant" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+                </div>
+                <div class="project-card">
+                    <h3>Fine-Tuned</h3>
+                    <p class="project-type">LLM Fine-Tuning GUI</p>
+                    <p>A user-friendly interface for rapid LLM experimentation and deployment, democratizing advanced model customization.</p>
+                    <a href="https://github.com/dovvnloading/Fine-Tuned" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+                </div>
+                 <div class="project-card">
+                    <h3>normalizer</h3>
+                    <p class="project-type">3D Normal Map Generator</p>
+                    <p>A fast, intuitive desktop tool for converting 2D images to production-quality normal maps for 3D artists and game developers.</p>
+                    <a href="https://github.com/dovvnloading/normalizer" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+                </div>
+                <div class="project-card">
+                    <h3>Qlearning Grid WorldExplore</h3>
+                    <p class="project-type">RL Visualizer</p>
+                    <p>An educational tool combining PyTorch and PySide6 for real-time reinforcement learning agent training and visualization.</p>
+                    <a href="https://github.com/dovvnloading/Qlearning-grid-worldexplore" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+                </div>
+            </div>
+            <div class="centered-link-wrapper">
+                <a href="https://github.com/dovvnloading" target="_blank" class="button-link">View Full Portfolio on GitHub</a>
+            </div>
+        </section>
+
+        <section id="datasets">
+            <h2>Datasets & Training Resources</h2>
+            <div class="datasets-grid">
+                <div class="dataset-item">
+                    <strong>Reasoning_Problem_Solving_Dataset</strong>
+                    <p>151k Q&A pairs (STEM, applied reasoning)</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>ToT_Reasoning_Problem_Solving_V2</strong>
+                    <p>72.1k structured Q&A</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>General_Inquiry_Thinking-Chain-Of-Thought</strong>
+                    <p>6k Q&A (broad reasoning)</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>ToT-Math-V1</strong>
+                    <p>26.8k pairs (math problem-solving)</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>ToT-Biology</strong>
+                    <p>23k pairs (biology reasoning)</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>CoT_Music_Production_DAW</strong>
+                    <p>7k pairs (music production & AI)</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>CoT_Heartbreak_and_Breakups</strong>
+                    <p>9.85k pairs (emotional reasoning)</p>
+                </div>
+                <div class="dataset-item">
+                    <strong>Specialized Collections</strong>
+                    <p>Medical diagnosis, legal reasoning, scientific discovery, cooking, rare diseases, and more</p>
+                </div>
+            </div>
+             <div class="centered-link-wrapper">
+                <a href="https://huggingface.co/moremilk" target="_blank" class="button-link">Explore All Datasets on Hugging Face</a>
+            </div>
+        </section>
+
+        <section id="why-work-together">
+            <h2>Why Work Together</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon-wrapper">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+                    </div>
+                    <h3>Portfolio-Driven</h3>
+                    <p>An extensive public project history demonstrates capability without relying on credentials alone.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon-wrapper">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    </div>
+                    <h3>End-to-End Ownership</h3>
+                    <p>From concept through deployment, the full development lifecycle is managed independently and meticulously.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon-wrapper">
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    </div>
+                    <h3>Versatile Expertise</h3>
+                    <p>Equally comfortable with AI infrastructure, UI/UX, backend systems, and specialized creative domains.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon-wrapper">
+                        <svg class="benefit-icon" xmlns="http://www.w.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                    <h3>Production Mindset</h3>
+                    <p>Every project ships with clean code, clear documentation, and a user-focused experience at the forefront.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Matt Wesney. All rights reserved. | <a href="mailto:devaux.mail@gmail.com" class="footer-link">Get in touch</a></p>
+        </footer>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        const setIcon = (isDark) => {
+            themeToggle.textContent = isDark ? '☀️' : '🌙';
+        };
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const isDarkMode = savedTheme === 'dark';
+        
+        body.classList.toggle('dark-mode', isDarkMode);
+        setIcon(isDarkMode);
+
+        themeToggle.addEventListener('click', () => {
+            const isCurrentlyDark = body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', isCurrentlyDark ? 'dark' : 'light');
+            setIcon(isCurrentlyDark);
+        });
+        
+        const animatedElements = document.querySelectorAll('header, section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animatedElements.forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
