@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matt Wesney | AI Developer & Full-Stack Engineer</title>
+    <title>Matthew Wesney | AI Developer & Creative Technologist</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
@@ -81,12 +81,16 @@
             animation: fadeInUp 0.6s ease-out forwards;
             opacity: 0;
         }
+        /* Staggered animation delays */
         header { animation-delay: 0.1s; }
         #profile { animation-delay: 0.2s; }
-        #competencies { animation-delay: 0.3s; }
-        #projects { animation-delay: 0.4s; }
-        #datasets { animation-delay: 0.5s; }
-        #why-work-together { animation-delay: 0.6s; }
+        #approach { animation-delay: 0.3s; }
+        #services { animation-delay: 0.4s; }
+        #projects { animation-delay: 0.5s; }
+        #journey { animation-delay: 0.6s; }
+        #datasets { animation-delay: 0.7s; }
+        #why-work-together { animation-delay: 0.8s; }
+
 
         /* Theme Toggle */
         .theme-toggle {
@@ -155,34 +159,7 @@
             margin-left: auto;
             margin-right: auto;
         }
-
-        .contact-links {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .contact-links a {
-            text-decoration: none;
-            color: var(--text-primary);
-            font-weight: 500;
-            background-color: var(--bg-card);
-            padding: 10px 20px;
-            border-radius: 50px;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 6px var(--shadow-md);
-            transition: all var(--transition-speed) ease;
-        }
-
-        .contact-links a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 14px var(--shadow-lg);
-            background-image: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            color: white;
-            border-color: transparent;
-        }
-
+        
         /* Main Content Section */
         section {
             background: var(--bg-card);
@@ -204,50 +181,67 @@
             border-image: linear-gradient(to right, var(--accent-1), var(--accent-2)) 1;
         }
 
-        .profile-text {
+        .text-block p {
             font-size: 1.1em;
             color: var(--text-secondary);
             line-height: 1.8;
+            margin-bottom: 1em;
         }
-
-        /* Core Competencies */
-        .competencies {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-
-        .competency-box {
-            padding: 25px;
-            background: var(--bg-interactive);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        .text-block p:last-child {
+            margin-bottom: 0;
         }
         
-        .competency-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px var(--shadow-md);
-        }
-
-        .competency-box h3 {
-            color: var(--accent-1);
-            margin-bottom: 15px;
-            font-size: 1.2em;
-            display: flex;
+        /* Approach Section */
+        .approach-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
             align-items: center;
         }
-
-        .competency-box h3::before {
-            content: '›';
-            margin-right: 8px;
-            font-weight: bold;
-            color: var(--accent-2);
+        .approach-icon {
+            width: 64px;
+            height: 64px;
+            stroke: var(--accent-1);
+            stroke-width: 1.5px;
         }
 
-        .competency-box p {
-            color: var(--text-tertiary);
-            font-size: 0.95em;
+        /* Services Section */
+        .services-banner {
+            width: 100%;
+            margin-bottom: 40px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .services-banner img {
+            width: 100%;
+            display: block;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .service-category h3 {
+            font-size: 1.3em;
+            color: var(--accent-2);
+            margin-bottom: 15px;
+        }
+        .service-category ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .service-category li {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .service-category li::before {
+            content: '🔹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-1);
         }
 
         /* Projects Grid */
@@ -258,39 +252,35 @@
         }
 
         .project-card {
-            background: var(--bg-card);
+            background: var(--bg-interactive);
             padding: 30px;
             border-radius: 12px;
             border: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            transition: transform var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all var(--transition-speed) ease;
         }
-
         .project-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 35px var(--shadow-lg);
+            background-color: var(--bg-card);
         }
-
         .project-card h3 {
             color: var(--text-primary);
             margin-bottom: 8px;
             font-size: 1.3em;
         }
-        
         .project-card .project-type {
             color: var(--accent-2);
             font-weight: 500;
             margin-bottom: 15px;
         }
-
         .project-card p {
             color: var(--text-secondary);
             margin-bottom: 20px;
             font-size: 1em;
             flex-grow: 1;
         }
-
         .project-link {
             display: inline-flex;
             align-items: center;
@@ -300,73 +290,72 @@
             transition: all var(--transition-speed) ease;
             align-self: flex-start;
         }
-
         .project-link .arrow {
             transition: transform var(--transition-speed) ease;
             margin-left: 5px;
         }
-
         .project-link:hover {
             color: var(--accent-2);
         }
-        
         .project-link:hover .arrow {
             transform: translateX(5px);
         }
 
-        /* Datasets */
-        .datasets-grid {
+        .extended-projects h3 {
+            font-size: 1.5em;
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            color: var(--text-secondary);
+        }
+        .project-categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
-
-        .dataset-item {
-            padding: 20px;
+        .project-category-card {
             background: var(--bg-interactive);
+            padding: 20px;
             border-radius: 8px;
-            border-left: 4px solid var(--accent-2);
-            transition: background var(--transition-speed) ease;
+            border: 1px solid var(--border);
         }
-        
-        .dataset-item:hover {
-            background: var(--accent-light-2);
+        .project-category-card h4 {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: var(--accent-1);
+        }
+        .project-category-card ul {
+            list-style: none;
+        }
+        .project-category-card li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-speed) ease;
+        }
+        .project-category-card li a:hover {
+            color: var(--accent-2);
         }
 
-        .dataset-item strong {
-            color: var(--text-primary);
-            font-size: 1.05em;
-        }
-
-        .dataset-item p {
-            color: var(--text-tertiary);
-            font-size: 0.9em;
-            margin-top: 5px;
-        }
-
-        /* --- Why Work Together (Corrected 2x2 Grid) --- */
+        /* Why Work Together */
         .benefits-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Set 2x2 grid */
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
         }
-
         .benefit-item {
             background: var(--bg-interactive);
             border-radius: 12px;
-            padding: 40px 35px; /* Generous padding */
+            padding: 40px 35px;
             text-align: center;
             border: 1px solid var(--border);
             transition: all var(--transition-speed) ease;
         }
-
         .benefit-item:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 35px var(--shadow-lg);
             background: var(--bg-card);
             border-color: var(--accent-1);
         }
-
         .benefit-icon-wrapper {
             margin: 0 auto 25px auto;
             width: 60px;
@@ -377,21 +366,18 @@
             align-items: center;
             justify-content: center;
         }
-
         .benefit-icon {
             width: 32px;
             height: 32px;
             stroke: var(--accent-2);
             stroke-width: 1.5px;
         }
-
         .benefit-item h3 {
             margin-bottom: 12px;
             font-size: 1.25em;
             font-weight: 700;
             color: var(--text-primary);
         }
-
         .benefit-item p {
             font-size: 1em;
             color: var(--text-secondary);
@@ -401,81 +387,45 @@
         /* Footer */
         footer {
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px;
             color: var(--text-tertiary);
             font-size: 0.9em;
             border-top: 1px solid var(--border);
             margin-top: 40px;
         }
-        
-        .footer-link {
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        .social-links a {
+            color: var(--text-secondary);
+            transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+        }
+        .social-links a:hover {
             color: var(--accent-1);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color var(--transition-speed) ease;
+            transform: scale(1.1);
+        }
+        .social-links svg {
+            width: 28px;
+            height: 28px;
         }
         
-        .footer-link:hover {
-            color: var(--accent-2);
-            text-decoration: underline;
-        }
-        
-        /* Utility */
-        .centered-link-wrapper {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .button-link {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-            transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .button-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.5);
-        }
-
-
         /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
-                padding: 40px 20px;
-            }
-            
-            .profile-picture {
-                width: 100px;
-                height: 100px;
-            }
-
             h1 { font-size: 2.5em; }
             h2 { font-size: 1.8em; }
             section { padding: 30px 25px; }
-            header { padding: 40px 0; }
-
-            .projects-grid, .datasets-grid, .competencies {
+            .benefits-grid, .competencies {
                 grid-template-columns: 1fr;
             }
-            
-            .theme-toggle {
-                width: 44px;
-                height: 44px;
-                top: 15px;
-                right: 15px;
-                font-size: 1.3em;
+            .approach-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
             }
-        }
-
-        @media (max-width: 576px) {
-            .benefits-grid {
-                grid-template-columns: 1fr; /* Stack to 1 column on mobile */
+            .approach-icon {
+                margin: 0 auto 20px auto;
             }
         }
     </style>
@@ -486,41 +436,71 @@
 
     <div class="container">
         <header>
-            <img src="./assets/dsp_ico_1.png" alt="A circular profile photo of Matt Wesney" class="profile-picture">
-            <h1>Matt Wesney</h1>
-            <p class="subtitle">An innovative AI Developer and Full-Stack Engineer crafting production-ready systems that bridge research with real-world application.</p>
-            <div class="contact-links">
-                <a href="mailto:devaux.mail@gmail.com">📧 Email</a>
-                <a href="https://github.com/dovvnloading" target="_blank">🔗 GitHub</a>
-                <a href="https://huggingface.co/moremilk" target="_blank">🤗 Hugging Face</a>
-            </div>
+            <img src="./assets/dsp_ico_1.png" alt="A circular profile photo of Matthew Wesney" class="profile-picture">
+            <h1>Matthew Robert Wesney</h1>
+            <p class="subtitle">AI Developer | Creative Technologist | Full-Stack Engineer</p>
         </header>
 
         <section id="profile">
             <h2>About Me</h2>
-            <p class="profile-text">
-                With proven expertise in AI/ML, full-stack development, and creative software engineering, I specialize in designing and deploying elegant, end-to-end solutions. My work is defined by clean architecture, thoughtful UX, and measurable impact. I thrive both independently and in leading cross-functional efforts across AI, backend, frontend, and audio/graphics domains.
-            </p>
+            <div class="text-block">
+                <p>
+                    A dedicated and relentlessly driven developer with a deep passion for building innovative AI and machine learning systems. My creative journey spans over 16 years — from professional music and sound design to 3D art, animation, and now, advanced AI development.
+                </p>
+                <p>
+                    Over the past two years, I’ve independently designed and built more than 50 applications, demonstrating not just versatility but a strong sense of purpose: to create tools that <strong>think, help, and inspire.</strong> My background in the arts gives me an intuitive edge in designing systems that feel <em>alive</em> — blending creativity with precision.
+                </p>
+            </div>
         </section>
 
-        <section id="competencies">
-            <h2>Core Competencies</h2>
-            <div class="competencies">
-                <div class="competency-box">
-                    <h3>AI & Machine Learning</h3>
-                    <p>LLM fine-tuning, RAG systems, autonomous agents, model integration, prompt engineering, and dataset creation.</p>
+        <section id="approach">
+            <h2>My Approach</h2>
+            <div class="approach-grid">
+                <svg class="approach-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l.34 2.28.28 1.89.04.28a2.5 2.5 0 0 1 1.03 1.03l.28.04 1.89.28 2.28.34L18.31 12l-2.28.34-1.89.28-.28.04a2.5 2.5 0 0 1-1.03 1.03l-.04.28-.28 1.89-.34 2.28L12 18.31l-2.28-.34-1.89-.28-.28-.04a2.5 2.5 0 0 1-1.03-1.03l-.04-.28-.28-1.89-.34-2.28L5.69 12l2.28-.34 1.89-.28.28-.04a2.5 2.5 0 0 1 1.03-1.03l.04-.28.28-1.89.34-2.28L12 5.69z"/><circle cx="12" cy="12" r="3"/></svg>
+                <div class="text-block">
+                    <p>
+                        I’m proudly on the Spectrum (Neurodivergent/ASD1) — something I view as a superpower. It allows me to sustain hyper-focus, spot intricate patterns, and approach problem-solving from unconventional angles.
+                    </p>
+                    <p>
+                        I excel in focused, deep work environments where I can transform minimal input into complete, sophisticated systems. While I’m more comfortable building than talking, I value clarity, integrity, and collaboration built on mutual respect.
+                    </p>
                 </div>
-                <div class="competency-box">
-                    <h3>Full-Stack Development</h3>
-                    <p>Python, JavaScript, HTML/CSS, desktop applications (PySide6/PyQt5), scalable web platforms, and robust backend systems.</p>
+            </div>
+        </section>
+
+        <section id="services">
+            <h2>Services</h2>
+            <div class="services-banner">
+                <img src="https://github.com/user-attachments/assets/2befcc18-cf9e-4517-ae7d-be4c7c143e0c" alt="A banner showcasing services by Matthew Robert Wesney">
+            </div>
+            <div class="services-grid">
+                <div class="service-category">
+                    <h3>AI & Application Development</h3>
+                    <ul>
+                        <li>Custom AI desktop applications (Python, PySide6)</li>
+                        <li>Ollama-integrated tools for local LLM inference</li>
+                        <li>Fine-tuning and dataset preparation</li>
+                        <li>Autonomous agents and memory systems</li>
+                        <li>Multi-agent communication frameworks</li>
+                    </ul>
                 </div>
-                <div class="competency-box">
-                    <h3>Specialized Domains</h3>
-                    <p>3D rendering & animation, real-time audio signal processing, VST plugin development, and applied reinforcement learning.</p>
+                <div class="service-category">
+                    <h3>UI/UX & Product Design</h3>
+                    <ul>
+                        <li>Clean, modern desktop interface design</li>
+                        <li>Minimal, functional, and accessible UIs</li>
+                        <li>Wireframing and concept visualization</li>
+                        <li>3D visualization to enhance user feedback</li>
+                    </ul>
                 </div>
-                <div class="competency-box">
-                    <h3>DevOps & Infrastructure</h3>
-                    <p>Local model deployment (Ollama), CI/CD pipelines, version control, collaborative development, and rapid prototyping.</p>
+                <div class="service-category">
+                    <h3>Creative & Multimedia</h3>
+                    <ul>
+                        <li>Sound design and synthesis for software</li>
+                        <li>Generative ambient soundscapes</li>
+                        <li>3D rendering, animation, and visualization</li>
+                        <li>AI-assisted music and audio tools</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -528,10 +508,10 @@
         <section id="projects">
             <h2>Featured Projects</h2>
             <div class="projects-grid">
-                <div class="project-card">
+                 <div class="project-card">
                     <h3>Cortex</h3>
                     <p class="project-type">Desktop AI Assistant</p>
-                    <p>A secure, modular desktop application for local LLM interaction, built with a production-ready architecture and extensible utilities.</p>
+                    <p>A secure, modular desktop application for local LLM interaction, built with a production-ready architecture.</p>
                     <a href="https://github.com/dovvnloading/Cortex" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
                 </div>
                 <div class="project-card">
@@ -541,73 +521,73 @@
                     <a href="https://github.com/dovvnloading/Tree-Graph-MindMap" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
                 </div>
                 <div class="project-card">
-                    <h3>Autonomous Web Search Assistant</h3>
+                    <h3>Autonomous Web Search</h3>
                     <p class="project-type">Verified Research Agent</p>
-                    <p>A real-time web research agent with automatic source validation, providing trustworthy answers by filtering results against reliability criteria.</p>
+                    <p>A real-time web research agent with automatic source validation, providing trustworthy, verified answers.</p>
                     <a href="https://github.com/dovvnloading/Autonomous-AI-Web-Search-Assistant" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
                 </div>
                 <div class="project-card">
                     <h3>Fine-Tuned</h3>
                     <p class="project-type">LLM Fine-Tuning GUI</p>
-                    <p>A user-friendly interface for rapid LLM experimentation and deployment, democratizing advanced model customization.</p>
+                    <p>A user-friendly interface for rapid LLM experimentation and deployment, democratizing model customization.</p>
                     <a href="https://github.com/dovvnloading/Fine-Tuned" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
                 </div>
                  <div class="project-card">
                     <h3>normalizer</h3>
                     <p class="project-type">3D Normal Map Generator</p>
-                    <p>A fast, intuitive desktop tool for converting 2D images to production-quality normal maps for 3D artists and game developers.</p>
+                    <p>A fast, intuitive desktop tool for converting 2D images to production-quality normal maps for 3D artists.</p>
                     <a href="https://github.com/dovvnloading/normalizer" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
                 </div>
                 <div class="project-card">
-                    <h3>Qlearning Grid WorldExplore</h3>
-                    <p class="project-type">RL Visualizer</p>
-                    <p>An educational tool combining PyTorch and PySide6 for real-time reinforcement learning agent training and visualization.</p>
-                    <a href="https://github.com/dovvnloading/Qlearning-grid-worldexplore" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+                    <h3>RL-Tic-Tac-Toe</h3>
+                    <p class="project-type">Dueling DDQN Agent</p>
+                    <p>An educational tool combining PyTorch and PySide6 for real-time reinforcement learning and visualization.</p>
+                    <a href="https://github.com/dovvnloading/RL-Tic-Tac-Toe" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
                 </div>
             </div>
-            <div class="centered-link-wrapper">
-                <a href="https://github.com/dovvnloading" target="_blank" class="button-link">View Full Portfolio on GitHub</a>
+            <div class="extended-projects">
+                <h3>Extended Project Showcase</h3>
+                <div class="project-categories-grid">
+                    <div class="project-category-card">
+                        <h4>AI Assistants & Search</h4>
+                        <ul>
+                            <li><a href="https://github.com/dovvnloading/Leadz" target="_blank">Leadz</a></li>
+                            <li><a href="https://github.com/dovvnloading/Local-Deepseek-R1" target="_blank">Local-Deepseek-R1</a></li>
+                        </ul>
+                    </div>
+                    <div class="project-category-card">
+                        <h4>LLM / Ollama Utilities</h4>
+                        <ul>
+                            <li><a href="https://github.com/dovvnloading/File2MD" target="_blank">File2MD</a></li>
+                            <li><a href="https://github.com/dovvnloading/ITT_Qwen" target="_blank">ITT_Qwen</a></li>
+                            <li><a href="https://github.com/dovvnloading/Clarity" target="_blank">Clarity</a></li>
+                            <li><a href="https://github.com/dovvnloading/Promptly" target="_blank">Promptly</a></li>
+                        </ul>
+                    </div>
+                    <div class="project-category-card">
+                        <h4>AI Model Tools</h4>
+                        <ul>
+                            <li><a href="https://github.com/dovvnloading/Genesis-Mini" target="_blank">Genesis-Mini</a></li>
+                            <li><a href="https://github.com/dovvnloading/Verbalink" target="_blank">Verbalink</a></li>
+                            <li><a href="https://github.com/dovvnloading/Suno-Bark" target="_blank">Suno-Bark</a></li>
+                        </ul>
+                    </div>
+                    <div class="project-category-card">
+                        <h4>ML & Gameplay</h4>
+                        <ul>
+                            <li><a href="https://github.com/dovvnloading/Qwen2.5-Checkers" target="_blank">Qwen2.5-Checkers</a></li>
+                            <li><a href="https://github.com/dovvnloading/Interactive-MNIST-Digit-Classifier" target="_blank">Interactive-MNIST</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="datasets">
-            <h2>Datasets & Training Resources</h2>
-            <div class="datasets-grid">
-                <div class="dataset-item">
-                    <strong>Reasoning_Problem_Solving_Dataset</strong>
-                    <p>151k Q&A pairs (STEM, applied reasoning)</p>
-                </div>
-                <div class="dataset-item">
-                    <strong>ToT_Reasoning_Problem_Solving_V2</strong>
-                    <p>72.1k structured Q&A</p>
-                </div>
-                <div class="dataset-item">
-                    <strong>General_Inquiry_Thinking-Chain-Of-Thought</strong>
-                    <p>6k Q&A (broad reasoning)</p>
-                </div>
-                <div class="dataset-item">
-                    <strong>ToT-Math-V1</strong>
-                    <p>26.8k pairs (math problem-solving)</p>
-                </div>
-                <div class="dataset-item">
-                    <strong>ToT-Biology</strong>
-                    <p>23k pairs (biology reasoning)</p>
-                </div>
-                <div class="dataset-item">
-                    <strong>CoT_Music_Production_DAW</strong>
-                    <p>7k pairs (music production & AI)</p>
-                </div>
-                <div class="dataset-item">
-                    <strong>CoT_Heartbreak_and_Breakups</strong>
-                    <p>9.85k pairs (emotional reasoning)</p>
-                </div>
-                <div class="dataset-item">
-                    <strong>Specialized Collections</strong>
-                    <p>Medical diagnosis, legal reasoning, scientific discovery, cooking, rare diseases, and more</p>
-                </div>
-            </div>
-             <div class="centered-link-wrapper">
-                <a href="https://huggingface.co/moremilk" target="_blank" class="button-link">Explore All Datasets on Hugging Face</a>
+        <section id="journey">
+            <h2>A Lifelong Creator</h2>
+            <div class="text-block">
+                <p>Born in Columbus, Ohio, in 1989, I’ve spent my life creating across mediums — sound, visuals, and now code. Before development, I spent 16 years as a musician and sound designer, creating sample packs that shaped the early dubstep scene, and even free VSTs. Some of these plugins were listed among the <em>Top 10 Best Free VSTs of All Time</em> and were downloaded +50k times worldwide.</p>
+                <p>That same creative instinct led me into game development, where I first engineered AI enemy behavior systems in Unreal Engine. Over time, that curiosity evolved into a full transition toward AI and machine learning — where I now focus my energy on building intelligent, open-source tools that expand human capability.</p>
             </div>
         </section>
 
@@ -616,28 +596,28 @@
             <div class="benefits-grid">
                 <div class="benefit-item">
                     <div class="benefit-icon-wrapper">
-                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
                     </div>
                     <h3>Portfolio-Driven</h3>
                     <p>An extensive public project history demonstrates capability without relying on credentials alone.</p>
                 </div>
                 <div class="benefit-item">
                     <div class="benefit-icon-wrapper">
-                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                     </div>
                     <h3>End-to-End Ownership</h3>
                     <p>From concept through deployment, the full development lifecycle is managed independently and meticulously.</p>
                 </div>
                 <div class="benefit-item">
                     <div class="benefit-icon-wrapper">
-                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                     </div>
                     <h3>Versatile Expertise</h3>
                     <p>Equally comfortable with AI infrastructure, UI/UX, backend systems, and specialized creative domains.</p>
                 </div>
                 <div class="benefit-item">
                     <div class="benefit-icon-wrapper">
-                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     </div>
                     <h3>Production Mindset</h3>
                     <p>Every project ships with clean code, clear documentation, and a user-focused experience at the forefront.</p>
@@ -646,7 +626,27 @@
         </section>
 
         <footer>
-            <p>&copy; 2025 Matt Wesney. All rights reserved. | <a href="mailto:devaux.mail@gmail.com" class="footer-link">Get in touch</a></p>
+            <div class="social-links">
+                <a href="mailto:devaux.mail@gmail.com" title="Email">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </a>
+                <a href="https://github.com/dovvnloading" target="_blank" title="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                <a href="https://huggingface.co/moremilk" target="_blank" title="Hugging Face">
+                    🤗
+                </a>
+                <a href="https://x.com/D3VAUX" target="_blank" title="X (Twitter)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </a>
+                <a href="https://www.youtube.com/@mattwesney" target="_blank" title="YouTube">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10C2.5 4.24 4.24 2.5 7 2.5h10c2.76 0 4.5 1.74 4.5 4.5s-1.74 4.5-4.5 4.5h-1.88c-.53 0-1.01.21-1.37.59a2 2 0 0 0-.63 1.41v1.88c0 2.76-1.74 4.5-4.5 4.5Z"/><path d="m10 15 5-3-5-3z"/></svg>
+                </a>
+                <a href="https://soundcloud.com/devaux" target="_blank" title="SoundCloud">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12.5a4.5 4.5 0 1 0 9 0 4.5 4.5 0 1 0-9 0Z"/><path d="M12.5 12.5a4.5 4.5 0 1 0 9 0 4.5 4.5 0 1 0-9 0Z"/><path d="M19 12v-2.5a4.5 4.5 0 0 0-4.5-4.5 4.5 4.5 0 0 0-4.5 4.5V12"/><path d="M5 12v-2.5a4.5 4.5 0 0 1 4.5-4.5 4.5 4.5 0 0 1 4.5 4.5V12"/></svg>
+                </a>
+            </div>
+            <p>&copy; 2025 Matthew Robert Wesney. All rights reserved.</p>
         </footer>
     </div>
 
@@ -685,5 +685,4 @@
         });
     </script>
 </body>
-
 </html>
