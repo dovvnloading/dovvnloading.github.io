@@ -89,7 +89,7 @@
             transition: background var(--transition-speed) ease;
         }
 
-        #webglContainer {
+        #webglCanvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -97,6 +97,7 @@
             height: 100vh;
             z-index: -2;
             opacity: 0.6;
+            display: block;
         }
 
         .container {
@@ -538,7 +539,7 @@
 </head>
 <body>
 
-    <canvas id="webglContainer"></canvas>
+    <canvas id="webglCanvas"></canvas>
 
     <div class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</div>
 
