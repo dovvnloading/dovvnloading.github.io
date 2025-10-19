@@ -60,25 +60,20 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: var(--text-primary);
-            background-color: var(--bg-primary); /* Fallback */
+            background-color: var(--bg-primary);
             min-height: 100vh;
             transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            
-            /* Background Enhancements */
             position: relative;
-            isolation: isolate; /* Create a new stacking context */
+            isolation: isolate;
             background-image: 
-                /* Dotted Grid */
                 radial-gradient(circle at 1px 1px, var(--grid-dot-color) 1px, transparent 0),
-                /* Base Gradient */
                 linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
             background-size: 30px 30px, 100% 100%;
-            overflow-x: hidden; /* Prevent horizontal scroll from glow */
+            overflow-x: hidden;
         }
 
-        /* Background Aurora Glow */
         body::before {
             content: '';
             position: fixed;
@@ -90,12 +85,20 @@
             background: radial-gradient(circle, var(--accent-light-2) 0%, transparent 60%);
             filter: blur(100px);
             opacity: 0.5;
-            z-index: -1; /* Place it behind all content */
+            z-index: -1;
             transition: background var(--transition-speed) ease;
         }
 
+        #webglContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -2;
+            opacity: 0.6;
+        }
 
-        /* --- Scroll Fade Effect --- */
         .container {
             --mask-height: 40px;
             mask-image: linear-gradient(
@@ -115,9 +118,10 @@
             max-width: 960px;
             margin: 0 auto;
             padding: 60px 20px;
+            position: relative;
+            z-index: 1;
         }
         
-        /* --- Animations --- */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -127,7 +131,7 @@
             animation: fadeInUp 0.6s ease-out forwards;
             opacity: 0;
         }
-        /* Staggered animation delays */
+
         header { animation-delay: 0.1s; }
         #profile { animation-delay: 0.2s; }
         #approach { animation-delay: 0.3s; }
@@ -137,8 +141,6 @@
         #journey { animation-delay: 0.7s; }
         #why-work-together { animation-delay: 0.8s; }
 
-
-        /* Theme Toggle */
         .theme-toggle {
             position: fixed;
             top: 20px;
@@ -164,7 +166,6 @@
             box-shadow: 0 8px 25px var(--shadow-lg);
         }
 
-        /* Header */
         header {
             background: transparent;
             padding: 60px 0;
@@ -206,7 +207,6 @@
             margin-right: auto;
         }
         
-        /* Main Content Section */
         section {
             background: var(--bg-card);
             border-radius: 16px;
@@ -233,45 +233,42 @@
             line-height: 1.8;
             margin-bottom: 1em;
         }
+
         .text-block p:last-child {
             margin-bottom: 0;
         }
         
-        /* Approach Section */
         .approach-grid {
             display: grid;
             grid-template-columns: auto 1fr;
             gap: 30px;
             align-items: center;
         }
-        .approach-icon {
-            width: 64px;
-            height: 64px;
-            stroke: var(--accent-1);
-            stroke-width: 1.5px;
-        }
 
-        /* Services Section */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
+
         .service-category h3 {
             font-size: 1.3em;
             color: var(--accent-2);
             margin-bottom: 15px;
         }
+
         .service-category ul {
             list-style: none;
             padding-left: 0;
         }
+
         .service-category li {
             color: var(--text-secondary);
             margin-bottom: 10px;
             padding-left: 20px;
             position: relative;
         }
+
         .service-category li::before {
             content: '🔹';
             position: absolute;
@@ -279,7 +276,6 @@
             color: var(--accent-1);
         }
 
-        /* Projects Grid */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -295,27 +291,32 @@
             flex-direction: column;
             transition: all var(--transition-speed) ease;
         }
+
         .project-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 35px var(--shadow-lg);
             background-color: var(--bg-card);
         }
+
         .project-card h3 {
             color: var(--text-primary);
             margin-bottom: 8px;
             font-size: 1.3em;
         }
+
         .project-card .project-type {
             color: var(--accent-2);
             font-weight: 500;
             margin-bottom: 15px;
         }
+
         .project-card p {
             color: var(--text-secondary);
             margin-bottom: 20px;
             font-size: 1em;
             flex-grow: 1;
         }
+
         .project-link {
             display: inline-flex;
             align-items: center;
@@ -325,13 +326,16 @@
             transition: all var(--transition-speed) ease;
             align-self: flex-start;
         }
+
         .project-link .arrow {
             transition: transform var(--transition-speed) ease;
             margin-left: 5px;
         }
+
         .project-link:hover {
             color: var(--accent-2);
         }
+
         .project-link:hover .arrow {
             transform: translateX(5px);
         }
@@ -343,40 +347,46 @@
             margin-bottom: 30px;
             color: var(--text-secondary);
         }
+
         .project-categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
         }
+
         .project-category-card {
             background: var(--bg-interactive);
             padding: 20px;
             border-radius: 8px;
             border: 1px solid var(--border);
         }
+
         .project-category-card h4 {
             font-size: 1.1em;
             margin-bottom: 15px;
             color: var(--accent-1);
         }
+
         .project-category-card ul {
             list-style: none;
         }
+
         .project-category-card li a {
             color: var(--text-secondary);
             text-decoration: none;
             transition: color var(--transition-speed) ease;
         }
+
         .project-category-card li a:hover {
             color: var(--accent-2);
         }
 
-        /* Datasets */
         .datasets-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
+
         .dataset-item {
             padding: 20px;
             background: var(--bg-interactive);
@@ -384,25 +394,28 @@
             border-left: 4px solid var(--accent-2);
             transition: background var(--transition-speed) ease;
         }
+
         .dataset-item:hover {
             background: var(--accent-light-2);
         }
+
         .dataset-item strong {
             color: var(--text-primary);
             font-size: 1.05em;
         }
+
         .dataset-item p {
             color: var(--text-tertiary);
             font-size: 0.9em;
             margin-top: 5px;
         }
 
-        /* Why Work Together */
         .benefits-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 30px;
         }
+
         .benefit-item {
             background: var(--bg-interactive);
             border-radius: 12px;
@@ -411,12 +424,14 @@
             border: 1px solid var(--border);
             transition: all var(--transition-speed) ease;
         }
+
         .benefit-item:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 35px var(--shadow-lg);
             background: var(--bg-card);
             border-color: var(--accent-1);
         }
+
         .benefit-icon-wrapper {
             margin: 0 auto 25px auto;
             width: 60px;
@@ -427,25 +442,27 @@
             align-items: center;
             justify-content: center;
         }
+
         .benefit-icon {
             width: 32px;
             height: 32px;
             stroke: var(--accent-2);
             stroke-width: 1.5px;
         }
+
         .benefit-item h3 {
             margin-bottom: 12px;
             font-size: 1.25em;
             font-weight: 700;
             color: var(--text-primary);
         }
+
         .benefit-item p {
             font-size: 1em;
             color: var(--text-secondary);
             line-height: 1.7;
         }
         
-        /* Footer */
         footer {
             text-align: center;
             padding: 50px 20px;
@@ -453,31 +470,37 @@
             font-size: 0.9em;
             border-top: 1px solid var(--border);
             margin-top: 40px;
+            position: relative;
+            z-index: 1;
         }
+
         .social-links {
             display: flex;
             justify-content: center;
             gap: 25px;
             margin-bottom: 25px;
         }
+
         .social-links a {
             color: var(--text-secondary);
             transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
         }
+
         .social-links a:hover {
             color: var(--accent-1);
             transform: scale(1.1);
         }
+
         .social-links svg {
             width: 28px;
             height: 28px;
         }
 
-        /* Utility */
         .centered-link-wrapper {
             text-align: center;
             margin-top: 30px;
         }
+
         .button-link {
             display: inline-block;
             background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
@@ -489,12 +512,12 @@
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
             transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
         }
+
         .button-link:hover {
             transform: translateY(-3px);
             box-shadow: 0 7px 20px rgba(102, 126, 234, 0.5);
         }
         
-        /* Responsive Design */
         @media (max-width: 768px) {
             h1 { font-size: 2.5em; }
             h2 { font-size: 1.8em; }
@@ -506,9 +529,6 @@
                 grid-template-columns: 1fr;
                 text-align: center;
             }
-            .approach-icon {
-                margin: 0 auto 20px auto;
-            }
             body::before {
                 width: 500px;
                 height: 500px;
@@ -517,6 +537,8 @@
     </style>
 </head>
 <body>
+
+    <canvas id="webglContainer"></canvas>
 
     <div class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</div>
 
@@ -721,7 +743,7 @@
         <section id="journey">
             <h2>A Lifelong Creator</h2>
             <div class="text-block">
-                <p>Born in Columbus, Ohio, in 1989, I’ve spent my life creating across mediums — sound, visuals, and now code. Before development, I spent 16 years as a musician and sound designer, creating sample packs that shaped the early dubstep scene, and even free VSTs. Some of these plugins were listed among the <em>Top 10 Best Free VSTs of All Time</em> and were downloaded +50k times worldwide.</p>
+                <p>Born in Columbus, Ohio, in 1989, I've spent my life creating across mediums — sound, visuals, and now code. Before development, I spent 16 years as a musician and sound designer, creating sample packs that shaped the early dubstep scene, and even free VSTs. Some of these plugins were listed among the <em>Top 10 Best Free VSTs of All Time</em> and were downloaded +50k times worldwide.</p>
                 <p>That same creative instinct led me into game development, where I first engineered AI enemy behavior systems in Unreal Engine. Over time, that curiosity evolved into a full transition toward AI and machine learning — where I now focus my energy on building intelligent, open-source tools that expand human capability.</p>
             </div>
         </section>
@@ -780,41 +802,3 @@
     </div>
     <p>&copy; 2025 Matthew Robert Wesney. All rights reserved.</p>
 </footer>
-    </div>
-
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-
-        const setIcon = (isDark) => {
-            themeToggle.textContent = isDark ? '☀️' : '🌙';
-        };
-
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        const isDarkMode = savedTheme === 'dark';
-        
-        body.classList.toggle('dark-mode', isDarkMode);
-        setIcon(isDarkMode);
-
-        themeToggle.addEventListener('click', () => {
-            const isCurrentlyDark = body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', isCurrentlyDark ? 'dark' : 'light');
-            setIcon(isCurrentlyDark);
-        });
-        
-        const animatedElements = document.querySelectorAll('header, section');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in-up');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        animatedElements.forEach(el => {
-            observer.observe(el);
-        });
-    </script>
-</body>
-</html>
