@@ -293,7 +293,6 @@
         /* Theme Toggle */
         .theme-toggle {
             position: fixed;
-            top: 540px;
             right: 20px;
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -302,13 +301,14 @@
             height: 48px;
             cursor: pointer;
             box-shadow: 0 5px 15px var(--shadow-md);
-            transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: top 0.1s ease-out;
             z-index: 999;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5em;
             overflow: hidden;
+            top: 540px;
         }
 
         .theme-toggle:hover {
@@ -958,6 +958,7 @@
     <script>
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
+        const galleryBanner = document.querySelector('.gallery-banner');
 
         const setIcon = (isDark) => {
             themeToggle.textContent = isDark ? '☀️' : '🌙';
@@ -988,6 +989,20 @@
         animatedElements.forEach(el => {
             observer.observe(el);
         });
+
+        // Smooth sticky theme toggle
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const galleryHeight = 480 + 60; // gallery + margin
+            
+            if (scrollTop >= galleryHeight - 60) {
+                themeToggle.style.top = '20px';
+            } else {
+                themeToggle.style.top = (540 - scrollTop) + 'px';
+            }
+            lastScrollTop = scrollTop;
+        }, { passive: true });
 
         // Gallery Banner Script
         class GalleryBanner {
