@@ -141,67 +141,29 @@
             animation: inherit;
         }
 
-        @keyframes zoomInPan {
-            0% {
-                transform: scale(1) translate(var(--start-tx), var(--start-ty));
-            }
-            100% {
-                transform: scale(1.05) translate(var(--tx), var(--ty));
-            }
+        @keyframes kenBurns1 {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.08) translate(25px, -20px); }
         }
 
-        @keyframes zoomOutPan {
-            0% {
-                transform: scale(1.08) translate(var(--start-tx), var(--start-ty));
-            }
-            100% {
-                transform: scale(1) translate(0, 0);
-            }
+        @keyframes kenBurns2 {
+            0% { transform: scale(1.08) translate(-20px, 25px); }
+            100% { transform: scale(1) translate(0, 0); }
         }
 
-        @keyframes purePanLeft {
-            0% {
-                transform: scale(1) translate(-30px, var(--start-ty));
-            }
-            100% {
-                transform: scale(1) translate(30px, var(--ty));
-            }
+        @keyframes kenBurns3 {
+            0% { transform: scale(1) translate(-15px, 15px); }
+            100% { transform: scale(1.08) translate(15px, -15px); }
         }
 
-        @keyframes purePanRight {
-            0% {
-                transform: scale(1) translate(30px, var(--start-ty));
-            }
-            100% {
-                transform: scale(1) translate(-30px, var(--ty));
-            }
+        @keyframes kenBurns4 {
+            0% { transform: scale(1.08) translate(20px, -15px); }
+            100% { transform: scale(1) translate(-10px, 10px); }
         }
 
-        @keyframes purePanUp {
-            0% {
-                transform: scale(1) translate(var(--start-tx), 30px);
-            }
-            100% {
-                transform: scale(1) translate(var(--tx), -30px);
-            }
-        }
-
-        @keyframes purePanDown {
-            0% {
-                transform: scale(1) translate(var(--start-tx), -30px);
-            }
-            100% {
-                transform: scale(1) translate(var(--tx), 30px);
-            }
-        }
-
-        @keyframes zoomAndPanDiagonal {
-            0% {
-                transform: scale(1.02) translate(var(--start-tx), var(--start-ty));
-            }
-            100% {
-                transform: scale(1.04) translate(var(--tx), var(--ty));
-            }
+        @keyframes kenBurns5 {
+            0% { transform: scale(1) translate(10px, -25px); }
+            100% { transform: scale(1.08) translate(-15px, 10px); }
         }
 
         .gallery-overlay {
@@ -1093,12 +1055,6 @@
                     img.src = slide.url;
                     img.alt = slide.name;
                     
-                    const animation = this.getRandomAnimation();
-                    slideEl.dataset.animationName = animation.name;
-                    slideEl.dataset.animationTiming = animation.timing;
-                    slideEl.dataset.tx = animation.tx;
-                    slideEl.dataset.ty = animation.ty;
-                    
                     this.applyAnimation(slideEl, img);
                     slideEl.appendChild(img);
                     viewport.appendChild(slideEl);
@@ -1111,71 +1067,23 @@
             }
 
             applyAnimation(slideEl, img) {
-                const name = slideEl.dataset.animationName;
-                const timing = slideEl.dataset.animationTiming;
-                const tx = slideEl.dataset.tx;
-                const ty = slideEl.dataset.ty;
-                const startTx = this.getRandomPanValue();
-                const startTy = this.getRandomPanValue();
-                
-                img.style.animation = `${name} 14s ${timing} forwards`;
-                img.style.setProperty('--tx', tx);
-                img.style.setProperty('--ty', ty);
-                img.style.setProperty('--start-tx', startTx);
-                img.style.setProperty('--start-ty', startTy);
+                const animation = this.getRandomAnimation();
+                img.style.animation = `${animation.name} 16s ${animation.timing} forwards`;
             }
 
             getRandomAnimation() {
                 const animations = [
-                    {
-                        name: 'zoomInPan',
-                        timing: 'linear',
-                        tx: this.getRandomPanValue(),
-                        ty: this.getRandomPanValue()
-                    },
-                    {
-                        name: 'zoomOutPan',
-                        timing: 'linear',
-                        tx: this.getRandomPanValue(),
-                        ty: this.getRandomPanValue()
-                    },
-                    {
-                        name: 'purePanLeft',
-                        timing: 'linear',
-                        tx: '0px',
-                        ty: this.getRandomPanValue()
-                    },
-                    {
-                        name: 'purePanRight',
-                        timing: 'linear',
-                        tx: '0px',
-                        ty: this.getRandomPanValue()
-                    },
-                    {
-                        name: 'purePanUp',
-                        timing: 'linear',
-                        tx: this.getRandomPanValue(),
-                        ty: '0px'
-                    },
-                    {
-                        name: 'purePanDown',
-                        timing: 'linear',
-                        tx: this.getRandomPanValue(),
-                        ty: '0px'
-                    },
-                    {
-                        name: 'zoomAndPanDiagonal',
-                        timing: 'linear',
-                        tx: this.getRandomPanValue(),
-                        ty: this.getRandomPanValue()
-                    }
+                    { name: 'kenBurns1', timing: 'ease-out' },
+                    { name: 'kenBurns2', timing: 'ease-in' },
+                    { name: 'kenBurns3', timing: 'ease-in-out' },
+                    { name: 'kenBurns4', timing: 'ease-out' },
+                    { name: 'kenBurns5', timing: 'ease-in-out' }
                 ];
                 return animations[Math.floor(Math.random() * animations.length)];
             }
 
             getRandomPanValue() {
-                const values = ['-15px', '-10px', '-5px', '5px', '10px', '15px'];
-                return values[Math.floor(Math.random() * values.length)];
+                return '0px';
             }
 
             attachEventListeners() {
@@ -1209,9 +1117,7 @@
                 const img = slides[this.currentIndex].querySelector('img');
                 img.style.animation = 'none';
                 setTimeout(() => {
-                    const name = slides[this.currentIndex].dataset.animationName;
-                    const timing = slides[this.currentIndex].dataset.animationTiming;
-                    img.style.animation = `${name} 14s ${timing} forwards`;
+                    this.applyAnimation(slides[this.currentIndex], img);
                 }, 10);
 
                 document.getElementById('currentSlide').textContent = this.currentIndex + 1;
