@@ -121,15 +121,33 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            animation: kenBurns 12s ease-in-out forwards;
+            animation: var(--animation-name) 14s var(--animation-timing) forwards;
         }
 
-        @keyframes kenBurns {
+        @keyframes zoomInPan {
             0% {
                 transform: scale(1) translate(0, 0);
             }
             100% {
-                transform: scale(1.12) translate(var(--tx), var(--ty));
+                transform: scale(1.3) translate(var(--tx), var(--ty));
+            }
+        }
+
+        @keyframes zoomOutPan {
+            0% {
+                transform: scale(1.4) translate(var(--tx), var(--ty));
+            }
+            100% {
+                transform: scale(1) translate(0, 0);
+            }
+        }
+
+        @keyframes subtleZoomInPan {
+            0% {
+                transform: scale(0.95) translate(var(--tx), var(--ty));
+            }
+            100% {
+                transform: scale(1.15) translate(0, 0);
             }
         }
 
@@ -258,7 +276,7 @@
         /* Theme Toggle */
         .theme-toggle {
             position: fixed;
-            top: 20px;
+            top: 540px;
             right: 20px;
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -268,7 +286,7 @@
             cursor: pointer;
             box-shadow: 0 5px 15px var(--shadow-md);
             transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
-            z-index: 1000;
+            z-index: 999;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1019,9 +1037,11 @@
                     img.src = slide.url;
                     img.alt = slide.name;
                     
-                    const { tx, ty } = this.getRandomPan();
-                    slideEl.style.setProperty('--tx', tx);
-                    slideEl.style.setProperty('--ty', ty);
+                    const animation = this.getRandomAnimation();
+                    slideEl.style.setProperty('--animation-name', animation.name);
+                    slideEl.style.setProperty('--animation-timing', animation.timing);
+                    slideEl.style.setProperty('--tx', animation.tx);
+                    slideEl.style.setProperty('--ty', animation.ty);
                     
                     slideEl.appendChild(img);
                     viewport.appendChild(slideEl);
@@ -1033,15 +1053,33 @@
                 });
             }
 
-            getRandomPan() {
-                const directions = [
-                    { tx: '20px', ty: '-20px' },
-                    { tx: '-20px', ty: '20px' },
-                    { tx: '-15px', ty: '-15px' },
-                    { tx: '25px', ty: '10px' },
-                    { tx: '-25px', ty: '-10px' }
+            getRandomAnimation() {
+                const animations = [
+                    {
+                        name: 'zoomInPan',
+                        timing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                        tx: this.getRandomPanValue(),
+                        ty: this.getRandomPanValue()
+                    },
+                    {
+                        name: 'zoomOutPan',
+                        timing: 'cubic-bezier(0.45, 0.05, 0.55, 0.95)',
+                        tx: this.getRandomPanValue(),
+                        ty: this.getRandomPanValue()
+                    },
+                    {
+                        name: 'subtleZoomInPan',
+                        timing: 'ease-in-out',
+                        tx: this.getRandomPanValue(),
+                        ty: this.getRandomPanValue()
+                    }
                 ];
-                return directions[Math.floor(Math.random() * directions.length)];
+                return animations[Math.floor(Math.random() * animations.length)];
+            }
+
+            getRandomPanValue() {
+                const values = ['-25px', '-15px', '-5px', '5px', '15px', '25px'];
+                return values[Math.floor(Math.random() * values.length)];
             }
 
             attachEventListeners() {
