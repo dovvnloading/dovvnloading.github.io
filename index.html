@@ -60,25 +60,21 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: var(--text-primary);
-            background-color: var(--bg-primary); /* Fallback */
+            background-color: var(--bg-primary);
             min-height: 100vh;
             transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             
-            /* Background Enhancements */
             position: relative;
-            isolation: isolate; /* Create a new stacking context */
+            isolation: isolate;
             background-image: 
-                /* Dotted Grid */
                 radial-gradient(circle at 1px 1px, var(--grid-dot-color) 1px, transparent 0),
-                /* Base Gradient */
                 linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
             background-size: 30px 30px, 100% 100%;
-            overflow-x: hidden; /* Prevent horizontal scroll from glow */
+            overflow-x: hidden;
         }
 
-        /* Background Aurora Glow */
         body::before {
             content: '';
             position: fixed;
@@ -90,10 +86,133 @@
             background: radial-gradient(circle, var(--accent-light-2) 0%, transparent 60%);
             filter: blur(100px);
             opacity: 0.5;
-            z-index: -1; /* Place it behind all content */
+            z-index: -1;
             transition: background var(--transition-speed) ease;
         }
 
+        /* Gallery Banner Styles */
+        .gallery-banner {
+            width: 100%;
+            height: 480px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 60px;
+        }
+
+        .gallery-viewport {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .gallery-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .gallery-slide.active {
+            opacity: 1;
+        }
+
+        .gallery-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: kenBurns 12s ease-in-out forwards;
+        }
+
+        @keyframes kenBurns {
+            0% {
+                transform: scale(1) translate(0, 0);
+            }
+            100% {
+                transform: scale(1.12) translate(var(--tx), var(--ty));
+            }
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.25) 100%);
+            pointer-events: none;
+        }
+
+        .gallery-controls {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 100;
+            align-items: center;
+        }
+
+        .gallery-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: rgba(255,255,255,0.95);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .dot:hover {
+            background: rgba(255,255,255,0.7);
+        }
+
+        .gallery-nav {
+            display: flex;
+            gap: 12px;
+        }
+
+        .gallery-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.5);
+            background: rgba(0,0,0,0.25);
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .gallery-btn:hover {
+            border-color: rgba(255,255,255,0.9);
+            background: rgba(0,0,0,0.4);
+            transform: scale(1.08);
+        }
+
+        .gallery-counter {
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+            font-weight: 500;
+            min-width: 45px;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
 
         /* --- Scroll Fade Effect --- */
         .container {
@@ -127,7 +246,6 @@
             animation: fadeInUp 0.6s ease-out forwards;
             opacity: 0;
         }
-        /* Staggered animation delays */
         header { animation-delay: 0.1s; }
         #profile { animation-delay: 0.2s; }
         #approach { animation-delay: 0.3s; }
@@ -136,7 +254,6 @@
         #datasets { animation-delay: 0.6s; }
         #journey { animation-delay: 0.7s; }
         #why-work-together { animation-delay: 0.8s; }
-
 
         /* Theme Toggle */
         .theme-toggle {
@@ -513,12 +630,32 @@
                 width: 500px;
                 height: 500px;
             }
+            .gallery-banner {
+                height: 300px;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</div>
+
+    <!-- GALLERY BANNER -->
+    <div class="gallery-banner">
+        <div class="gallery-viewport">
+            <div id="gallerySlides"></div>
+            <div class="gallery-overlay"></div>
+        </div>
+
+        <div class="gallery-controls">
+            <div class="gallery-dots" id="galleryDots"></div>
+            <div class="gallery-nav">
+                <button class="gallery-btn" id="prevBtn" title="Previous">‹</button>
+                <span class="gallery-counter"><span id="currentSlide">1</span> / <span id="totalSlides">0</span></span>
+                <button class="gallery-btn" id="nextBtn" title="Next">›</button>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
         <header>
@@ -721,7 +858,7 @@
         <section id="journey">
             <h2>A Lifelong Creator</h2>
             <div class="text-block">
-                <p>Born in Columbus, Ohio, in 1989, I’ve spent my life creating across mediums — sound, visuals, and now code. Before development, I spent 16 years as a musician and sound designer, creating sample packs that shaped the early dubstep scene, and even free VSTs. Some of these plugins were listed among the <em>Top 10 Best Free VSTs of All Time</em> and were downloaded +50k times worldwide.</p>
+                <p>Born in Columbus, Ohio, in 1989, I've spent my life creating across mediums — sound, visuals, and now code. Before development, I spent 16 years as a musician and sound designer, creating sample packs that shaped the early dubstep scene, and even free VSTs. Some of these plugins were listed among the <em>Top 10 Best Free VSTs of All Time</em> and were downloaded +50k times worldwide.</p>
                 <p>That same creative instinct led me into game development, where I first engineered AI enemy behavior systems in Unreal Engine. Over time, that curiosity evolved into a full transition toward AI and machine learning — where I now focus my energy on building intelligent, open-source tools that expand human capability.</p>
             </div>
         </section>
@@ -761,25 +898,25 @@
         </section>
 
         <footer>
-    <div class="social-links">
-        <a href="mailto:devaux.mail@gmail.com" title="Email">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-        </a>
-        <a href="https://github.com/dovvnloading" target="_blank" title="GitHub">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-        </a>        
-        <a href="https://x.com/D3VAUX" target="_blank" title="X (Twitter)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-        </a>
-        <a href="https://www.youtube.com/@mattwesney" target="_blank" title="YouTube">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 7.03 15.75 11.75 9.75 16.48 9.75 7.03"></polygon></svg>
-        </a>
-        <a href="https://soundcloud.com/devaux" target="_blank" title="SoundCloud">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-        </a>
-    </div>
-    <p>&copy; 2025 Matthew Robert Wesney. All rights reserved.</p>
-</footer>
+            <div class="social-links">
+                <a href="mailto:devaux.mail@gmail.com" title="Email">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </a>
+                <a href="https://github.com/dovvnloading" target="_blank" title="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>        
+                <a href="https://x.com/D3VAUX" target="_blank" title="X (Twitter)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </a>
+                <a href="https://www.youtube.com/@mattwesney" target="_blank" title="YouTube">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 7.03 15.75 11.75 9.75 16.48 9.75 7.03"></polygon></svg>
+                </a>
+                <a href="https://soundcloud.com/devaux" target="_blank" title="SoundCloud">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                </a>
+            </div>
+            <p>&copy; 2025 Matthew Robert Wesney. All rights reserved.</p>
+        </footer>
     </div>
 
     <script>
@@ -815,6 +952,145 @@
         animatedElements.forEach(el => {
             observer.observe(el);
         });
+
+        // Gallery Banner Script
+        class GalleryBanner {
+            constructor() {
+                this.slides = [];
+                this.currentIndex = 0;
+                this.autoPlayInterval = null;
+                this.isTransitioning = false;
+                this.imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+                this.init();
+            }
+
+            async init() {
+                await this.loadImages();
+                this.setupDOM();
+                this.attachEventListeners();
+                this.autoPlay();
+            }
+
+            async loadImages() {
+                try {
+                    const response = await fetch('https://api.github.com/repos/dovvnloading/dovvnloading.github.io/contents/assets');
+                    const data = await response.json();
+                    
+                    if (Array.isArray(data)) {
+                        this.slides = data
+                            .filter(file => this.imageExtensions.some(ext => file.name.toLowerCase().endsWith(ext)))
+                            .map(file => ({
+                                name: file.name,
+                                url: file.download_url
+                            }));
+                    }
+
+                    if (this.slides.length === 0) {
+                        this.slides = this.getLocalImages();
+                    }
+                } catch (error) {
+                    console.log('Gallery: Using local images');
+                    this.slides = this.getLocalImages();
+                }
+            }
+
+            getLocalImages() {
+                const imageNames = [];
+                for (let i = 1; i <= 30; i++) {
+                    imageNames.push(`image-${i}.jpg`);
+                }
+                return imageNames.map(name => ({ 
+                    name, 
+                    url: `assets/${name}` 
+                }));
+            }
+
+            setupDOM() {
+                const viewport = document.getElementById('gallerySlides');
+                const dotsContainer = document.getElementById('galleryDots');
+                
+                document.getElementById('totalSlides').textContent = this.slides.length;
+
+                this.slides.forEach((slide, index) => {
+                    const slideEl = document.createElement('div');
+                    slideEl.className = 'gallery-slide' + (index === 0 ? ' active' : '');
+                    
+                    const img = document.createElement('img');
+                    img.src = slide.url;
+                    img.alt = slide.name;
+                    
+                    const { tx, ty } = this.getRandomPan();
+                    slideEl.style.setProperty('--tx', tx);
+                    slideEl.style.setProperty('--ty', ty);
+                    
+                    slideEl.appendChild(img);
+                    viewport.appendChild(slideEl);
+
+                    const dot = document.createElement('div');
+                    dot.className = 'dot' + (index === 0 ? ' active' : '');
+                    dot.addEventListener('click', () => this.goToSlide(index));
+                    dotsContainer.appendChild(dot);
+                });
+            }
+
+            getRandomPan() {
+                const directions = [
+                    { tx: '20px', ty: '-20px' },
+                    { tx: '-20px', ty: '20px' },
+                    { tx: '-15px', ty: '-15px' },
+                    { tx: '25px', ty: '10px' },
+                    { tx: '-25px', ty: '-10px' }
+                ];
+                return directions[Math.floor(Math.random() * directions.length)];
+            }
+
+            attachEventListeners() {
+                document.getElementById('nextBtn').addEventListener('click', () => this.next());
+                document.getElementById('prevBtn').addEventListener('click', () => this.prev());
+            }
+
+            next() {
+                this.goToSlide((this.currentIndex + 1) % this.slides.length);
+            }
+
+            prev() {
+                this.goToSlide((this.currentIndex - 1 + this.slides.length) % this.slides.length);
+            }
+
+            goToSlide(index) {
+                if (this.isTransitioning || index === this.currentIndex) return;
+                this.isTransitioning = true;
+
+                const slides = document.querySelectorAll('.gallery-slide');
+                const dots = document.querySelectorAll('.dot');
+
+                slides[this.currentIndex].classList.remove('active');
+                dots[this.currentIndex].classList.remove('active');
+
+                this.currentIndex = index;
+
+                slides[this.currentIndex].classList.add('active');
+                dots[this.currentIndex].classList.add('active');
+
+                document.getElementById('currentSlide').textContent = this.currentIndex + 1;
+
+                this.resetAutoPlay();
+                this.isTransitioning = false;
+            }
+
+            autoPlay() {
+                this.autoPlayInterval = setInterval(() => {
+                    this.next();
+                }, 12000);
+            }
+
+            resetAutoPlay() {
+                clearInterval(this.autoPlayInterval);
+                this.autoPlay();
+            }
+        }
+
+        new GalleryBanner();
     </script>
 </body>
 </html>
