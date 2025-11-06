@@ -146,34 +146,61 @@
                 transform: scale(1) translate(var(--start-tx), var(--start-ty));
             }
             100% {
-                transform: scale(1.15) translate(var(--tx), var(--ty));
+                transform: scale(1.05) translate(var(--tx), var(--ty));
             }
         }
 
         @keyframes zoomOutPan {
             0% {
-                transform: scale(1.2) translate(var(--start-tx), var(--start-ty));
+                transform: scale(1.08) translate(var(--start-tx), var(--start-ty));
             }
             100% {
-                transform: scale(0.95) translate(0, 0);
+                transform: scale(1) translate(0, 0);
             }
         }
 
-        @keyframes subtleZoomInPan {
+        @keyframes purePanLeft {
             0% {
-                transform: scale(0.9) translate(var(--start-tx), var(--start-ty));
+                transform: scale(1) translate(-60px, var(--start-ty));
             }
             100% {
-                transform: scale(1.1) translate(0, 0);
+                transform: scale(1) translate(60px, var(--ty));
             }
         }
 
-        @keyframes aggressivePan {
+        @keyframes purePanRight {
             0% {
-                transform: scale(1.08) translate(calc(var(--start-tx) * 1.5), calc(var(--start-ty) * 1.5));
+                transform: scale(1) translate(60px, var(--start-ty));
             }
             100% {
-                transform: scale(1.15) translate(var(--tx), var(--ty));
+                transform: scale(1) translate(-60px, var(--ty));
+            }
+        }
+
+        @keyframes purePanUp {
+            0% {
+                transform: scale(1) translate(var(--start-tx), 60px);
+            }
+            100% {
+                transform: scale(1) translate(var(--tx), -60px);
+            }
+        }
+
+        @keyframes purePanDown {
+            0% {
+                transform: scale(1) translate(var(--start-tx), -60px);
+            }
+            100% {
+                transform: scale(1) translate(var(--tx), 60px);
+            }
+        }
+
+        @keyframes zoomAndPanDiagonal {
+            0% {
+                transform: scale(1.02) translate(var(--start-tx), var(--start-ty));
+            }
+            100% {
+                transform: scale(1.04) translate(var(--tx), var(--ty));
             }
         }
 
@@ -1102,25 +1129,43 @@
                 const animations = [
                     {
                         name: 'zoomInPan',
-                        timing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                        timing: 'linear',
                         tx: this.getRandomPanValue(),
                         ty: this.getRandomPanValue()
                     },
                     {
                         name: 'zoomOutPan',
-                        timing: 'cubic-bezier(0.45, 0.05, 0.55, 0.95)',
+                        timing: 'linear',
                         tx: this.getRandomPanValue(),
                         ty: this.getRandomPanValue()
                     },
                     {
-                        name: 'subtleZoomInPan',
-                        timing: 'ease-in-out',
-                        tx: this.getRandomPanValue(),
+                        name: 'purePanLeft',
+                        timing: 'linear',
+                        tx: '0px',
                         ty: this.getRandomPanValue()
                     },
                     {
-                        name: 'aggressivePan',
-                        timing: 'cubic-bezier(0.33, 0, 0.67, 1)',
+                        name: 'purePanRight',
+                        timing: 'linear',
+                        tx: '0px',
+                        ty: this.getRandomPanValue()
+                    },
+                    {
+                        name: 'purePanUp',
+                        timing: 'linear',
+                        tx: this.getRandomPanValue(),
+                        ty: '0px'
+                    },
+                    {
+                        name: 'purePanDown',
+                        timing: 'linear',
+                        tx: this.getRandomPanValue(),
+                        ty: '0px'
+                    },
+                    {
+                        name: 'zoomAndPanDiagonal',
+                        timing: 'linear',
                         tx: this.getRandomPanValue(),
                         ty: this.getRandomPanValue()
                     }
