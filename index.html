@@ -143,37 +143,37 @@
 
         @keyframes zoomInPan {
             0% {
-                transform: scale(1) translate(0, 0);
+                transform: scale(1) translate(var(--start-tx), var(--start-ty));
             }
             100% {
-                transform: scale(1.5) translate(var(--tx), var(--ty));
+                transform: scale(1.15) translate(var(--tx), var(--ty));
             }
         }
 
         @keyframes zoomOutPan {
             0% {
-                transform: scale(1.6) translate(var(--tx), var(--ty));
+                transform: scale(1.2) translate(var(--start-tx), var(--start-ty));
             }
             100% {
-                transform: scale(0.9) translate(0, 0);
+                transform: scale(0.95) translate(0, 0);
             }
         }
 
         @keyframes subtleZoomInPan {
             0% {
-                transform: scale(0.85) translate(var(--tx), var(--ty));
+                transform: scale(0.9) translate(var(--start-tx), var(--start-ty));
             }
             100% {
-                transform: scale(1.25) translate(0, 0);
+                transform: scale(1.1) translate(0, 0);
             }
         }
 
         @keyframes aggressivePan {
             0% {
-                transform: scale(1.2) translate(calc(var(--tx) * 1.5), calc(var(--ty) * 1.5));
+                transform: scale(1.08) translate(calc(var(--start-tx) * 1.5), calc(var(--start-ty) * 1.5));
             }
             100% {
-                transform: scale(1.3) translate(calc(var(--tx) * -1), calc(var(--ty) * -1));
+                transform: scale(1.15) translate(var(--tx), var(--ty));
             }
         }
 
@@ -1088,10 +1088,14 @@
                 const timing = slideEl.dataset.animationTiming;
                 const tx = slideEl.dataset.tx;
                 const ty = slideEl.dataset.ty;
+                const startTx = this.getRandomPanValue();
+                const startTy = this.getRandomPanValue();
                 
                 img.style.animation = `${name} 14s ${timing} forwards`;
                 img.style.setProperty('--tx', tx);
                 img.style.setProperty('--ty', ty);
+                img.style.setProperty('--start-tx', startTx);
+                img.style.setProperty('--start-ty', startTy);
             }
 
             getRandomAnimation() {
