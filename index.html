@@ -161,37 +161,37 @@
 
         @keyframes purePanLeft {
             0% {
-                transform: scale(1) translate(-60px, var(--start-ty));
+                transform: scale(1) translate(-30px, var(--start-ty));
             }
             100% {
-                transform: scale(1) translate(60px, var(--ty));
+                transform: scale(1) translate(30px, var(--ty));
             }
         }
 
         @keyframes purePanRight {
             0% {
-                transform: scale(1) translate(60px, var(--start-ty));
+                transform: scale(1) translate(30px, var(--start-ty));
             }
             100% {
-                transform: scale(1) translate(-60px, var(--ty));
+                transform: scale(1) translate(-30px, var(--ty));
             }
         }
 
         @keyframes purePanUp {
             0% {
-                transform: scale(1) translate(var(--start-tx), 60px);
+                transform: scale(1) translate(var(--start-tx), 30px);
             }
             100% {
-                transform: scale(1) translate(var(--tx), -60px);
+                transform: scale(1) translate(var(--tx), -30px);
             }
         }
 
         @keyframes purePanDown {
             0% {
-                transform: scale(1) translate(var(--start-tx), -60px);
+                transform: scale(1) translate(var(--start-tx), -30px);
             }
             100% {
-                transform: scale(1) translate(var(--tx), 60px);
+                transform: scale(1) translate(var(--tx), 30px);
             }
         }
 
@@ -1174,7 +1174,7 @@
             }
 
             getRandomPanValue() {
-                const values = ['-40px', '-30px', '-20px', '-10px', '10px', '20px', '30px', '40px'];
+                const values = ['-15px', '-10px', '-5px', '5px', '10px', '15px'];
                 return values[Math.floor(Math.random() * values.length)];
             }
 
