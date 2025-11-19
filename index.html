@@ -6,43 +6,38 @@
     <title>Matthew Wesney | AI Developer & Creative Technologist</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #f5f7fa;
-            --bg-secondary: #eef2f7;
-            --bg-card: #ffffff;
-            --bg-interactive: #f9fafb;
-            --text-primary: #1a202c;
-            --text-secondary: #4a5568;
-            --text-tertiary: #718096;
-            --accent-1: #667eea;
-            --accent-2: #764ba2;
-            --border: #e2e8f0;
-            --shadow-md: rgba(0, 0, 0, 0.06);
-            --shadow-lg: rgba(0, 0, 0, 0.1);
-            --accent-light-1: #667eea15;
-            --accent-light-2: #764ba215;
-            --grid-dot-color: #dce1e8;
-            --transition-speed: 0.3s;
+            /* LIGHT MODE NEUMORPHISM */
+            --bg-main: #e0e5ec;
+            --text-main: #4a5568;
+            --text-head: #2d3748;
+            --accent: #667eea;
+            
+            /* Neumorphic Shadows Light */
+            --shadow-light: -9px -9px 16px rgba(255, 255, 255, 0.8);
+            --shadow-dark: 9px 9px 16px rgba(163, 177, 198, 0.6);
+            --shadow-inset-light: inset -6px -6px 10px rgba(255, 255, 255, 0.8);
+            --shadow-inset-dark: inset 6px 6px 10px rgba(163, 177, 198, 0.6);
+            
+            --card-radius: 20px;
+            --btn-radius: 50px;
+            --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body.dark-mode {
-            --bg-primary: #121212;
-            --bg-secondary: #1a1a2e;
-            --bg-card: #1e1e2e;
-            --bg-interactive: #2a2a3a;
-            --text-primary: #e2e8f0;
-            --text-secondary: #a0aec0;
-            --text-tertiary: #718096;
-            --accent-1: #8c9eff;
-            --accent-2: #b388ff;
-            --border: #2d3748;
-            --shadow-md: rgba(0, 0, 0, 0.2);
-            --shadow-lg: rgba(0, 0, 0, 0.3);
-            --accent-light-1: #8c9eff1a;
-            --accent-light-2: #b388ff1a;
-            --grid-dot-color: #2a2a3a;
+            /* DARK MODE NEUMORPHISM */
+            --bg-main: #212529;
+            --text-main: #a0aec0;
+            --text-head: #e2e8f0;
+            --accent: #8c9eff;
+
+            /* Neumorphic Shadows Dark */
+            --shadow-light: -5px -5px 12px rgba(50, 55, 60, 0.5); 
+            --shadow-dark: 5px 5px 12px rgba(0, 0, 0, 0.6);
+            --shadow-inset-light: inset -4px -4px 10px rgba(50, 55, 60, 0.5);
+            --shadow-inset-dark: inset 4px 4px 10px rgba(0, 0, 0, 0.8);
         }
 
         * {
@@ -51,1109 +46,724 @@
             box-sizing: border-box;
         }
 
-        ::selection {
-            background-color: var(--accent-1);
-            color: white;
-        }
-
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-primary);
-            background-color: var(--bg-primary);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
             min-height: 100vh;
-            transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            
-            position: relative;
-            isolation: isolate;
-            background-image: 
-                radial-gradient(circle at 1px 1px, var(--grid-dot-color) 1px, transparent 0),
-                linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-            background-size: 30px 30px, 100% 100%;
+            transition: background-color var(--transition), color var(--transition);
             overflow-x: hidden;
+            padding-bottom: 50px;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, var(--accent-light-2) 0%, transparent 60%);
-            filter: blur(100px);
-            opacity: 0.5;
-            z-index: -1;
-            transition: background var(--transition-speed) ease;
+        /* --- Typography & Layout --- */
+        h1, h2, h3, h4 {
+            color: var(--text-head);
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
-        /* Gallery Banner Styles */
-        .gallery-banner {
-            width: 100%;
-            height: 480px;
-            position: relative;
-            overflow: hidden;
-            margin-top: 0;
-            margin-bottom: 60px;
-            border: 2px solid var(--border);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            margin: 0 0 60px 0;
+        p {
+            line-height: 1.7;
+            font-weight: 400;
+            margin-bottom: 1rem;
         }
 
-        .gallery-banner::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.05) 100%);
-            pointer-events: none;
-            z-index: 50;
+        a {
+            text-decoration: none;
+            color: var(--accent);
+            font-weight: 600;
+            transition: all 0.2s ease;
         }
 
-        .gallery-viewport {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .gallery-slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        .gallery-slide.active {
-            opacity: 1;
-        }
-
-        .gallery-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .gallery-slide.active img {
-            animation: inherit;
-        }
-
-        @keyframes kenBurns1 {
-            0% { transform: scale(1) translate(0, 0); }
-            100% { transform: scale(1.08) translate(15px, -12px); }
-        }
-
-        @keyframes kenBurns2 {
-            0% { transform: scale(1.08) translate(-12px, 15px); }
-            100% { transform: scale(1) translate(0, 0); }
-        }
-
-        @keyframes kenBurns3 {
-            0% { transform: scale(1) translate(-10px, 10px); }
-            100% { transform: scale(1.08) translate(10px, -10px); }
-        }
-
-        @keyframes kenBurns4 {
-            0% { transform: scale(1.08) translate(12px, -10px); }
-            100% { transform: scale(1) translate(-5px, 5px); }
-        }
-
-        @keyframes kenBurns5 {
-            0% { transform: scale(1) translate(8px, -15px); }
-            100% { transform: scale(1.08) translate(-12px, 8px); }
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 100%),
-                linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.3) 100%);
-            pointer-events: none;
-        }
-
-        .gallery-controls {
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 16px;
-            z-index: 100;
-            align-items: center;
-        }
-
-        .gallery-dots {
-            display: flex;
-            gap: 8px;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.4);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .dot.active {
-            background: rgba(255,255,255,0.95);
-            width: 24px;
-            border-radius: 4px;
-        }
-
-        .dot:hover {
-            background: rgba(255,255,255,0.7);
-        }
-
-        .gallery-nav {
-            display: flex;
-            gap: 12px;
-        }
-
-        .gallery-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.5);
-            background: rgba(0,0,0,0.25);
-            color: white;
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(8px);
-        }
-
-        .gallery-btn:hover {
-            border-color: rgba(255,255,255,0.9);
-            background: rgba(0,0,0,0.4);
-            transform: scale(1.08);
-        }
-
-        .gallery-counter {
-            color: rgba(255,255,255,0.8);
-            font-size: 13px;
-            font-weight: 500;
-            min-width: 45px;
-            text-align: center;
-            letter-spacing: 0.5px;
-        }
-
-        /* --- Scroll Fade Effect --- */
         .container {
-            --mask-height: 40px;
-            mask-image: linear-gradient(
-                to bottom,
-                transparent 0,
-                black var(--mask-height),
-                black calc(100% - var(--mask-height)),
-                transparent 100%
-            );
-            -webkit-mask-image: linear-gradient(
-                to bottom,
-                transparent 0,
-                black var(--mask-height),
-                black calc(100% - var(--mask-height)),
-                transparent 100%
-            );
-            max-width: 960px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 60px 20px;
-        }
-        
-        /* --- Animations --- */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            padding: 40px 20px;
         }
 
-        section, header {
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
+        /* --- Neumorphic Components --- */
+        .neu-card {
+            background: var(--bg-main);
+            box-shadow: var(--shadow-dark), var(--shadow-light);
+            border-radius: var(--card-radius);
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid transparent; /* Maintains layout during transition */
+            transition: all var(--transition);
         }
-        header { animation-delay: 0.1s; }
-        #profile { animation-delay: 0.2s; }
-        #approach { animation-delay: 0.3s; }
-        #services { animation-delay: 0.4s; }
-        #projects { animation-delay: 0.5s; }
-        #datasets { animation-delay: 0.6s; }
-        #journey { animation-delay: 0.7s; }
-        #why-work-together { animation-delay: 0.8s; }
 
-        /* Theme Toggle */
-        .theme-toggle {
-            position: fixed;
-            right: 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            width: 48px;
-            height: 48px;
+        .neu-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .neu-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            background: var(--bg-main);
+            color: var(--accent);
+            box-shadow: var(--shadow-dark), var(--shadow-light);
+            border-radius: var(--btn-radius);
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: none;
             cursor: pointer;
-            box-shadow: 0 5px 15px var(--shadow-md);
-            transition: top 0.1s ease-out;
-            z-index: 999;
+        }
+
+        .neu-btn:hover {
+            transform: translateY(-2px);
+            color: var(--text-head);
+        }
+
+        .neu-btn:active, .neu-btn.active {
+            box-shadow: var(--shadow-inset-dark), var(--shadow-inset-light);
+            transform: translateY(1px);
+        }
+
+        .neu-icon-box {
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5em;
-            overflow: hidden;
-            top: 540px;
+            border-radius: 50%;
+            background: var(--bg-main);
+            box-shadow: var(--shadow-dark), var(--shadow-light);
+            color: var(--accent);
+            margin-bottom: 20px;
         }
 
+        /* --- Theme Toggle --- */
+        .theme-toggle-wrapper {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        .theme-toggle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-main);
+            box-shadow: var(--shadow-dark), var(--shadow-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-head);
+        }
         .theme-toggle:hover {
-            transform: scale(1.1) rotate(15deg);
-            box-shadow: 0 8px 25px var(--shadow-lg);
+            color: var(--accent);
+        }
+        .theme-toggle:active {
+            box-shadow: var(--shadow-inset-dark), var(--shadow-inset-light);
         }
 
-        /* Header */
+        /* --- Header / Hero --- */
         header {
-            background: transparent;
-            padding: 60px 0;
-            margin-bottom: 50px;
             text-align: center;
+            padding: 80px 20px 60px;
+            position: relative;
+        }
+
+        .profile-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            padding: 10px;
+            /* Convex outer ring */
+            box-shadow: var(--shadow-dark), var(--shadow-light);
+            background: var(--bg-main);
+            animation: float 6s ease-in-out infinite;
         }
 
         .profile-picture {
-            width: 120px;
-            height: 120px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            margin: 0 auto 25px auto;
-            border: 4px solid var(--bg-card);
-            box-shadow: 0 8px 25px var(--shadow-lg);
-            transition: transform var(--transition-speed) ease;
+            /* Concave inner ring for the image */
+            box-shadow: var(--shadow-inset-dark), var(--shadow-inset-light);
+            border: 4px solid var(--bg-main);
         }
 
-        .profile-picture:hover {
-            transform: scale(1.05);
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
         h1 {
-            font-size: 3.5em;
-            font-weight: 700;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 100%);
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--text-head) 0%, var(--accent) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
-            font-size: 1.25em;
-            color: var(--text-secondary);
-            margin-bottom: 25px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .hero-tags {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
         }
         
-        /* Main Content Section */
+        .tag {
+            font-size: 0.85rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--bg-main);
+            box-shadow: var(--shadow-dark), var(--shadow-light);
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        /* --- Sections --- */
         section {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 50px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px var(--shadow-md);
-            border: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
         }
-        
+
         h2 {
-            font-size: 2em;
-            font-weight: 700;
-            margin-bottom: 30px;
-            color: var(--text-primary);
+            font-size: 2rem;
+            margin-bottom: 40px;
+            position: relative;
             display: inline-block;
-            padding-bottom: 10px;
-            border-bottom: 3px solid;
-            border-image: linear-gradient(to right, var(--accent-1), var(--accent-2)) 1;
-        }
-
-        .text-block p {
-            font-size: 1.1em;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 1em;
-        }
-        .text-block p:last-child {
-            margin-bottom: 0;
         }
         
-        /* Approach Section */
-        .approach-grid {
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 30px;
-            align-items: center;
-        }
-        .approach-icon {
-            width: 64px;
-            height: 64px;
-            stroke: var(--accent-1);
-            stroke-width: 1.5px;
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(102,126,234,0.4);
         }
 
-        /* Services Section */
-        .services-grid {
+        /* --- Services Grid --- */
+        .grid-3 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
-        .service-category h3 {
-            font-size: 1.3em;
-            color: var(--accent-2);
+
+        .service-card h3 {
+            color: var(--accent);
             margin-bottom: 15px;
         }
-        .service-category ul {
+
+        .service-card ul {
             list-style: none;
-            padding-left: 0;
         }
-        .service-category li {
-            color: var(--text-secondary);
+        
+        .service-card li {
             margin-bottom: 10px;
-            padding-left: 20px;
-            position: relative;
-        }
-        .service-category li::before {
-            content: '🔹';
-            position: absolute;
-            left: 0;
-            color: var(--accent-1);
+            display: flex;
+            align-items: baseline;
         }
 
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+        .service-card li::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin-right: 10px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
         }
 
+        /* --- Projects --- */
         .project-card {
-            background: var(--bg-interactive);
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            transition: all var(--transition-speed) ease;
-        }
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px var(--shadow-lg);
-            background-color: var(--bg-card);
-        }
-        .project-card h3 {
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            font-size: 1.3em;
-        }
-        .project-card .project-type {
-            color: var(--accent-2);
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-        .project-card p {
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            font-size: 1em;
-            flex-grow: 1;
-        }
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            color: var(--accent-1);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all var(--transition-speed) ease;
-            align-self: flex-start;
-        }
-        .project-link .arrow {
-            transition: transform var(--transition-speed) ease;
-            margin-left: 5px;
-        }
-        .project-link:hover {
-            color: var(--accent-2);
-        }
-        .project-link:hover .arrow {
-            transform: translateX(5px);
+            justify-content: space-between;
         }
 
-        .extended-projects h3 {
-            font-size: 1.5em;
-            text-align: center;
-            margin-top: 50px;
-            margin-bottom: 30px;
-            color: var(--text-secondary);
-        }
-        .project-categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .project-category-card {
-            background: var(--bg-interactive);
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-        .project-category-card h4 {
-            font-size: 1.1em;
-            margin-bottom: 15px;
-            color: var(--accent-1);
-        }
-        .project-category-card ul {
-            list-style: none;
-        }
-        .project-category-card li a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color var(--transition-speed) ease;
-        }
-        .project-category-card li a:hover {
-            color: var(--accent-2);
-        }
-
-        /* Datasets */
-        .datasets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .dataset-item {
-            padding: 20px;
-            background: var(--bg-interactive);
-            border-radius: 8px;
-            border-left: 4px solid var(--accent-2);
-            transition: background var(--transition-speed) ease;
-        }
-        .dataset-item:hover {
-            background: var(--accent-light-2);
-        }
-        .dataset-item strong {
-            color: var(--text-primary);
-            font-size: 1.05em;
-        }
-        .dataset-item p {
-            color: var(--text-tertiary);
-            font-size: 0.9em;
-            margin-top: 5px;
-        }
-
-        /* Why Work Together */
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-        }
-        .benefit-item {
-            background: var(--bg-interactive);
-            border-radius: 12px;
-            padding: 40px 35px;
-            text-align: center;
-            border: 1px solid var(--border);
-            transition: all var(--transition-speed) ease;
-        }
-        .benefit-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px var(--shadow-lg);
-            background: var(--bg-card);
-            border-color: var(--accent-1);
-        }
-        .benefit-icon-wrapper {
-            margin: 0 auto 25px auto;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-light-1), var(--accent-light-2));
+        .project-header {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
         }
-        .benefit-icon {
-            width: 32px;
-            height: 32px;
-            stroke: var(--accent-2);
-            stroke-width: 1.5px;
-        }
-        .benefit-item h3 {
-            margin-bottom: 12px;
-            font-size: 1.25em;
+
+        .project-type {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-main);
+            opacity: 0.7;
             font-weight: 700;
-            color: var(--text-primary);
         }
-        .benefit-item p {
-            font-size: 1em;
-            color: var(--text-secondary);
-            line-height: 1.7;
+
+        .project-link-wrapper {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        /* --- Visuals Carousel (Replaces Old Slideshow) --- */
+        .visuals-container {
+            overflow-x: auto;
+            display: flex;
+            gap: 30px;
+            padding: 20px 10px 40px 10px; /* Padding for shadow clipping */
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
         
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 50px 20px;
-            color: var(--text-tertiary);
-            font-size: 0.9em;
-            border-top: 1px solid var(--border);
-            margin-top: 40px;
+        .visuals-container::-webkit-scrollbar {
+            display: none;
         }
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-bottom: 25px;
+
+        .visual-item {
+            min-width: 300px;
+            height: 200px;
+            flex-shrink: 0;
+            scroll-snap-align: center;
+            border-radius: var(--card-radius);
+            position: relative;
+            overflow: hidden;
+            /* Neumorphic frame for image */
+            background: var(--bg-main);
+            box-shadow: var(--shadow-dark), var(--shadow-light);
+            padding: 8px;
         }
-        .social-links a {
-            color: var(--text-secondary);
-            transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
+
+        .visual-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.5s ease;
         }
-        .social-links a:hover {
-            color: var(--accent-1);
+
+        .visual-item:hover img {
             transform: scale(1.1);
         }
-        .social-links svg {
-            width: 28px;
-            height: 28px;
+
+        /* --- Datasets --- */
+        .dataset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
         }
 
-        /* Utility */
-        .centered-link-wrapper {
+        .dataset-pill {
+            padding: 20px;
+            border-radius: 15px;
+            background: var(--bg-main);
+            box-shadow: var(--shadow-dark), var(--shadow-light);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             text-align: center;
-            margin-top: 30px;
-        }
-        .button-link {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-            transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .button-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.5);
         }
         
-        /* Responsive Design */
+        .dataset-pill:active {
+            box-shadow: var(--shadow-inset-dark), var(--shadow-inset-light);
+            transform: scale(0.98);
+        }
+
+        .dataset-pill strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .social-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            background: var(--bg-main);
+            box-shadow: var(--shadow-dark), var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .social-btn:active {
+            box-shadow: var(--shadow-inset-dark), var(--shadow-inset-light);
+            transform: translateY(0);
+        }
+
+        /* Animation Helpers */
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5em; }
-            h2 { font-size: 1.8em; }
-            section { padding: 30px 25px; }
-            .benefits-grid, .competencies {
-                grid-template-columns: 1fr;
-            }
-            .approach-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .approach-icon {
-                margin: 0 auto 20px auto;
-            }
-            body::before {
-                width: 500px;
-                height: 500px;
-            }
-            .gallery-banner {
-                height: 300px;
-                border: 2px solid var(--border);
-            }
+            h1 { font-size: 2.2rem; }
+            .container { padding: 20px; }
+            .neu-card { padding: 25px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="theme-toggle" id="themeToggle" title="Toggle Theme">🌙</div>
-
-    <!-- GALLERY BANNER -->
-    <div class="gallery-banner">
-        <div class="gallery-viewport">
-            <div id="gallerySlides"></div>
-            <div class="gallery-overlay"></div>
-        </div>
-
-        <div class="gallery-controls">
-            <div class="gallery-dots" id="galleryDots"></div>
-            <div class="gallery-nav">
-                <button class="gallery-btn" id="prevBtn" title="Previous">‹</button>
-                <span class="gallery-counter"><span id="currentSlide">1</span> / <span id="totalSlides">0</span></span>
-                <button class="gallery-btn" id="nextBtn" title="Next">›</button>
-            </div>
+    <div class="theme-toggle-wrapper">
+        <div class="theme-toggle" id="themeToggle" title="Toggle Theme">
+            🌙
         </div>
     </div>
 
     <div class="container">
         <header>
-            <img src="./assets/dsp_ico_1.png" alt="A circular profile photo of Matthew Wesney" class="profile-picture">
+            <div class="profile-container">
+                <img src="./assets/dsp_ico_1.png" alt="Matthew Wesney" class="profile-picture" onerror="this.src='https://via.placeholder.com/150'">
+            </div>
             <h1>Matthew Robert Wesney</h1>
             <p class="subtitle">AI Developer | Creative Technologist | Full-Stack Engineer</p>
+            
+            <div class="hero-tags">
+                <span class="tag">Python</span>
+                <span class="tag">PySide6</span>
+                <span class="tag">LLM Fine-Tuning</span>
+                <span class="tag">Sound Design</span>
+                <span class="tag">UI/UX</span>
+            </div>
         </header>
 
+        <!-- ABOUT / INTRO -->
         <section id="profile">
-            <h2>About Me</h2>
-            <div class="text-block">
-                <p>
-                    A dedicated and relentlessly driven developer with a deep passion for building innovative AI and machine learning systems. My creative journey spans over 16 years — from professional music and sound design to 3D art, animation, and now, advanced AI development.
-                </p>
-                <p>
-                    My approach to mastering development is intensely hands-on; I believe the best way to learn is to build. This philosophy has guided me through an intensive period of creating a wide range of applications, each serving as a practical exploration of new technologies. This process is driven by a singular purpose: to build tools that <strong>think, help, and inspire.</strong> My background in the arts gives me an intuitive edge in designing these systems to feel <em>alive</em> — blending creativity with precision.
-                </p>
-            </div>
-        </section>
-
-        <section id="approach">
-            <h2>My Approach</h2>
-            <div class="approach-grid">                
+            <div class="neu-card">
+                <h2>About Me</h2>
                 <div class="text-block">
                     <p>
-                        My development philosophy is rooted in <strong>deep, first-principles thinking.</strong> I thrive on deconstructing complex problems to their core components and rebuilding them into <strong>elegant, intuitive systems.</strong> This method allows me to spot intricate patterns others might miss and architect solutions from unconventional, highly effective angles.
+                        A dedicated and relentlessly driven developer with a deep passion for building innovative AI and machine learning systems. My creative journey spans over 16 years — from professional music and sound design to 3D art, animation, and now, advanced AI development.
                     </p>
                     <p>
-                        I excel in focused environments that value deep work, transforming a simple concept into a fully-realized, production-ready application. While my passion is for the focused act of creation, I believe the best systems are born from clear communication and mutual respect.
+                        My philosophy is simple: <strong>build to learn</strong>. This hands-on approach has led me to create tools that think, help, and inspire. Blending a background in the arts with rigorous engineering, I design systems that feel alive.
                     </p>
                 </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="mailto:devaux.mail@gmail.com" class="neu-btn">Get In Touch</a>
+                </div>
             </div>
         </section>
 
+        <!-- SERVICES -->
         <section id="services">
-            <h2>Services</h2>
-            <div class="services-grid">
-                <div class="service-category">
-                    <h3>AI & Application Development</h3>
+            <div class="grid-3">
+                <div class="neu-card service-card">
+                    <div class="neu-icon-box">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    </div>
+                    <h3>AI Development</h3>
                     <ul>
-                        <li>Custom AI desktop applications (Python, PySide6)</li>
-                        <li>Ollama-integrated tools for local LLM inference</li>
-                        <li>Fine-tuning and dataset preparation</li>
-                        <li>Autonomous agents and memory systems</li>
-                        <li>Multi-agent communication frameworks</li>
+                        <li>Custom Desktop Agents</li>
+                        <li>Ollama/Local LLM Integration</li>
+                        <li>Fine-tuning & Dataset Gen</li>
+                        <li>Multi-agent Frameworks</li>
                     </ul>
                 </div>
-                <div class="service-category">
-                    <h3>UI/UX & Product Design</h3>
+                <div class="neu-card service-card">
+                    <div class="neu-icon-box">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    </div>
+                    <h3>UI/UX Design</h3>
                     <ul>
-                        <li>Clean, modern desktop interface design</li>
-                        <li>Minimal, functional, and accessible UIs</li>
-                        <li>Wireframing and concept visualization</li>
-                        <li>3D visualization to enhance user feedback</li>
+                        <li>Modern Desktop Interfaces</li>
+                        <li>Minimalist & Accessible</li>
+                        <li>Wireframing & Concepts</li>
+                        <li>3D Visualization</li>
                     </ul>
                 </div>
-                <div class="service-category">
-                    <h3>Creative & Multimedia</h3>
+                <div class="neu-card service-card">
+                    <div class="neu-icon-box">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                    </div>
+                    <h3>Creative Audio</h3>
                     <ul>
-                        <li>Sound design and synthesis for software</li>
-                        <li>Generative ambient soundscapes</li>
-                        <li>3D rendering, animation, and visualization</li>
-                        <li>AI-assisted music and audio tools</li>
+                        <li>Algorithmic Sound Design</li>
+                        <li>Generative Soundscapes</li>
+                        <li>Audio/AI Tooling</li>
+                        <li>Multimedia Production</li>
                     </ul>
                 </div>
             </div>
         </section>
 
+        <!-- PROJECTS -->
         <section id="projects">
             <h2>Featured Projects</h2>
-            <div class="projects-grid">
-                 <div class="project-card">
-                    <h3>Graphite</h3>
-                    <p class="project-type">Visual LLM Workspace</p>
-                    <p>A desktop application that transforms linear chat into a dynamic, non-linear visual workspace using local LLMs.</p>
-                    <a href="https://github.com/dovvnloading/Graphite" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+            <div class="grid-3">
+                <!-- Graphite -->
+                <div class="neu-card project-card">
+                    <div>
+                        <div class="project-header">
+                            <h3>Graphite</h3>
+                            <span class="project-type">AI / VISUAL</span>
+                        </div>
+                        <p>A desktop application that transforms linear chat into a dynamic, non-linear visual workspace using local LLMs. Think clearer, map ideas.</p>
+                    </div>
+                    <div class="project-link-wrapper">
+                        <a href="https://github.com/dovvnloading/Graphite" target="_blank" class="neu-btn">View Code</a>
+                    </div>
                 </div>
-                <div class="project-card">
-                    <h3>PrismXL</h3>
-                    <p class="project-type">AI Image Generation GUI</p>
-                    <p>A high-performance desktop GUI for generating images with diffusion models, featuring advanced controls and a responsive UI.</p>
-                    <a href="https://github.com/dovvnloading/Sapphire-Image-GenXL" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+
+                <!-- PrismXL -->
+                <div class="neu-card project-card">
+                    <div>
+                        <div class="project-header">
+                            <h3>PrismXL</h3>
+                            <span class="project-type">GUI / DIFFUSION</span>
+                        </div>
+                        <p>High-performance desktop GUI for generating images with diffusion models, featuring advanced controls and a responsive, professional UI.</p>
+                    </div>
+                    <div class="project-link-wrapper">
+                        <a href="https://github.com/dovvnloading/Sapphire-Image-GenXL" target="_blank" class="neu-btn">View Code</a>
+                    </div>
                 </div>
-                <div class="project-card">
-                    <h3>Cortex</h3>
-                    <p class="project-type">Desktop AI Assistant</p>
-                    <p>A secure, modular desktop application for local LLM interaction, built with a production-ready architecture.</p>
-                    <a href="https://github.com/dovvnloading/Cortex" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+
+                <!-- Cortex -->
+                <div class="neu-card project-card">
+                    <div>
+                        <div class="project-header">
+                            <h3>Cortex</h3>
+                            <span class="project-type">ASSISTANT</span>
+                        </div>
+                        <p>A secure, modular desktop application for local LLM interaction. Built with production-ready architecture for privacy and speed.</p>
+                    </div>
+                    <div class="project-link-wrapper">
+                        <a href="https://github.com/dovvnloading/Cortex" target="_blank" class="neu-btn">View Code</a>
+                    </div>
                 </div>
-                <div class="project-card">
-                    <h3>Tree-Graph-MindMap</h3>
-                    <p class="project-type">Interactive Knowledge Visualizer</p>
-                    <p>Transforms unstructured text into dynamic, explorable mind maps, aiding researchers in structuring complex information.</p>
-                    <a href="https://github.com/dovvnloading/Tree-Graph-MindMap" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+
+                <!-- Tree Graph -->
+                <div class="neu-card project-card">
+                    <div>
+                        <div class="project-header">
+                            <h3>Tree-Graph</h3>
+                            <span class="project-type">VISUALIZER</span>
+                        </div>
+                        <p>Transforms unstructured text into dynamic, explorable mind maps, aiding researchers in structuring complex information instantly.</p>
+                    </div>
+                    <div class="project-link-wrapper">
+                        <a href="https://github.com/dovvnloading/Tree-Graph-MindMap" target="_blank" class="neu-btn">View Code</a>
+                    </div>
                 </div>
-                <div class="project-card">
-                    <h3>Autonomous Web Search</h3>
-                    <p class="project-type">Verified Research Agent</p>
-                    <p>A real-time web research agent with automatic source validation, providing trustworthy, verified answers.</p>
-                    <a href="https://github.com/dovvnloading/Autonomous-AI-Web-Search-Assistant" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+
+                <!-- Auto Search -->
+                <div class="neu-card project-card">
+                    <div>
+                        <div class="project-header">
+                            <h3>Auto Search</h3>
+                            <span class="project-type">AGENT</span>
+                        </div>
+                        <p>Real-time web research agent with automatic source validation. Delivers trustworthy, verified answers with citations.</p>
+                    </div>
+                    <div class="project-link-wrapper">
+                        <a href="https://github.com/dovvnloading/Autonomous-AI-Web-Search-Assistant" target="_blank" class="neu-btn">View Code</a>
+                    </div>
                 </div>
-                <div class="project-card">
-                    <h3>Fine-Tuned</h3>
-                    <p class="project-type">LLM Fine-Tuning GUI</p>
-                    <p>A user-friendly interface for rapid LLM experimentation and deployment, democratizing model customization.</p>
-                    <a href="https://github.com/dovvnloading/Fine-Tuned" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
-                </div>
-                 <div class="project-card">
-                    <h3>normalizer</h3>
-                    <p class="project-type">3D Normal Map Generator</p>
-                    <p>A fast, intuitive desktop tool for converting 2D images to production-quality normal maps for 3D artists.</p>
-                    <a href="https://github.com/dovvnloading/normalizer" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
-                </div>
-                <div class="project-card">
-                    <h3>RL-Tic-Tac-Toe</h3>
-                    <p class="project-type">Dueling DDQN Agent</p>
-                    <p>An educational tool combining PyTorch and PySide6 for real-time reinforcement learning and visualization.</p>
-                    <a href="https://github.com/dovvnloading/RL-Tic-Tac-Toe" target="_blank" class="project-link">View Project <span class="arrow">→</span></a>
+
+                <!-- Fine Tuned -->
+                <div class="neu-card project-card">
+                    <div>
+                        <div class="project-header">
+                            <h3>Fine-Tuned</h3>
+                            <span class="project-type">UTILITY</span>
+                        </div>
+                        <p>User-friendly interface for rapid LLM experimentation and fine-tuning deployment. Democratizing model customization.</p>
+                    </div>
+                    <div class="project-link-wrapper">
+                        <a href="https://github.com/dovvnloading/Fine-Tuned" target="_blank" class="neu-btn">View Code</a>
+                    </div>
                 </div>
             </div>
-            <div class="extended-projects">
-                <h3>Extended Project Showcase</h3>
-                <div class="project-categories-grid">
-                    <div class="project-category-card">
-                        <h4>AI Assistants & Search</h4>
-                        <ul>
-                            <li><a href="https://github.com/dovvnloading/Leadz" target="_blank">Leadz</a></li>
-                            <li><a href="https://github.com/dovvnloading/Local-Deepseek-R1" target="_blank">Local-Deepseek-R1</a></li>
-                        </ul>
-                    </div>
-                    <div class="project-category-card">
-                        <h4>LLM / Ollama Utilities</h4>
-                        <ul>
-                            <li><a href="https://github.com/dovvnloading/File2MD" target="_blank">File2MD</a></li>
-                            <li><a href="https://github.com/dovvnloading/ITT_Qwen" target="_blank">ITT_Qwen</a></li>
-                            <li><a href="https://github.com/dovvnloading/Clarity" target="_blank">Clarity</a></li>
-                            <li><a href="https://github.com/dovvnloading/Promptly" target="_blank">Promptly</a></li>
-                        </ul>
-                    </div>
-                    <div class="project-category-card">
-                        <h4>AI Model Tools</h4>
-                        <ul>
-                            <li><a href="https://github.com/dovvnloading/Genesis-Mini" target="_blank">Genesis-Mini</a></li>
-                            <li><a href="https://github.com/dovvnloading/Verbalink" target="_blank">Verbalink</a></li>
-                            <li><a href="https://github.com/dovvnloading/Suno-Bark" target="_blank">Suno-Bark</a></li>
-                        </ul>
-                    </div>
-                    <div class="project-category-card">
-                        <h4>ML & Gameplay</h4>
-                        <ul>
-                            <li><a href="https://github.com/dovvnloading/Qwen2.5-Checkers" target="_blank">Qwen2.5-Checkers</a></li>
-                            <li><a href="https://github.com/dovvnloading/Interactive-MNIST-Digit-Classifier" target="_blank">Interactive-MNIST</a></li>
-                        </ul>
-                    </div>
-                </div>
+
+            <div class="neu-card" style="text-align: center;">
+                <h3>More Tools</h3>
+                <p style="margin: 20px 0;">Leadz, Local-Deepseek-R1, File2MD, Clarity, Genesis-Mini, and more available on GitHub.</p>
+                <a href="https://github.com/dovvnloading" target="_blank" class="neu-btn">Browse All Repositories</a>
             </div>
         </section>
-        
+
+        <!-- VISUAL SHOWCASE (Replaces Banner) -->
+        <section id="visuals">
+            <h2>Visual Works</h2>
+            <p style="margin-bottom: 20px;">Generative art, 3D renders, and UI Concepts.</p>
+            <div class="visuals-container" id="visualsContainer">
+                <!-- Images injected via JS -->
+            </div>
+        </section>
+
+        <!-- DATASETS -->
         <section id="datasets">
-            <h2>Datasets & Training Resources</h2>
-            <div class="text-block" style="margin-bottom: 30px;">
-                <p>
-                    Beyond applications, a significant part of my work involves engineering high-quality data, specializing in synthetic datasets for <strong>advanced reasoning and Chain-of-Thought (CoT) processes.</strong>
-                </p>
-                <p>
-                    Many of these are built using my custom dataset generator, "Genesis," and undergo a rigorous cleaning and formatting pipeline post-generation. The goal is to provide clean, structured, and potent data for fine-tuning models capable of complex problem-solving.
-                </p>
-            </div>
-            <div class="datasets-grid">
-                <div class="dataset-item">
-                    <strong>Reasoning_Problem_Solving_Dataset</strong>
-                    <p>151k Q&A pairs (STEM, applied reasoning)</p>
+            <h2>Datasets & Resources</h2>
+            <p>Specializing in synthetic data generation for Chain-of-Thought (CoT) reasoning.</p>
+            <div class="dataset-grid" style="margin-top: 30px;">
+                <div class="dataset-pill">
+                    <strong>Reasoning_Problem_Solving</strong>
+                    <span>151k Q&A Pairs</span>
                 </div>
-                <div class="dataset-item">
-                    <strong>ToT_Reasoning_Problem_Solving_V2</strong>
-                    <p>72.1k structured Q&A</p>
+                <div class="dataset-pill">
+                    <strong>ToT_Math_V1</strong>
+                    <span>26.8k Pairs</span>
                 </div>
-                <div class="dataset-item">
-                    <strong>General_Inquiry_Thinking-Chain-Of-Thought</strong>
-                    <p>6k Q&A (broad reasoning)</p>
+                <div class="dataset-pill">
+                    <strong>ToT_Biology</strong>
+                    <span>23k Pairs</span>
                 </div>
-                <div class="dataset-item">
-                    <strong>ToT-Math-V1</strong>
-                    <p>26.8k pairs (math problem-solving)</p>
-                </div>
-                <div class="dataset-item">
-                    <strong>ToT-Biology</strong>
-                    <p>23k pairs (biology reasoning)</p>
-                </div>
-                <div class="dataset-item">
-                    <strong>CoT_Music_Production_DAW</strong>
-                    <p>7k pairs (music production & AI)</p>
+                <div class="dataset-pill">
+                    <strong>CoT_Music_Production</strong>
+                    <span>7k Pairs</span>
                 </div>
             </div>
-             <div class="centered-link-wrapper">
-                <a href="https://huggingface.co/moremilk" target="_blank" class="button-link">Explore All Datasets on Hugging Face</a>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://huggingface.co/moremilk" target="_blank" class="neu-btn">Hugging Face Profile</a>
             </div>
         </section>
 
-        <section id="journey">
-            <h2>A Lifelong Creator</h2>
-            <div class="text-block">
-                <p>Born in Columbus, Ohio, in 1989, I've spent my life creating across mediums — sound, visuals, and now code. Before development, I spent 16 years as a musician and sound designer, creating sample packs that shaped the early dubstep scene, and even free VSTs. Some of these plugins were listed among the <em>Top 10 Best Free VSTs of All Time</em> and were downloaded +50k times worldwide.</p>
-                <p>That same creative instinct led me into game development, where I first engineered AI enemy behavior systems in Unreal Engine. Over time, that curiosity evolved into a full transition toward AI and machine learning — where I now focus my energy on building intelligent, open-source tools that expand human capability.</p>
-            </div>
-        </section>
-
-        <section id="why-work-together">
+        <!-- WHY WORK TOGETHER -->
+        <section id="why">
             <h2>Why Work Together</h2>
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon-wrapper">
-                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+            <div class="grid-3">
+                <div class="neu-card" style="text-align: center;">
+                    <div class="neu-icon-box" style="margin: 0 auto 20px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path></svg>
                     </div>
-                    <h3>Portfolio-Driven</h3>
-                    <p>An extensive public project history demonstrates capability without relying on credentials alone.</p>
+                    <h4>Proven Portfolio</h4>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Extensive public history of shipping working code, not just concepts.</p>
                 </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon-wrapper">
-                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <div class="neu-card" style="text-align: center;">
+                    <div class="neu-icon-box" style="margin: 0 auto 20px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                     </div>
-                    <h3>End-to-End Ownership</h3>
-                    <p>From concept through deployment, the full development lifecycle is managed independently and meticulously.</p>
+                    <h4>End-to-End</h4>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Full ownership of the stack: from backend logic to pixel-perfect UI.</p>
                 </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon-wrapper">
-                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <div class="neu-card" style="text-align: center;">
+                    <div class="neu-icon-box" style="margin: 0 auto 20px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     </div>
-                    <h3>Versatile Expertise</h3>
-                    <p>Equally comfortable with AI infrastructure, UI/UX, backend systems, and specialized creative domains.</p>
-                </div>
-                <div class="benefit-item">
-                    <div class="benefit-icon-wrapper">
-                        <svg class="benefit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    </div>
-                    <h3>Production Mindset</h3>
-                    <p>Every project ships with clean code, clear documentation, and a user-focused experience at the forefront.</p>
+                    <h4>Production Ready</h4>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Clean, documented, and maintainable code delivered every time.</p>
                 </div>
             </div>
         </section>
 
         <footer>
-            <div class="social-links">
-                <a href="mailto:devaux.mail@gmail.com" title="Email">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <div class="social-row">
+                <a href="mailto:devaux.mail@gmail.com" class="social-btn" title="Email">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </a>
-                <a href="https://github.com/dovvnloading" target="_blank" title="GitHub">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                </a>        
-                <a href="https://x.com/D3VAUX" target="_blank" title="X (Twitter)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                <a href="https://github.com/dovvnloading" target="_blank" class="social-btn" title="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
                 </a>
-                <a href="https://www.youtube.com/@mattwesney" target="_blank" title="YouTube">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 7.03 15.75 11.75 9.75 16.48 9.75 7.03"></polygon></svg>
+                <a href="https://x.com/D3VAUX" target="_blank" class="social-btn" title="X">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
                 </a>
-                <a href="https://soundcloud.com/devaux" target="_blank" title="SoundCloud">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                <a href="https://www.youtube.com/@mattwesney" target="_blank" class="social-btn" title="YouTube">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 7.03 15.75 11.75 9.75 16.48 9.75 7.03"></polygon></svg>
                 </a>
             </div>
-            <p>&copy; 2025 Matthew Robert Wesney. All rights reserved.</p>
+            <p style="font-size: 0.85rem; opacity: 0.6;">&copy; 2025 Matthew Robert Wesney.</p>
         </footer>
     </div>
 
     <script>
+        /* Theme Toggle Logic */
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
-        const galleryBanner = document.querySelector('.gallery-banner');
-
-        const setIcon = (isDark) => {
-            themeToggle.textContent = isDark ? '☀️' : '🌙';
-        };
-
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        const isDarkMode = savedTheme === 'dark';
         
-        body.classList.toggle('dark-mode', isDarkMode);
-        setIcon(isDarkMode);
+        // Check saved theme
+        const savedTheme = localStorage.getItem('theme');
+        const isDark = savedTheme === 'dark';
+        if (isDark) body.classList.add('dark-mode');
+        themeToggle.textContent = isDark ? '☀️' : '🌙';
 
         themeToggle.addEventListener('click', () => {
-            const isCurrentlyDark = body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', isCurrentlyDark ? 'dark' : 'light');
-            setIcon(isCurrentlyDark);
+            body.classList.toggle('dark-mode');
+            const currentIsDark = body.classList.contains('dark-mode');
+            themeToggle.textContent = currentIsDark ? '☀️' : '🌙';
+            localStorage.setItem('theme', currentIsDark ? 'dark' : 'light');
         });
-        
-        const animatedElements = document.querySelectorAll('header, section');
+
+        /* Simple Visuals Loader (Replaces Complex Gallery) */
+        const loadVisuals = () => {
+            const container = document.getElementById('visualsContainer');
+            // Fallback / Placeholder images since we don't have the repo access in this context
+            // In production, this could be an array of real URLs
+            const imageCount = 8;
+            
+            for(let i=1; i<=imageCount; i++) {
+                const div = document.createElement('div');
+                div.className = 'visual-item';
+                const img = document.createElement('img');
+                // Using a tech/abstract placeholder service that fits the vibe
+                img.src = `assets/image-${i}.jpg`; 
+                img.onerror = function() {
+                    this.src = `https://placehold.co/600x400/212529/667eea?text=Visual+${i}`;
+                };
+                img.alt = `Visual Work ${i}`;
+                img.loading = "lazy";
+                div.appendChild(img);
+                container.appendChild(div);
+            }
+        };
+
+        /* Intersection Observer for Fade Ups */
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in-up');
-                    observer.unobserve(entry.target);
+                    entry.target.style.animationPlayState = 'running';
+                    // Add a slight delay based on index if needed, or just let CSS handle it
                 }
             });
         }, { threshold: 0.1 });
 
-        animatedElements.forEach(el => {
-            observer.observe(el);
+        document.querySelectorAll('section').forEach(sec => {
+            sec.style.animationPlayState = 'paused'; // Pause initially
+            observer.observe(sec);
         });
 
-        // Smooth sticky theme toggle
-        let lastScrollTop = 0;
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const galleryHeight = 480 + 60; // gallery + margin
-            
-            if (scrollTop >= galleryHeight - 60) {
-                themeToggle.style.top = '20px';
-            } else {
-                themeToggle.style.top = (540 - scrollTop) + 'px';
-            }
-            lastScrollTop = scrollTop;
-        }, { passive: true });
+        // Init
+        window.addEventListener('DOMContentLoaded', loadVisuals);
 
-        // Gallery Banner Script
-        class GalleryBanner {
-            constructor() {
-                this.slides = [];
-                this.currentIndex = 0;
-                this.autoPlayInterval = null;
-                this.isTransitioning = false;
-                this.imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
-                this.init();
-            }
-
-            async init() {
-                await this.loadImages();
-                this.setupDOM();
-                this.attachEventListeners();
-                this.autoPlay();
-            }
-
-            async loadImages() {
-                try {
-                    const response = await fetch('https://api.github.com/repos/dovvnloading/dovvnloading.github.io/contents/assets');
-                    const data = await response.json();
-                    
-                    if (Array.isArray(data)) {
-                        this.slides = data
-                            .filter(file => this.imageExtensions.some(ext => file.name.toLowerCase().endsWith(ext)))
-                            .map(file => ({
-                                name: file.name,
-                                url: file.download_url
-                            }));
-                    }
-
-                    if (this.slides.length === 0) {
-                        this.slides = this.getLocalImages();
-                    }
-                } catch (error) {
-                    console.log('Gallery: Using local images');
-                    this.slides = this.getLocalImages();
-                }
-            }
-
-            getLocalImages() {
-                const imageNames = [];
-                for (let i = 1; i <= 30; i++) {
-                    imageNames.push(`image-${i}.jpg`);
-                }
-                return imageNames.map(name => ({ 
-                    name, 
-                    url: `assets/${name}` 
-                }));
-            }
-
-            setupDOM() {
-                const viewport = document.getElementById('gallerySlides');
-                const dotsContainer = document.getElementById('galleryDots');
-                
-                document.getElementById('totalSlides').textContent = this.slides.length;
-
-                this.slides.forEach((slide, index) => {
-                    const slideEl = document.createElement('div');
-                    slideEl.className = 'gallery-slide' + (index === 0 ? ' active' : '');
-                    
-                    const img = document.createElement('img');
-                    img.src = slide.url;
-                    img.alt = slide.name;
-                    
-                    this.applyAnimation(slideEl, img);
-                    slideEl.appendChild(img);
-                    viewport.appendChild(slideEl);
-
-                    const dot = document.createElement('div');
-                    dot.className = 'dot' + (index === 0 ? ' active' : '');
-                    dot.addEventListener('click', () => this.goToSlide(index));
-                    dotsContainer.appendChild(dot);
-                });
-            }
-
-            applyAnimation(slideEl, img) {
-                const animation = this.getRandomAnimation();
-                img.style.animation = `${animation.name} 16s ${animation.timing} forwards`;
-            }
-
-            getRandomAnimation() {
-                const animations = [
-                    { name: 'kenBurns1', timing: 'ease-out' },
-                    { name: 'kenBurns2', timing: 'ease-in' },
-                    { name: 'kenBurns3', timing: 'ease-in-out' },
-                    { name: 'kenBurns4', timing: 'ease-out' },
-                    { name: 'kenBurns5', timing: 'ease-in-out' }
-                ];
-                return animations[Math.floor(Math.random() * animations.length)];
-            }
-
-            getRandomPanValue() {
-                return '0px';
-            }
-
-            attachEventListeners() {
-                document.getElementById('nextBtn').addEventListener('click', () => this.next());
-                document.getElementById('prevBtn').addEventListener('click', () => this.prev());
-            }
-
-            next() {
-                this.goToSlide((this.currentIndex + 1) % this.slides.length);
-            }
-
-            prev() {
-                this.goToSlide((this.currentIndex - 1 + this.slides.length) % this.slides.length);
-            }
-
-            goToSlide(index) {
-                if (this.isTransitioning || index === this.currentIndex) return;
-                this.isTransitioning = true;
-
-                const slides = document.querySelectorAll('.gallery-slide');
-                const dots = document.querySelectorAll('.dot');
-
-                slides[this.currentIndex].classList.remove('active');
-                dots[this.currentIndex].classList.remove('active');
-
-                this.currentIndex = index;
-
-                slides[this.currentIndex].classList.add('active');
-                dots[this.currentIndex].classList.add('active');
-
-                const img = slides[this.currentIndex].querySelector('img');
-                img.style.animation = 'none';
-                setTimeout(() => {
-                    this.applyAnimation(slides[this.currentIndex], img);
-                }, 10);
-
-                document.getElementById('currentSlide').textContent = this.currentIndex + 1;
-
-                this.resetAutoPlay();
-                this.isTransitioning = false;
-            }
-
-            autoPlay() {
-                this.autoPlayInterval = setInterval(() => {
-                    this.next();
-                }, 12000);
-            }
-
-            resetAutoPlay() {
-                clearInterval(this.autoPlayInterval);
-                this.autoPlay();
-            }
-        }
-
-        new GalleryBanner();
     </script>
 </body>
 </html>
