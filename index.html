@@ -93,15 +93,70 @@
             border: var(--border);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            overflow: hidden;
+            /* overflow: hidden; Removed to allow tooltip popup */
             height: 100%;
             display: flex;
             flex-direction: column;
+            z-index: 1;
         }
 
         .card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-float);
+            z-index: 10; /* Bring to front on hover for tooltip */
+        }
+
+        /* Tooltip Styles */
+        .project-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            width: 280px;
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-float);
+            border: var(--border);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 20;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        
+        .project-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -8px;
+            border-width: 8px;
+            border-style: solid;
+            border-color: var(--bg-card) transparent transparent transparent;
+        }
+
+        .card:hover .project-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .tooltip-header {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .tooltip-text {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            line-height: 1.4;
         }
 
         /* Subtle Glow Effect on Hover (Dark Mode) */
@@ -129,7 +184,7 @@
             transition: all 0.2s ease;
             cursor: pointer;
             text-decoration: none;
-            margin-top: auto; /* Push to bottom of flex container */
+            margin-top: auto; 
             width: fit-content;
         }
 
@@ -282,7 +337,6 @@
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         }
         
-        /* Specific grid for datasets to allow 2-column spread on large cards */
         .bento-datasets {
              display: grid;
              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -456,6 +510,12 @@
             
             <!-- Graphite Phlow -->
             <article class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">Client-side React 19 SPA.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">Context Window Stuffing, Virtual File System, WebContainer-style execution.</p>
+                </div>
                 <div class="project-top">
                     <h3>Graphite-Phlow</h3>
                     <span class="badge-type">AI IDE</span>
@@ -474,6 +534,12 @@
 
             <!-- Os-s -->
             <article class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">Three.js + React Three Fiber.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">Direct Float32Array buffer manipulation for 60FPS vertex displacement.</p>
+                </div>
                 <div class="project-top">
                     <h3>Os-s (Sculpt)</h3>
                     <span class="badge-type">3D Engine</span>
@@ -491,6 +557,12 @@
 
             <!-- AdGeni -->
             <article class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">Gemini Multimodal Pipeline.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">Prompt chaining for asset consistency across copy, image, and video generation.</p>
+                </div>
                 <div class="project-top">
                     <h3>AdGeni</h3>
                     <span class="badge-type">GenAI Suite</span>
@@ -509,6 +581,12 @@
 
             <!-- EchoLingua -->
             <article class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">WebSockets + AudioWorklet.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">Low-latency PCM stream decoding directly from Gemini Live API.</p>
+                </div>
                 <div class="project-top">
                     <h3>EchoLingua</h3>
                     <span class="badge-type">Realtime Audio</span>
@@ -530,10 +608,45 @@
             <h2>Desktop AI Suite</h2>
             <div class="section-line"></div>
         </div>
+        
         <div class="bento-grid">
             
+            <!-- Graphite Desktop (HERO) -->
+            <article class="card col-span-2" style="border-left: 4px solid var(--accent);">
+                <div class="project-tooltip" style="width: 320px;">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">PyQt6 + SQLite (Local-First).</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">Directed Acyclic Graph (DAG) state management. Includes "Py-Coder" (local sandbox) and "Orchestrator" agents.</p>
+                </div>
+                <div class="project-top">
+                    <h3>Graphite Desktop</h3>
+                    <span class="badge-type">Flagship | Orchestrator</span>
+                </div>
+                <p>
+                    Transforms AI interaction from a timeline into a topology. Graphite is an infinite, node-based workspace where an <strong>Autonomous Orchestrator</strong> agent programmatically builds workflows for you.
+                    <br><br>
+                    Built on a Parent-Child DAG architecture with full state serialization via local SQLite. Features specialized agents like <strong>Py-Coder</strong> (local sandboxed Python execution) and <strong>Reasoning</strong> (Plan/Critique loops).
+                </p>
+                <div class="stack-row">
+                    <span class="stack-item">PyQt6</span>
+                    <span class="stack-item">24k+ LOC</span>
+                    <span class="stack-item">Multi-Agent Swarm</span>
+                    <span class="stack-item">Local-First</span>
+                </div>
+                <div class="project-actions">
+                    <a href="https://github.com/dovvnloading/Graphite" target="_blank" class="btn btn-primary">View Repository</a>
+                </div>
+            </article>
+
             <!-- Cortex -->
             <article class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">PySide6 + Ollama.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">Vector-based long-term memory & conversation forking logic.</p>
+                </div>
                 <div class="project-top">
                     <h3>Cortex</h3>
                     <span class="badge-type">Local Assistant</span>
@@ -552,6 +665,12 @@
 
             <!-- Chorus -->
             <article class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">Multi-Agent Swarm.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">BeautifulSoup scraping, source validation agents, iterative synthesis.</p>
+                </div>
                 <div class="project-top">
                     <h3>Chorus</h3>
                     <span class="badge-type">Multi-Agent</span>
@@ -568,6 +687,12 @@
 
             <!-- Leadz -->
             <article class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">Embedding-based Ranking.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">Sentence-transformers for semantic relevance, automated headless browsing.</p>
+                </div>
                 <div class="project-top">
                     <h3>Leadz</h3>
                     <span class="badge-type">Automation</span>
@@ -584,6 +709,12 @@
 
              <!-- PrismXL -->
              <article class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">PyTorch + Diffusers.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">VAE Tiling for low-VRAM optimization, asynchronous generation thread.</p>
+                </div>
                 <div class="project-top">
                     <h3>PrismXL</h3>
                     <span class="badge-type">Diffusion GUI</span>
@@ -612,12 +743,18 @@
             
             <!-- Hero Dataset Card -->
             <article class="card col-span-2" style="border-left: 4px solid var(--hf-color);">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Methodology</span>
+                    <p class="tooltip-text">Synthetic generation via 'Genesis' pipeline.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Focus</span>
+                    <p class="tooltip-text">Deductive, Inductive, and Abductive logic paths.</p>
+                </div>
                 <div class="project-top">
                     <h3>Reasoning Problem Solving</h3>
                     <span class="badge-type badge-hf">Top Rated</span>
                 </div>
                 <p style="margin-bottom: 15px;">
-                    <span class="stat-highlight">151,000+ Downloads</span>
+                    <span class="stat-highlight">151,000+ Q&A Pairs</span>
                     A comprehensive collection of 150k+ Q&A pairs tailored for training AI in logical reasoning. It spans multiple domains including deductive, inductive, and abductive reasoning to help models generalize in diverse situations.
                 </p>
                 <div class="stack-row">
@@ -632,10 +769,16 @@
 
             <!-- Medical & Health -->
             <article class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Scope</span>
+                    <p class="tooltip-text">Specialized medical domains.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Goal</span>
+                    <p class="tooltip-text">Training models on differential diagnosis and clinical judgment logic.</p>
+                </div>
                 <h4>Medical & Psychology</h4>
                 <ul class="dataset-list">
                     <li><strong>Clinical Diagnosis:</strong> Mental health symptom presentation and treatment rationales.</li>
-                    <li><strong>Medical Diagnosis:</strong> 1,200+ scenarios built via Genesis II pipeline.</li>
+                    <li><strong>Medical Diagnosis:</strong> 1,200+ scenarios built via "Genesis II" pipeline.</li>
                     <li><strong>Neurodivergence:</strong> Bridge understanding between neurodivergent and neurotypical perspectives.</li>
                 </ul>
                 <div class="project-actions">
@@ -645,6 +788,12 @@
 
             <!-- Science & Nature -->
             <article class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Scope</span>
+                    <p class="tooltip-text">Hard sciences and biological systems.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Goal</span>
+                    <p class="tooltip-text">Establishing mechanistic understanding and explanatory reasoning.</p>
+                </div>
                 <h4>Science & Nature</h4>
                 <ul class="dataset-list">
                     <li><strong>ToT-Biology:</strong> Explanatory biological reasoning from cell to systems.</li>
@@ -656,13 +805,19 @@
                 </div>
             </article>
 
-             <!-- Social & Tech -->
+             <!-- Social, Arts & Tech -->
              <article class="card">
-                <h4>Social & Tech</h4>
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Scope</span>
+                    <p class="tooltip-text">Humanities and Applied Technology.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Goal</span>
+                    <p class="tooltip-text">Teaching models nuance, etiquette, and historical causation.</p>
+                </div>
+                <h4>Social, Arts & Tech</h4>
                 <ul class="dataset-list">
                     <li><strong>Python CoT:</strong> Explains the <em>logic</em> behind programming concepts.</li>
                     <li><strong>Cultural Nuances:</strong> Etiquette and cross-cultural understanding.</li>
-                    <li><strong>Legal:</strong> Applying statutes to hypothetical situations.</li>
+                    <li><strong>Ancient Past:</strong> Historical causation and archaeological evidence.</li>
                 </ul>
                 <div class="project-actions">
                     <a href="https://huggingface.co/moremilk" target="_blank" class="btn btn-hf" style="width:100%">View All 28 Datasets</a>
@@ -679,6 +834,12 @@
         <div class="bento-grid">
              <!-- PolyArbor -->
              <article class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">Web Audio API.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">Precise lookahead scheduling for polyrhythmic timing, canvas vector visualization.</p>
+                </div>
                 <div class="project-top">
                     <h3>PolyArbor</h3>
                     <span class="badge-type">Sequencer</span>
@@ -691,6 +852,12 @@
 
              <!-- Sleep Sounds -->
              <article class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">Pure DSP (Digital Signal Processing).</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">Pink/Brown noise algorithms, biquad filters generated in real-time.</p>
+                </div>
                 <div class="project-top">
                     <h3>Sleep Sounds</h3>
                     <span class="badge-type">DSP / Audio</span>
@@ -704,6 +871,12 @@
 
             <!-- Dither-Pro -->
             <article class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Architecture</span>
+                    <p class="tooltip-text">NumPy/Numba.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <p class="tooltip-text">JIT-compiled error diffusion algorithms (Floyd-Steinberg/Atkinson).</p>
+                </div>
                 <div class="project-top">
                     <h3>Dither-Pro</h3>
                     <span class="badge-type">Image Proc</span>
@@ -723,48 +896,70 @@
         <div class="bento-grid bento-mini">
             
             <div class="card">
-                <h4>Graphite Desktop</h4>
-                <p style="font-size: 0.85rem; margin-top: 5px;">Node-based visual LLM interface for non-linear conversations.</p>
-                <a href="https://github.com/dovvnloading/Graphite" class="btn" style="margin-top: 15px; font-size: 0.8rem;">View</a>
-            </div>
-
-            <div class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Key Tech</span>
+                    <p class="tooltip-text">Regex patterns for 50+ file types to identify technical debt.</p>
+                </div>
                 <h4>Polyglot Analyzer</h4>
                 <p style="font-size: 0.85rem; margin-top: 5px;">Static code analysis tool identifying tech debt across 50+ file types.</p>
                 <a href="https://dovvnloading.github.io/Polyglot-Code-Analyzer/" class="btn" style="margin-top: 15px; font-size: 0.8rem;">View</a>
             </div>
 
             <div class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Key Tech</span>
+                    <p class="tooltip-text">Hugging Face Trainer integration with PySide6 plotting.</p>
+                </div>
                 <h4>Fine-Tuned</h4>
                 <p style="font-size: 0.85rem; margin-top: 5px;">GUI for training Hugging Face models with real-time loss visualization.</p>
                 <a href="https://github.com/dovvnloading/Fine-Tuned" class="btn" style="margin-top: 15px; font-size: 0.8rem;">View</a>
             </div>
 
             <div class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Key Tech</span>
+                    <p class="tooltip-text">Agentic loop for topic expansion and validation.</p>
+                </div>
                 <h4>Genisis-Mini</h4>
                 <p style="font-size: 0.85rem; margin-top: 5px;">Agentic tool for generating synthetic micro-datasets using local LLMs.</p>
                 <a href="https://github.com/dovvnloading/genisis-mini" class="btn" style="margin-top: 15px; font-size: 0.8rem;">View</a>
             </div>
 
             <div class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Key Tech</span>
+                    <p class="tooltip-text">Ollama streaming response to Markdown renderer.</p>
+                </div>
                 <h4>File2MD</h4>
                 <p style="font-size: 0.85rem; margin-top: 5px;">Convert unstructured text files into clean Markdown using AI.</p>
                 <a href="https://github.com/dovvnloading/File2MD" class="btn" style="margin-top: 15px; font-size: 0.8rem;">View</a>
             </div>
 
              <div class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Key Tech</span>
+                    <p class="tooltip-text">PyTorch Audio generation with QPainter waveform visualizer.</p>
+                </div>
                 <h4>Suno-Bark GUI</h4>
                 <p style="font-size: 0.85rem; margin-top: 5px;">Desktop interface for the Suno Bark TTS model.</p>
                 <a href="https://github.com/dovvnloading/Suno-Bark" class="btn" style="margin-top: 15px; font-size: 0.8rem;">View</a>
             </div>
 
             <div class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Key Tech</span>
+                    <p class="tooltip-text">WebEngine chat bubble integration with local API.</p>
+                </div>
                 <h4>Deepseek-Chat</h4>
                 <p style="font-size: 0.85rem; margin-top: 5px;">A quick-build desktop UI for the Deepseek-R1 model via Ollama.</p>
                 <a href="https://github.com/mattw/deepseek-chat" class="btn" style="margin-top: 15px; font-size: 0.8rem;">View</a>
             </div>
             
             <div class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Key Tech</span>
+                    <p class="tooltip-text">Q-Learning algorithms with PyQtGraph visualization.</p>
+                </div>
                 <h4>RL Arcade</h4>
                 <p style="font-size: 0.85rem; margin-top: 5px;">Reinforcement Learning implementations for games.</p>
                 <a href="https://github.com/dovvnloading/RL-Tic-Tac-Toe" class="btn" style="margin-top: 15px; font-size: 0.8rem;">View</a>
@@ -794,6 +989,12 @@
             
             <!-- The Synths -->
             <article class="card">
+                <div class="project-tooltip">
+                    <span class="tooltip-header">Methodology</span>
+                    <p class="tooltip-text">Hardware sampling (Prophet/Juno).</p>
+                    <span class="tooltip-header" style="margin-top:8px">Processing</span>
+                    <p class="tooltip-text">Tape saturation and granular synthesis layers.</p>
+                </div>
                 <div class="project-top">
                     <h3>The Synths</h3>
                     <span class="badge-type badge-pb">Flagship</span>
@@ -810,6 +1011,12 @@
 
             <!-- Broken Piano -->
             <article class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Methodology</span>
+                    <p class="tooltip-text">Ribbon Mic recordings.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Processing</span>
+                    <p class="tooltip-text">Distortion pedals and VST chaining for lo-fi character.</p>
+                </div>
                 <div class="project-top">
                     <h3>Broken Piano</h3>
                     <span class="badge-type badge-pb">Acoustic</span>
@@ -826,6 +1033,12 @@
             
             <!-- Glitch Modulator -->
              <article class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Source</span>
+                    <p class="tooltip-text">Linn LM-1, Korg MP7.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Processing</span>
+                    <p class="tooltip-text">Pitch shifting and modulation for abstract percussion.</p>
+                </div>
                 <div class="project-top">
                     <h3>Glitch Modulator</h3>
                     <span class="badge-type badge-pb">Rhythm</span>
@@ -842,6 +1055,12 @@
 
             <!-- Hell Drones -->
             <article class="card">
+                 <div class="project-tooltip">
+                    <span class="tooltip-header">Methodology</span>
+                    <p class="tooltip-text">Recursive processing through granular effectors.</p>
+                    <span class="tooltip-header" style="margin-top:8px">Content</span>
+                    <p class="tooltip-text">Includes "Hell Evolutions" string-like pads.</p>
+                </div>
                 <div class="project-top">
                     <h3>Hell Drones</h3>
                     <span class="badge-type badge-pb">Texture</span>
@@ -869,6 +1088,9 @@
                 </a>
                 <a href="https://x.com/D3VAUX" target="_blank" class="theme-btn" aria-label="X">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                </a>
+                 <a href="https://www.youtube.com/@mattwesney" target="_blank" class="theme-btn" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 7.03 15.75 11.75 9.75 16.48 9.75 7.03"></polygon></svg>
                 </a>
             </div>
             <p style="font-size: 0.8rem; opacity: 0.5;">&copy; 2025 Matthew Robert Wesney.</p>
