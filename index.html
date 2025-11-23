@@ -93,17 +93,17 @@
             border: var(--border);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            /* overflow: hidden; Removed to allow tooltip popup */
             height: 100%;
             display: flex;
             flex-direction: column;
-            z-index: 1;
+            z-index: 1; /* Default stack level */
         }
 
         .card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-float);
-            z-index: 10; /* Bring to front on hover for tooltip */
+            /* CRITICAL: Raise hovered card above siblings so tooltip isn't clipped */
+            z-index: 100; 
         }
 
         /* Tooltip Styles */
@@ -120,9 +120,11 @@
             border: var(--border);
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            /* Add delay to disappearance (0s) but animate properties */
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+            transition-delay: 0s; 
             pointer-events: none;
-            z-index: 20;
+            z-index: 200; /* Above card */
             text-align: left;
             margin-bottom: 15px;
         }
@@ -142,6 +144,8 @@
             opacity: 1;
             visibility: visible;
             transform: translateX(-50%) translateY(0);
+            /* DELAY: Wait 0.4s before showing to prevent flickering */
+            transition-delay: 0.4s; 
         }
 
         .tooltip-header {
@@ -1005,7 +1009,7 @@
                     <span class="stack-item">6.2k Downloads</span>
                 </div>
                 <div class="project-actions">
-                    <a href="https://www.pianobook.co.uk/library/the-synths/" target="_blank" class="btn btn-pb">View Pack</a>
+                    <a href="https://www.pianobook.co.uk/packs/the-synths/" target="_blank" class="btn btn-pb">View Pack</a>
                 </div>
             </article>
 
@@ -1027,7 +1031,7 @@
                     <span class="stack-item">3.5k Downloads</span>
                 </div>
                 <div class="project-actions">
-                    <a href="https://www.pianobook.co.uk/library/broken-piano/" target="_blank" class="btn btn-pb">View Pack</a>
+                    <a href="https://www.pianobook.co.uk/packs/broken-piano/" target="_blank" class="btn btn-pb">View Pack</a>
                 </div>
             </article>
             
@@ -1049,7 +1053,7 @@
                     <span class="stack-item">3.1k Downloads</span>
                 </div>
                 <div class="project-actions">
-                    <a href="https://www.pianobook.co.uk/library/glitch-modulator/" target="_blank" class="btn btn-pb">View Pack</a>
+                    <a href="https://www.pianobook.co.uk/packs/glitch-modulator/" target="_blank" class="btn btn-pb">View Pack</a>
                 </div>
             </article>
 
@@ -1071,7 +1075,7 @@
                     <span class="stack-item">2k Downloads</span>
                 </div>
                 <div class="project-actions">
-                    <a href="https://www.pianobook.co.uk/library/hell-drones/" target="_blank" class="btn btn-pb">View Pack</a>
+                    <a href="https://www.pianobook.co.uk/packs/hell-drones/" target="_blank" class="btn btn-pb">View Pack</a>
                 </div>
             </article>
 
