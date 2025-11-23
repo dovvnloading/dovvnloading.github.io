@@ -96,72 +96,68 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            z-index: 1; /* Default stack level */
+            z-index: 1; 
+            overflow: hidden; /* Keeps tooltip contained */
         }
 
         .card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow-float);
-            /* CRITICAL: Raise hovered card above siblings so tooltip isn't clipped */
-            z-index: 100; 
+            z-index: 10; 
         }
 
-        /* Tooltip Styles */
+        /* --- HUD OVERLAY TOOLTIP --- */
         .project-tooltip {
             position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            width: 280px;
-            background: var(--bg-card);
-            padding: 15px;
+            top: 60px; /* Start below the title row */
+            left: 20px;
+            right: 20px;
+            bottom: auto;
+            background: rgba(238, 242, 246, 0.95); /* Match light bg with opacity */
+            padding: 20px;
             border-radius: 12px;
-            box-shadow: var(--shadow-float);
-            border: var(--border);
+            border: 1px solid var(--accent); /* Accent border to pop */
             opacity: 0;
             visibility: hidden;
-            /* Add delay to disappearance (0s) but animate properties */
-            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-            transition-delay: 0s; 
+            transition: all 0.3s ease;
             pointer-events: none;
-            z-index: 200; /* Above card */
+            z-index: 20;
             text-align: left;
-            margin-bottom: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(10px);
+            backdrop-filter: blur(8px);
         }
         
-        .project-tooltip::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -8px;
-            border-width: 8px;
-            border-style: solid;
-            border-color: var(--bg-card) transparent transparent transparent;
+        body.dark-mode .project-tooltip {
+            background: rgba(31, 41, 55, 0.95); /* Match dark bg */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .card:hover .project-tooltip {
             opacity: 1;
             visibility: visible;
-            transform: translateX(-50%) translateY(0);
-            /* DELAY: Wait 0.4s before showing to prevent flickering */
-            transition-delay: 0.4s; 
+            transform: translateY(0);
+            transition-delay: 0.2s; /* Slight delay for smoothness */
         }
 
         .tooltip-header {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
             color: var(--accent);
             font-weight: 800;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             display: block;
         }
         
         .tooltip-text {
-            font-size: 0.8rem;
-            color: var(--text-main);
+            font-size: 0.85rem;
+            color: var(--text-head);
             line-height: 1.4;
+            margin-bottom: 12px;
+            font-weight: 500;
         }
+        .tooltip-text:last-child { margin-bottom: 0; }
 
         /* Subtle Glow Effect on Hover (Dark Mode) */
         body.dark-mode .card::before {
@@ -517,7 +513,7 @@
                 <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">Client-side React 19 SPA.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">Context Window Stuffing, Virtual File System, WebContainer-style execution.</p>
                 </div>
                 <div class="project-top">
@@ -541,7 +537,7 @@
                 <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">Three.js + React Three Fiber.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">Direct Float32Array buffer manipulation for 60FPS vertex displacement.</p>
                 </div>
                 <div class="project-top">
@@ -564,7 +560,7 @@
                 <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">Gemini Multimodal Pipeline.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">Prompt chaining for asset consistency across copy, image, and video generation.</p>
                 </div>
                 <div class="project-top">
@@ -588,7 +584,7 @@
                 <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">WebSockets + AudioWorklet.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">Low-latency PCM stream decoding directly from Gemini Live API.</p>
                 </div>
                 <div class="project-top">
@@ -617,10 +613,10 @@
             
             <!-- Graphite Desktop (HERO) -->
             <article class="card col-span-2" style="border-left: 4px solid var(--accent);">
-                <div class="project-tooltip" style="width: 320px;">
+                <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">PyQt6 + SQLite (Local-First).</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">Directed Acyclic Graph (DAG) state management. Includes "Py-Coder" (local sandbox) and "Orchestrator" agents.</p>
                 </div>
                 <div class="project-top">
@@ -648,7 +644,7 @@
                 <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">PySide6 + Ollama.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">Vector-based long-term memory & conversation forking logic.</p>
                 </div>
                 <div class="project-top">
@@ -672,7 +668,7 @@
                 <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">Multi-Agent Swarm.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">BeautifulSoup scraping, source validation agents, iterative synthesis.</p>
                 </div>
                 <div class="project-top">
@@ -694,7 +690,7 @@
                  <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">Embedding-based Ranking.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">Sentence-transformers for semantic relevance, automated headless browsing.</p>
                 </div>
                 <div class="project-top">
@@ -716,7 +712,7 @@
                 <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">PyTorch + Diffusers.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">VAE Tiling for low-VRAM optimization, asynchronous generation thread.</p>
                 </div>
                 <div class="project-top">
@@ -750,7 +746,7 @@
                 <div class="project-tooltip">
                     <span class="tooltip-header">Methodology</span>
                     <p class="tooltip-text">Synthetic generation via 'Genesis' pipeline.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Focus</span>
+                    <span class="tooltip-header">Focus</span>
                     <p class="tooltip-text">Deductive, Inductive, and Abductive logic paths.</p>
                 </div>
                 <div class="project-top">
@@ -776,7 +772,7 @@
                 <div class="project-tooltip">
                     <span class="tooltip-header">Scope</span>
                     <p class="tooltip-text">Specialized medical domains.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Goal</span>
+                    <span class="tooltip-header">Goal</span>
                     <p class="tooltip-text">Training models on differential diagnosis and clinical judgment logic.</p>
                 </div>
                 <h4>Medical & Psychology</h4>
@@ -795,7 +791,7 @@
                  <div class="project-tooltip">
                     <span class="tooltip-header">Scope</span>
                     <p class="tooltip-text">Hard sciences and biological systems.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Goal</span>
+                    <span class="tooltip-header">Goal</span>
                     <p class="tooltip-text">Establishing mechanistic understanding and explanatory reasoning.</p>
                 </div>
                 <h4>Science & Nature</h4>
@@ -814,7 +810,7 @@
                  <div class="project-tooltip">
                     <span class="tooltip-header">Scope</span>
                     <p class="tooltip-text">Humanities and Applied Technology.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Goal</span>
+                    <span class="tooltip-header">Goal</span>
                     <p class="tooltip-text">Teaching models nuance, etiquette, and historical causation.</p>
                 </div>
                 <h4>Social, Arts & Tech</h4>
@@ -841,7 +837,7 @@
                 <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">Web Audio API.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">Precise lookahead scheduling for polyrhythmic timing, canvas vector visualization.</p>
                 </div>
                 <div class="project-top">
@@ -859,7 +855,7 @@
                  <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">Pure DSP (Digital Signal Processing).</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">Pink/Brown noise algorithms, biquad filters generated in real-time.</p>
                 </div>
                 <div class="project-top">
@@ -878,7 +874,7 @@
                  <div class="project-tooltip">
                     <span class="tooltip-header">Architecture</span>
                     <p class="tooltip-text">NumPy/Numba.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Key Tech</span>
+                    <span class="tooltip-header">Key Tech</span>
                     <p class="tooltip-text">JIT-compiled error diffusion algorithms (Floyd-Steinberg/Atkinson).</p>
                 </div>
                 <div class="project-top">
@@ -996,7 +992,7 @@
                 <div class="project-tooltip">
                     <span class="tooltip-header">Methodology</span>
                     <p class="tooltip-text">Hardware sampling (Prophet/Juno).</p>
-                    <span class="tooltip-header" style="margin-top:8px">Processing</span>
+                    <span class="tooltip-header">Processing</span>
                     <p class="tooltip-text">Tape saturation and granular synthesis layers.</p>
                 </div>
                 <div class="project-top">
@@ -1018,7 +1014,7 @@
                  <div class="project-tooltip">
                     <span class="tooltip-header">Methodology</span>
                     <p class="tooltip-text">Ribbon Mic recordings.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Processing</span>
+                    <span class="tooltip-header">Processing</span>
                     <p class="tooltip-text">Distortion pedals and VST chaining for lo-fi character.</p>
                 </div>
                 <div class="project-top">
@@ -1040,7 +1036,7 @@
                  <div class="project-tooltip">
                     <span class="tooltip-header">Source</span>
                     <p class="tooltip-text">Linn LM-1, Korg MP7.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Processing</span>
+                    <span class="tooltip-header">Processing</span>
                     <p class="tooltip-text">Pitch shifting and modulation for abstract percussion.</p>
                 </div>
                 <div class="project-top">
@@ -1062,7 +1058,7 @@
                  <div class="project-tooltip">
                     <span class="tooltip-header">Methodology</span>
                     <p class="tooltip-text">Recursive processing through granular effectors.</p>
-                    <span class="tooltip-header" style="margin-top:8px">Content</span>
+                    <span class="tooltip-header">Content</span>
                     <p class="tooltip-text">Includes "Hell Evolutions" string-like pads.</p>
                 </div>
                 <div class="project-top">
