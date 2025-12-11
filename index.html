@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,60 +6,50 @@
     <title>Matthew Wesney | Graphite Protocol</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* --- COLOR PALETTE --- */
-            --bg-void: #050505;
-            --bg-surface: #0a0a0a;
-            --bg-surface-2: #111111;
+            /* --- CORE PALETTE --- */
+            --bg-main: #050505;
+            --bg-card: rgba(20, 20, 20, 0.6);
+            --border-base: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.25);
             
-            --border-dim: rgba(255, 255, 255, 0.08);
-            --border-glow: rgba(255, 255, 255, 0.15);
-            
-            --text-main: #ededed;
-            --text-muted: #888888;
-            --text-dim: #444444;
+            --text-head: #ffffff;
+            --text-body: #a1a1aa;
+            --text-muted: #52525b;
 
-            /* --- ACCENTS (Graphite Theme) --- */
-            --accent-core: #ffffff;
-            --accent-plasma: #818cf8; /* Indigo */
-            --accent-cyan: #22d3ee;   /* Cyan */
-            --accent-rose: #fb7185;   /* Rose */
-            --accent-gold: #fbbf24;
+            /* --- ACCENTS --- */
+            --acc-indigo: #818cf8;
+            --acc-cyan: #22d3ee;
+            --acc-rose: #fb7185;
+            --acc-gold: #fbbf24;
+            --acc-teal: #2dd4bf; 
 
-            /* --- METRICS --- */
-            --gap-grid: 16px;
-            --radius-outer: 12px;
-            --radius-inner: 8px;
-            
-            /* --- ANIMATION --- */
-            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            /* --- UTILS --- */
+            --radius-card: 12px;
+            --spotlight-color: rgba(255, 255, 255, 0.05);
         }
 
-        /* --- RESET & BASE --- */
+        /* --- RESET & GLOBAL --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: var(--bg-void);
-            color: var(--text-main);
             font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-body);
+            line-height: 1.6;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
         }
 
-        /* Grain Texture */
-        body::after {
-            content: "";
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 9999;
+        h1, h2, h3, h4 { 
+            font-family: 'Space Grotesk', sans-serif; 
+            color: var(--text-head);
+            letter-spacing: -0.03em;
         }
 
-        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.03em; }
-        .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.02em; }
-        a { text-decoration: none; color: inherit; transition: opacity 0.2s; }
-        a:hover { opacity: 0.8; }
+        .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.05em;}
+        a { text-decoration: none; color: inherit; }
 
         .container {
             max-width: 1400px;
@@ -68,102 +57,94 @@
             padding: 0 24px 120px;
         }
 
-        /* --- GLOW EFFECTS --- */
-        .glow-text {
-            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-        }
-
-        /* --- HEADER SECTION --- */
+        /* --- HEADER --- */
         header {
-            padding: 120px 0 80px;
+            padding: 140px 0 80px;
+            text-align: left;
             position: relative;
         }
 
-        .hero-title {
-            font-size: clamp(3rem, 8vw, 6.5rem);
-            line-height: 0.9;
+        /* Accent Line */
+        header::before {
+            content: '';
+            position: absolute; top: 20px; left: 24px; width: 1px; height: 100px;
+            background: linear-gradient(to bottom, var(--acc-indigo), transparent);
+            opacity: 0.7;
+        }
+
+        h1 { 
+            font-size: clamp(3.5rem, 8vw, 6rem); 
+            line-height: 0.95; 
+            margin-bottom: 24px; 
             font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        .hero-title span {
-            color: var(--text-dim);
-            transition: color 0.5s var(--ease-out);
-        }
-        .hero-title:hover span { color: var(--accent-plasma); }
-
-        .hero-meta {
-            display: flex;
-            gap: 40px;
-            border-top: 1px solid var(--border-dim);
-            padding-top: 30px;
-            margin-top: 20px;
-            align-items: flex-start;
-            flex-wrap: wrap;
-        }
-
-        .bio-block {
-            max-width: 600px;
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        .bio-block strong { color: var(--text-main); font-weight: 500; }
-
-        .tech-stack {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .pill {
-            font-size: 0.75rem;
-            padding: 6px 14px;
-            border: 1px solid var(--border-dim);
-            border-radius: 100px;
-            background: rgba(255,255,255,0.02);
-            text-transform: uppercase;
-            color: var(--text-muted);
-            transition: all 0.2s;
-        }
-        .pill:hover { border-color: var(--accent-plasma); color: var(--accent-plasma); background: rgba(129, 140, 248, 0.1); }
-
-        /* --- SECTIONS --- */
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin: 100px 0 40px;
-            border-bottom: 1px solid var(--border-dim);
-            padding-bottom: 10px;
         }
         
-        .section-title { font-size: 2rem; }
-        .section-count { color: var(--text-dim); }
+        .accent-text {
+            background: linear-gradient(to right, #fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-        /* --- BENTO GRID SYSTEM --- */
+        .intro-block {
+            max-width: 800px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-body);
+            border-left: 2px solid var(--border-base);
+            padding-left: 32px;
+            margin-top: 32px;
+        }
+        
+        .intro-block strong { color: var(--text-head); font-weight: 500; }
+        .intro-block p { margin-bottom: 24px; }
+        .intro-block p:last-child { margin-bottom: 0; }
+
+        .tag-scroller {
+            margin-top: 40px;
+            display: flex; gap: 12px; flex-wrap: wrap;
+        }
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-base);
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+        .tag:hover { border-color: var(--acc-indigo); color: var(--text-head); transform: translateY(-2px); }
+
+        /* --- SECTIONS --- */
+        .section-head {
+            display: flex; align-items: flex-end; justify-content: space-between;
+            margin: 120px 0 40px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-base);
+        }
+        .section-head h2 { font-size: 2.2rem; }
+        .section-sub { font-family: 'JetBrains Mono', monospace; color: var(--acc-indigo); font-size: 0.8rem; }
+
+        /* --- BENTO GRID --- */
         .grid {
             display: grid;
             grid-template-columns: repeat(12, 1fr);
-            gap: var(--gap-grid);
+            gap: 20px;
             auto-rows: minmax(280px, auto);
         }
 
         .card {
             position: relative;
-            background: var(--bg-surface);
-            border: 1px solid var(--border-dim);
-            border-radius: var(--radius-outer);
-            padding: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-base);
+            border-radius: var(--radius-card);
+            padding: 30px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.3s var(--ease-out), border-color 0.3s;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+            grid-column: span 4;
             overflow: hidden;
-            group: card;
         }
 
         /* Spotlight Effect */
@@ -171,72 +152,82 @@
             content: "";
             position: absolute;
             height: 100%; width: 100%; top: 0; left: 0;
-            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%);
-            opacity: 0; transition: opacity 0.5s; z-index: 1; pointer-events: none;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);
+            opacity: 0; transition: opacity 0.4s; z-index: 1; pointer-events: none;
         }
         .card:hover::before { opacity: 1; }
-        .card:hover { border-color: var(--border-glow); transform: translateY(-2px); }
+        .card:hover { transform: translateY(-4px); border-color: var(--border-hover); }
+
+        /* LINK INDICATOR */
+        .link-icon {
+            position: absolute;
+            top: 24px; right: 24px;
+            color: var(--text-muted);
+            opacity: 0.5;
+            transition: 0.2s;
+            z-index: 5;
+        }
+        .card:hover .link-icon { opacity: 1; color: var(--acc-indigo); transform: translate(2px, -2px); }
 
         /* Card Content */
-        .card-top { z-index: 2; }
-        .card-icon { 
-            width: 40px; height: 40px; 
-            border: 1px solid var(--border-dim); 
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 8px; margin-bottom: 20px;
-            font-size: 1.2rem;
-        }
+        .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; position: relative; z-index: 2; }
+        .card h3 { font-size: 1.4rem; margin-bottom: 8px; position: relative; z-index: 2; }
+        .card p { font-size: 0.95rem; line-height: 1.6; color: var(--text-body); max-width: 95%; position: relative; z-index: 2; }
         
-        .card h3 { font-size: 1.5rem; margin-bottom: 8px; }
-        .card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; }
-        
-        .card-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; z-index: 2; }
-        .tag { 
-            font-size: 0.7rem; padding: 4px 8px; 
-            background: var(--bg-surface-2); 
-            color: var(--text-muted); border-radius: 4px; 
+        .badge {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; 
+            padding: 4px 8px; border-radius: 4px; border: 1px solid transparent;
+            text-transform: uppercase;
+        }
+        .badge.graphite { color: var(--acc-indigo); background: rgba(129, 140, 248, 0.1); border-color: rgba(129, 140, 248, 0.2); }
+        .badge.hf { color: var(--acc-gold); background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.2); }
+        .badge.pb { color: var(--acc-teal); background: rgba(45, 212, 191, 0.1); border-color: rgba(45, 212, 191, 0.2); }
+        .badge.red { color: var(--acc-rose); background: rgba(251, 113, 133, 0.1); border-color: rgba(251, 113, 133, 0.2); }
+
+        /* Tech Stack */
+        .stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; position: relative; z-index: 2; }
+        .pill {
+            font-size: 0.7rem; padding: 4px 10px; border-radius: 100px;
+            background: rgba(255,255,255,0.03); color: var(--text-muted); border: 1px solid var(--border-base);
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        /* --- FEATURED CARD STYLES --- */
-        .col-span-12 { grid-column: span 12; }
-        .col-span-8 { grid-column: span 8; }
-        .col-span-6 { grid-column: span 6; }
-        .col-span-4 { grid-column: span 4; }
-        .col-span-3 { grid-column: span 3; }
+        /* Full Link Overlay */
+        .card-link { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
 
-        /* Specific Graphite Branding */
-        .graphite-card {
-            background: linear-gradient(170deg, var(--bg-surface) 0%, #0f0f0f 100%);
-        }
-        .graphite-card h3 { color: var(--accent-core); }
-        .graphite-card .card-icon { color: var(--accent-plasma); border-color: rgba(129, 140, 248, 0.2); background: rgba(129, 140, 248, 0.05); }
+        /* --- SIZING UTILS --- */
+        .span-12 { grid-column: span 12; }
+        .span-8 { grid-column: span 8; }
+        .span-6 { grid-column: span 6; }
+        .span-4 { grid-column: span 4; }
+        .span-3 { grid-column: span 3; }
 
-        /* Links */
-        .card-link {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3;
+        /* Highlight Cards */
+        .graphite-highlight {
+            background: linear-gradient(160deg, rgba(25,25,25,0.8), rgba(10,10,10,1));
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
         /* --- FOOTER --- */
-        footer {
-            margin-top: 120px;
-            border-top: 1px solid var(--border-dim);
-            padding-top: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .socials { display: flex; gap: 20px; }
-        .socials a { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        footer { border-top: 1px solid var(--border-base); padding: 60px 0; margin-top: 120px; display: flex; justify-content: space-between; align-items: center; }
+        .socials { display: flex; gap: 24px; }
+        .social-link { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-muted); transition: color 0.2s; }
+        .social-link:hover { color: var(--text-head); }
 
-        /* --- RESPONSIVE --- */
+        /* --- ANIMATION --- */
+        .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .visible { opacity: 1; transform: translateY(0); }
+
         @media (max-width: 1024px) {
-            .col-span-8, .col-span-6, .col-span-4, .col-span-3 { grid-column: span 6; }
+            .span-8, .span-6, .span-4, .span-3 { grid-column: span 6; }
+            .span-12 { grid-column: span 12; }
         }
         @media (max-width: 768px) {
-            .hero-meta { flex-direction: column; gap: 20px; }
+            h1 { font-size: 3rem; }
             .grid { grid-template-columns: 1fr; }
-            .col-span-12, .col-span-8, .col-span-6, .col-span-4, .col-span-3 { grid-column: span 1; }
-            .hero-title { font-size: 3.5rem; }
+            .span-12, .span-8, .span-6, .span-4, .span-3 { grid-column: span 1; }
+            .intro-block { border: none; padding-left: 0; margin-top: 20px; }
+            header::before { display: none; }
         }
     </style>
 </head>
@@ -245,346 +236,328 @@
     <div class="container">
         
         <!-- HERO -->
-        <header>
-            <div class="mono" style="margin-bottom: 20px; color: var(--accent-plasma);">/// SYSTEMS ARCHITECT</div>
-            <h1 class="hero-title">
-                Matthew<br>
-                <span>Wesney</span>
+        <header class="fade-up">
+            <div class="mono" style="color: var(--acc-indigo); margin-bottom: 16px;">/// CREATIVE TECHNOLOGIST</div>
+            <h1>
+                MATTHEW<br>
+                <span class="accent-text">WESNEY</span>
             </h1>
             
-            <div class="hero-meta">
-                <div class="bio-block">
-                    <p>
-                        I don’t just write code; I engineer <strong>digital cognition</strong>. 
-                        My work bridges the gap between stochastic AI models and deterministic software engineering. 
-                        From the raw frequency of sound waves to the logic gates of neural networks, I build 
-                        "God Tier" tools that extend the mind—private, powerful, and undeniably human.
-                    </p>
-                </div>
-                <div class="tech-stack mono">
-                    <div class="pill">React 19</div>
-                    <div class="pill">Gemini 3 Pro</div>
-                    <div class="pill">Python</div>
-                    <div class="pill">WebAudio API</div>
-                    <div class="pill">Local LLMs</div>
-                    <div class="pill">PySide6</div>
-                </div>
+            <div class="intro-block">
+                <p>
+                    I make tools that let creative people <strong>think and perform at scale</strong>. My projects combine deep technical craft with a designer’s insistence on clarity — from VSTs and browser-based performance environments to large node-based ecosystems that model entire workflows. I obsess over <strong>latency, expressivity, and interface logic</strong>: the goal isn’t novelty, it’s a durable tool that professionals actually choose to use.
+                </p>
+                <p>
+                    <strong>Practically-minded and opinionated</strong>, I cut through fluff to ship systems that are dense in capability but clean to operate. If you want pragmatic innovation that scales from studio demo to production, let’s talk.
+                </p>
+            </div>
+
+            <div class="tag-scroller">
+                <span class="tag">GRAPHITE PROTOCOL</span>
+                <span class="tag">REACT 19</span>
+                <span class="tag">GEMINI 3 PRO</span>
+                <span class="tag">PYTHON / PYSIDE6</span>
+                <span class="tag">WEBAUDIO</span>
+                <span class="tag">SYNTHETIC DATA</span>
             </div>
         </header>
 
-        <!-- GRAPHITE ECOSYSTEM -->
-        <div class="section-header">
-            <h2 class="section-title">The Graphite Protocol</h2>
-            <span class="mono section-count">01 // FLGSHP</span>
+        <!-- SECTION: GRAPHITE SUITE -->
+        <div class="section-head fade-up">
+            <h2>The Graphite Ecosystem</h2>
+            <span class="section-sub">01 // FLAGSHIP SUITE</span>
         </div>
-
+        
         <div class="grid">
-            <!-- Graphite: Git -->
-            <article class="card col-span-8 graphite-card">
+            
+            <!-- Graphite: Git (Main Feature) -->
+            <article class="card span-8 graphite-highlight fade-up">
                 <a href="https://github.com/dovvnloading/graphite-git" target="_blank" class="card-link"></a>
-                <div class="card-top">
-                    <div class="card-icon mono">G:GT</div>
+                <!-- LINK INDICATOR -->
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+                
+                <div class="card-head">
                     <h3>Graphite: Git</h3>
-                    <p style="max-width: 80%;">
-                        A secure, local-first GitHub client with an integrated AI engineering agent. 
-                        It operates entirely on the client side, meaning tokens never leave the browser. 
-                        Includes a full in-browser IDE, Gist manager, and "Safety Net" for network auditing.
-                    </p>
+                    <span class="badge graphite">CLIENT-SIDE</span>
                 </div>
-                <div class="card-tags mono">
-                    <span class="tag">React</span>
-                    <span class="tag">TypeScript</span>
-                    <span class="tag">Local-First</span>
-                    <span class="tag">Gemini API</span>
+                <p>
+                    A secure, local-first GitHub client with an integrated AI engineering agent. Unlike standard clients, Graphite:Git operates entirely in the browser. Manage repos, edit code, and audit your network with a "Safety Net" feature.
+                </p>
+                <div class="stack">
+                    <span class="pill">React</span>
+                    <span class="pill">Gemini Agent</span>
+                    <span class="pill">Local Storage</span>
+                    <span class="pill">Vite</span>
                 </div>
             </article>
 
             <!-- Graphite: WebDev -->
-            <article class="card col-span-4 graphite-card">
-                <a href="#" class="card-link"></a>
-                <div class="card-top">
-                    <div class="card-icon mono">G:WD</div>
+            <article class="card span-4 graphite-highlight fade-up">
+                <div class="card-head">
                     <h3>Graphite: WebDev</h3>
-                    <p>
-                        An Agentic Web IDE. A browser-native environment where natural language prompts 
-                        are converted into functional apps via a "Shadow Output" protocol. Features a 
-                        Multi-Agent swarm (Architect, Developer, Reviewer).
-                    </p>
+                    <span class="badge graphite">IDE</span>
                 </div>
-                <div class="card-tags mono">
-                    <span class="tag">Vibe Coding</span>
-                    <span class="tag">Virtual FS</span>
-                    <span class="tag">Swarm</span>
+                <p>
+                    An Agentic Web IDE. A browser-native environment where natural language prompts are converted into functional apps via a "Shadow Output" protocol.
+                </p>
+                <div class="stack">
+                    <span class="pill">Vibe Coding</span>
+                    <span class="pill">Virtual FS</span>
+                    <span class="pill">Multi-Agent</span>
                 </div>
             </article>
 
             <!-- Graphite: Logica -->
-            <article class="card col-span-6 graphite-card">
-                <div class="card-top">
-                    <div class="card-icon mono">G:LG</div>
+            <article class="card span-6 graphite-highlight fade-up">
+                <div class="card-head">
                     <h3>Graphite: Logica</h3>
-                    <p>
-                        A protocol for deterministic cognitive orchestration. Visual Flow Engineering 
-                        that decouples probabilistic inference (LLMs) from deterministic control flow.
-                        Transpiles visual graphs into production-grade Python.
-                    </p>
+                    <span class="badge graphite">PROTOCOL</span>
                 </div>
-                <div class="card-tags mono">
-                    <span class="tag">Visual Scripting</span>
-                    <span class="tag">Graph Theory</span>
-                    <span class="tag">Python Transpiler</span>
+                <p>
+                    Visual Flow Engineering. Decouples probabilistic inference (LLM) from deterministic logic. Construct reliable, loop-safe AI workflows visually and transpile them to Python.
+                </p>
+                <div class="stack">
+                    <span class="pill">Visual Scripting</span>
+                    <span class="pill">Graph Theory</span>
+                    <span class="pill">Python</span>
                 </div>
             </article>
 
             <!-- Graphite: Phlow -->
-            <article class="card col-span-6 graphite-card">
+            <article class="card span-6 graphite-highlight fade-up">
                 <a href="https://dovvnloading.github.io/Graphite-Phlow" target="_blank" class="card-link"></a>
-                <div class="card-top">
-                    <div class="card-icon mono">G:PH</div>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head">
                     <h3>Graphite-Phlow</h3>
-                    <p>
-                        Client-side agentic IDE with autonomous swarm orchestration. Uses context-stuffing 
-                        to eliminate RAG, featuring a live code preview and project-aware memory.
-                    </p>
+                    <span class="badge graphite">ASSISTANT</span>
                 </div>
-                <div class="card-tags mono">
-                    <span class="tag">React 19</span>
-                    <span class="tag">Context-Stuffing</span>
-                    <span class="tag">Agentic</span>
+                <p>
+                    Client-side agentic IDE. Uses "Context Stuffing" to eliminate RAG, featuring a live code preview and project-aware memory for small-to-medium builds.
+                </p>
+                <div class="stack">
+                    <span class="pill">React 19</span>
+                    <span class="pill">WebContainer</span>
+                    <span class="pill">Swarm</span>
                 </div>
             </article>
 
             <!-- Graphite: Genesis -->
-            <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>Graphite: Genesis o1</h3>
-                    <p>Panoramic Environment Generator. Create and explore immersive 360-degree worlds generated on the fly.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">3D</span><span class="tag">Generative</span></div>
-            </article>
-
-            <!-- Graphite: Canvas -->
-            <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>Graphite: Canvas</h3>
-                    <p>UI Design Suite bridging visual editing with AI code generation in a charcoal monochrome aesthetic.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">Design Tool</span><span class="tag">UI/UX</span></div>
+            <article class="card span-4 fade-up">
+                <div class="card-head"><h3>Graphite: Genesis o1</h3></div>
+                <p>Panoramic Environment Generator. Create and explore immersive 360-degree worlds generated on the fly.</p>
+                <div class="stack"><span class="pill">3D</span><span class="pill">Generative</span></div>
             </article>
 
             <!-- Graphite: Desktop -->
-            <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>Graphite: Desktop</h3>
-                    <p>The original orchestrator. A PyQT6 node-based workspace connecting Ollama, OpenAI, and Anthropic.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">PyQt6</span><span class="tag">Desktop</span></div>
+            <article class="card span-4 fade-up">
+                <div class="card-head"><h3>Graphite: Desktop</h3></div>
+                <p>The original orchestrator. A PyQT6 node-based workspace connecting Ollama, OpenAI, and Anthropic.</p>
+                <div class="stack"><span class="pill">PyQt6</span><span class="pill">Local</span></div>
+            </article>
+
+            <!-- Graphite: Canvas -->
+            <article class="card span-4 fade-up">
+                <div class="card-head"><h3>Graphite: Canvas</h3></div>
+                <p>UI Design Suite. Bridges visual editing with AI code generation in a charcoal monochrome aesthetic.</p>
+                <div class="stack"><span class="pill">Design</span><span class="pill">UI/UX</span></div>
             </article>
         </div>
 
-        <!-- SONIC ENGINEERING -->
-        <div class="section-header">
-            <h2 class="section-title">Sonic Engineering</h2>
-            <span class="mono section-count">02 // AUDIO</span>
+        <!-- SECTION: SONIC ENGINEERING -->
+        <div class="section-head fade-up">
+            <h2>Sonic Engineering</h2>
+            <span class="section-sub">02 // AUDIO DSP</span>
         </div>
 
         <div class="grid">
-            <article class="card col-span-6" style="border-left: 2px solid var(--accent-rose);">
+            <!-- Pianobook -->
+            <article class="card span-6 fade-up">
                 <a href="https://www.pianobook.co.uk/profile/mattwesney/" target="_blank" class="card-link"></a>
-                <div class="card-top">
-                    <div class="card-icon mono">PB</div>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+                
+                <div class="card-head">
                     <h3>Pianobook Profile</h3>
-                    <p>18.6k+ Downloads. A collection of highly detailed sample libraries including "The Synths," "Broken Piano," and "Hell Drones."</p>
+                    <span class="badge pb">18K+ DLs</span>
                 </div>
-                <div class="card-tags mono"><span class="tag">Sampling</span><span class="tag">Sound Design</span></div>
+                <p>
+                    A collection of highly detailed sample libraries including "The Synths," "Broken Piano," and "Hell Drones." Focusing on texture and degradation.
+                </p>
+                <div class="stack">
+                    <span class="pill">Sampling</span>
+                    <span class="pill">Sound Design</span>
+                    <span class="pill">Kontakt</span>
+                </div>
             </article>
 
-            <article class="card col-span-3">
-                <div class="card-top">
-                    <h3>ERIN</h3>
-                    <p>Enhanced Real-time Instrument Nexus. Sample-based VST web app with effects chain.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">WebAudio</span><span class="tag">VST</span></div>
+            <!-- EchoLingua -->
+            <article class="card span-3 fade-up">
+                <a href="https://github.com/dovvnloading/echolingua-ai" target="_blank" class="card-link"></a>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head"><h3>EchoLingua</h3></div>
+                <p>Real-time interpretation lab. Streams PCM audio via WebSockets to Gemini Live.</p>
+                <div class="stack"><span class="pill">WebSockets</span></div>
             </article>
 
-            <article class="card col-span-3">
-                <div class="card-top">
-                    <h3>Os-Daw</h3>
-                    <p>Open Source DAW. Browser-based workstation with AI assistance and step sequencing.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">Sequencer</span><span class="tag">React</span></div>
+            <!-- PolyArbor -->
+            <article class="card span-3 fade-up">
+                <a href="https://github.com/dovvnloading/POLYARBOR-Rhythm-Generator" target="_blank" class="card-link"></a>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head"><h3>PolyArbor</h3></div>
+                <p>Generative Sequencer visualizing conflicting rhythms as organic vector scopes.</p>
+                <div class="stack"><span class="pill">Canvas</span><span class="pill">Math</span></div>
             </article>
 
-            <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>PolyArbor</h3>
-                    <p>Generative Sequencer visualizing conflicting rhythms as a pulsating organic vector scope.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">Generative</span><span class="tag">Canvas</span></div>
-            </article>
-
-            <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>EchoLingua</h3>
-                    <p>Real-time interpretation and deep linguistic analysis through Google’s Gemini Live API.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">Gemini Live</span><span class="tag">Audio</span></div>
-            </article>
-
-            <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>Suno-Bark GUI</h3>
-                    <p>Desktop app for Suno's Bark model with real-time waveform visualization and GPU acceleration.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">Python</span><span class="tag">TTS</span></div>
+            <!-- Os-Daw (Adjusted to Full Width) -->
+            <article class="card span-12 fade-up">
+                <div class="card-head"><h3>Os-Daw</h3></div>
+                <p>Open Source DAW. Browser-based workstation with AI assistance, 3-oscillator synthesis, and step sequencing.</p>
+                <div class="stack"><span class="pill">WebAudio</span><span class="pill">Synthesizer</span></div>
             </article>
         </div>
 
-        <!-- VISUAL & CREATIVE -->
-        <div class="section-header">
-            <h2 class="section-title">Visual & Creative</h2>
-            <span class="mono section-count">03 // PIXEL</span>
+        <!-- SECTION: VISUAL TOOLS -->
+        <div class="section-head fade-up">
+            <h2>Visual & Creative</h2>
+            <span class="section-sub">03 // PIXEL & MESH</span>
         </div>
 
         <div class="grid">
-            <article class="card col-span-6">
-                <a href="https://drive.google.com/file/d/1O58cpS1IODfMPHoZBKDXbY9Wv__rUFPr/view" target="_blank" class="card-link"></a>
-                <div class="card-top">
-                    <div class="card-icon mono">D2</div>
+            <!-- Dither Pro -->
+            <article class="card span-6 fade-up">
+                <a href="https://drive.google.com/file/d/1O58cpS1IODfMPHoZBKDXbY9Wv__rUFPr/view" class="card-link"></a>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head">
                     <h3>Dither Pro 2.0</h3>
-                    <p>Professional Image Dithering Suite. Offloads processing to Web Workers for privacy. Comparison view, custom palettes, and error diffusion algorithms.</p>
+                    <span class="badge red">APP</span>
                 </div>
-                <div class="card-tags mono"><span class="tag">Web Workers</span><span class="tag">Image Processing</span></div>
+                <p>
+                    Professional Image Dithering Suite. Offloads processing to Web Workers for privacy. Comparison view, custom palettes, and error diffusion algorithms.
+                </p>
+                <div class="stack">
+                    <span class="pill">Web Workers</span>
+                    <span class="pill">Image Processing</span>
+                </div>
             </article>
 
-            <article class="card col-span-6">
-                <a href="https://dovvnloading.github.io/AdGeni/" target="_blank" class="card-link"></a>
-                <div class="card-top">
-                    <h3>AdGeni</h3>
-                    <p>Ad Campaign Suite. All-in-one suite to generate compelling ad campaign visuals and video ads from initial concept to full composition.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">GenAI</span><span class="tag">Marketing</span></div>
-            </article>
-
-            <article class="card col-span-4">
+            <!-- Os-Sculpt -->
+            <article class="card span-6 fade-up">
                 <a href="https://github.com/dovvnloading/Os-Sculpt" target="_blank" class="card-link"></a>
-                <div class="card-top">
-                    <h3>Os-Sculpt</h3>
-                    <p>3D Sculpting Engine. Direct buffer manipulation for real-time mesh deformation.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">Three.js</span><span class="tag">WebGL</span></div>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head"><h3>Os-Sculpt</h3></div>
+                <p>3D Sculpting Engine. Direct buffer manipulation for real-time mesh deformation and vertex painting.</p>
+                <div class="stack"><span class="pill">Three.js</span><span class="pill">WebGL</span></div>
             </article>
 
-            <article class="card col-span-4">
-                <h3>BrickMaster 3D</h3>
-                <p>CAD-Style Brick Builder with realistic viewport and snapping.</p>
-            </article>
+            <!-- AdGeni -->
+            <article class="card span-12 fade-up">
+                <a href="https://dovvnloading.github.io/AdGeni/" target="_blank" class="card-link"></a>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
 
-            <article class="card col-span-4">
-                <h3>FlipBook AI</h3>
-                <p>Create, slice, and animate character sprites in seconds using Gemini.</p>
+                <div class="card-head"><h3>AdGeni</h3></div>
+                <p>Ad Campaign Suite. Generate product photography, packaging, and video ads ensuring asset consistency.</p>
             </article>
         </div>
 
-        <!-- INTELLIGENCE & RESEARCH -->
-        <div class="section-header">
-            <h2 class="section-title">Intelligence & Utilities</h2>
-            <span class="mono section-count">04 // BRAIN</span>
+        <!-- SECTION: INTELLIGENCE -->
+        <div class="section-head fade-up">
+            <h2>Intelligence & Research</h2>
+            <span class="section-sub">04 // DATA</span>
         </div>
 
         <div class="grid">
-            <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>Cortex</h3>
-                    <p>Private desktop AI assistant backed by SQLite. Features long-term vector memory.</p>
+            <!-- Synthetic Data -->
+            <article class="card span-6 fade-up">
+                <a href="https://huggingface.co/moremilk" target="_blank" class="card-link"></a>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head">
+                    <h3>Synthetic Reasoning Data</h3>
+                    <span class="badge hf">HUGGINGFACE</span>
                 </div>
-                <div class="card-tags mono"><span class="tag">Ollama</span><span class="tag">Local</span></div>
+                <p>
+                    A comprehensive collection (151k+ Q&A) tailored for training AI in logical reasoning (CoT/ToT). Spans deductive, inductive, and abductive reasoning.
+                </p>
+                <div class="stack"><span class="pill">Dataset</span><span class="pill">Fine-tuning</span></div>
             </article>
 
-            <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>Synthetic Data</h3>
-                    <p>Reasoning Problem Solving Dataset. 151,000+ Q&A pairs for CoT/ToT training.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">Dataset</span><span class="tag">HuggingFace</span></div>
+            <!-- Cortex -->
+            <article class="card span-6 fade-up">
+                <a href="https://dovvnloading.github.io/Cortex/" target="_blank" class="card-link"></a>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head"><h3>Cortex</h3></div>
+                <p>Private desktop AI assistant backed by SQLite. Features permanent memory, conversation forking, and response regeneration.</p>
+                <div class="stack"><span class="pill">Ollama</span><span class="pill">Python</span></div>
             </article>
 
-            <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>Leadz</h3>
-                    <p>AI job search automation. Scrapes listings and ranks relevance via embeddings.</p>
-                </div>
-                <div class="card-tags mono"><span class="tag">Automation</span><span class="tag">Scraping</span></div>
+            <!-- Leadz -->
+            <article class="card span-4 fade-up">
+                <a href="https://github.com/dovvnloading/Leadz" target="_blank" class="card-link"></a>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head"><h3>Leadz</h3></div>
+                <p>AI job search automation. Scrapes listings, ranks relevance via embeddings, and extracts data to dashboard.</p>
             </article>
 
-             <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>Signal Flow</h3>
-                    <p>High-Fidelity Filter. Distills complex information into pure signal using deep reasoning.</p>
-                </div>
+            <!-- Polyglot -->
+            <article class="card span-4 fade-up">
+                <a href="https://dovvnloading.github.io/Polyglot-Code-Analyzer/" target="_blank" class="card-link"></a>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head"><h3>Polyglot Analyzer</h3></div>
+                <p>Static code analysis tool identifying tech debt across 50+ file types using regex patterns.</p>
             </article>
-             <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>Polyglot Analyzer</h3>
-                    <p>Static code analysis tool providing insights into code structure across dozens of languages.</p>
-                </div>
-            </article>
-             <article class="card col-span-4">
-                <div class="card-top">
-                    <h3>File2MD</h3>
-                    <p>Sleek desktop app converting text to Markdown using private, local AI.</p>
-                </div>
+
+            <!-- File2MD -->
+             <article class="card span-4 fade-up">
+                <a href="https://github.com/dovvnloading/File2MD" target="_blank" class="card-link"></a>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head"><h3>File2MD</h3></div>
+                <p>Sleek desktop app converting text to Markdown using private, local AI (Ollama).</p>
             </article>
         </div>
 
         <!-- FOOTER -->
-        <footer>
-            <div class="mono" style="color: var(--text-dim);">
-                &copy; 2025 MATTHEW WESNEY<br>
-                EST. GRAPHITE PROTOCOL
+        <footer class="fade-up">
+            <div class="mono" style="font-size: 0.75rem; color: var(--text-muted);">
+                &copy; 2025 MATTHEW WESNEY. ALL SYSTEMS NOMINAL.
             </div>
-            <div class="socials mono">
-                <a href="https://github.com/dovvnloading" target="_blank">GitHub</a>
-                <a href="https://x.com/D3VAUX" target="_blank">Twitter / X</a>
-                <a href="mailto:devaux.mail@gmail.com">Contact</a>
+            <div class="socials">
+                <a href="https://github.com/dovvnloading" target="_blank" class="social-link">GITHUB</a>
+                <a href="https://x.com/D3VAUX" target="_blank" class="social-link">TWITTER/X</a>
+                <a href="mailto:devaux.mail@gmail.com" class="social-link">CONTACT</a>
             </div>
         </footer>
 
     </div>
 
     <script>
-        // --- SPOTLIGHT EFFECT ---
+        // --- SPOTLIGHT MOUSE TRACKING ---
         const cards = document.querySelectorAll('.card');
-        
         document.addEventListener('mousemove', e => {
             cards.forEach(card => {
                 const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                card.style.setProperty('--mouse-x', `${x}px`);
-                card.style.setProperty('--mouse-y', `${y}px`);
+                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
             });
         });
 
-        // --- SCROLL REVEAL (Simple) ---
+        // --- SCROLL REVEAL ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.05 });
 
-        cards.forEach((card, index) => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = `opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)`;
-            // Stagger delay based on index
-            // card.style.transitionDelay = `${(index % 3) * 50}ms`; 
-            observer.observe(card);
-        });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
