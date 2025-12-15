@@ -63,6 +63,8 @@
             border-right: 1px solid var(--border);
             padding: 32px;
             display: flex; flex-direction: column; justify-content: space-between;
+            background: var(--bg);
+            z-index: 50; /* Ensure sidebar stays on top of scrolled content */
         }
 
         .identity h1 {
@@ -86,7 +88,7 @@
         .ping { display: inline-block; width: 6px; height: 6px; background: #22c55e; border-radius: 50%; margin-right: 6px; }
 
         /* --- MAIN CONTENT --- */
-        main { border-left: 1px solid var(--border); margin-left: -1px; }
+        main { border-left: 1px solid var(--border); margin-left: -1px; position: relative; z-index: 1; }
 
         /* HERO */
         .hero {
@@ -102,7 +104,7 @@
         .domain-header {
             padding: 40px 60px 20px; border-bottom: 1px solid var(--border);
             display: flex; justify-content: space-between; align-items: flex-end;
-            position: sticky; top: 0; background: var(--bg); z-index: 10;
+            position: sticky; top: 0; background: var(--bg); z-index: 40;
         }
         .domain-header h2 { font-family: 'Syncopate', sans-serif; font-size: 16px; font-weight: 700; }
         .domain-header span { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); }
@@ -116,17 +118,17 @@
             border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
             padding: 40px; position: relative; transition: background 0.2s;
             display: flex; flex-direction: column; 
-            min-height: 380px; /* Use min-height to allow expansion */
+            min-height: 380px; /* Changed from height to min-height to prevent overlap */
         }
         .card:hover { background: var(--surface); }
 
         /* Special styling for the Main App */
         .card.prime-card {
-            grid-column: 1 / -1; /* Spans full width */
-            background: linear-gradient(90deg, rgba(59, 130, 246, 0.05) 0%, transparent 100%);
-            border-left: 2px solid var(--c-graphite);
+            background: rgba(59, 130, 246, 0.03);
+            border-bottom: 1px solid var(--c-graphite);
+            grid-column: 1 / -1; /* Span full width to be the main focus */
         }
-        .card.prime-card:hover { background: linear-gradient(90deg, rgba(59, 130, 246, 0.08) 0%, transparent 100%); }
+        .card.prime-card:hover { background: rgba(59, 130, 246, 0.08); }
 
         .card-meta {
             font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
@@ -222,7 +224,7 @@
                     <article class="card hover-target prime-card">
                          <div class="card-meta"><span>ORCHESTRATOR</span><span>v2.1</span></div>
                         <h3>GRAPHITE: PRIME</h3>
-                        <p style="max-width: 800px; font-size: 15px;">The sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control. Features a "Just-In-Time" persona injection system and a hybrid IPC bridge for arbitrary code synthesis beyond the browser sandbox.</p>
+                        <p>The sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control via secure local-runtime bridging. Features a "Just-In-Time" persona injection system and a hybrid IPC architecture for arbitrary code synthesis beyond the browser sandbox.</p>
                         <div class="specs"><span class="spec">Recursive Agents</span><span class="spec">Local Runtime Bridge</span><span class="spec">Spatial Canvas</span></div>
                     </article>
 
