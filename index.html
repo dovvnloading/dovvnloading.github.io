@@ -110,15 +110,23 @@
         .domain-header span { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); }
 
         .project-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            display: grid;
+            /* Safe Width: 340px prevents horizontal blowout on laptops */
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            /* Robust Height: Row determines min-height (380px), but 'auto' allows expansion */
+            grid-auto-rows: minmax(380px, auto);
         }
 
         /* --- PROJECT CARD --- */
         .card {
-            border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
-            padding: 40px; position: relative; transition: background 0.2s;
-            display: flex; flex-direction: column; 
-            min-height: 380px; /* Changed from height to min-height to prevent overlap */
+            border-right: 1px solid var(--border); 
+            border-bottom: 1px solid var(--border);
+            padding: 40px; 
+            position: relative; 
+            transition: background 0.2s;
+            display: flex; 
+            flex-direction: column;
+            height: 100%; /* Fill the grid cell exactly */
         }
         .card:hover { background: var(--surface); }
 
