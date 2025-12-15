@@ -115,16 +115,18 @@
         .card {
             border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
             padding: 40px; position: relative; transition: background 0.2s;
-            display: flex; flex-direction: column; height: 380px;
+            display: flex; flex-direction: column; 
+            min-height: 380px; /* Use min-height to allow expansion */
         }
         .card:hover { background: var(--surface); }
 
         /* Special styling for the Main App */
         .card.prime-card {
-            background: rgba(59, 130, 246, 0.03);
-            border-bottom: 1px solid var(--c-graphite);
+            grid-column: 1 / -1; /* Spans full width */
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.05) 0%, transparent 100%);
+            border-left: 2px solid var(--c-graphite);
         }
-        .card.prime-card:hover { background: rgba(59, 130, 246, 0.08); }
+        .card.prime-card:hover { background: linear-gradient(90deg, rgba(59, 130, 246, 0.08) 0%, transparent 100%); }
 
         .card-meta {
             font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
@@ -220,7 +222,7 @@
                     <article class="card hover-target prime-card">
                          <div class="card-meta"><span>ORCHESTRATOR</span><span>v2.1</span></div>
                         <h3>GRAPHITE: PRIME</h3>
-                        <p>The sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control. Features a "Just-In-Time" persona injection system and a hybrid IPC bridge for arbitrary code synthesis beyond the browser sandbox.</p>
+                        <p style="max-width: 800px; font-size: 15px;">The sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control. Features a "Just-In-Time" persona injection system and a hybrid IPC bridge for arbitrary code synthesis beyond the browser sandbox.</p>
                         <div class="specs"><span class="spec">Recursive Agents</span><span class="spec">Local Runtime Bridge</span><span class="spec">Spatial Canvas</span></div>
                     </article>
 
