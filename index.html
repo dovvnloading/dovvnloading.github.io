@@ -3,530 +3,628 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matthew Wesney | Graphite Protocol</title>
+    <title>MATTHEW WESNEY /// SYSTEMS ARCHITECT</title>
+    
+    <!-- FONTS: Brutalist Sans + Technical Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;500;800&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            /* --- CORE PALETTE --- */
-            --bg-main: #050505;
-            --bg-card: rgba(20, 20, 20, 0.6);
-            --border-base: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.25);
+            /* --- THE VOID PALETTE --- */
+            --void: #030303;
+            --surface: #0a0a0a;
+            --surface-2: #121212;
+            --border: rgba(255, 255, 255, 0.12);
+            --border-active: rgba(255, 255, 255, 0.4);
             
-            --text-head: #ffffff;
-            --text-body: #a1a1aa;
-            --text-muted: #52525b;
+            /* --- SIGNAL COLORS --- */
+            --signal-white: #ededed;
+            --signal-dim: #666666;
+            --signal-accent: #3b82f6; /* Graphite Blue */
+            --signal-audio: #eab308; /* Analog Gold */
+            --signal-data: #ec4899; /* Neural Pink */
+            --signal-local: #10b981; /* Terminal Green */
 
-            /* --- ACCENTS --- */
-            --acc-indigo: #818cf8;
-            --acc-cyan: #22d3ee;
-            --acc-rose: #fb7185;
-            --acc-gold: #fbbf24;
-            --acc-teal: #2dd4bf; 
-
-            /* --- UTILS --- */
-            --radius-card: 12px;
-            --spotlight-color: rgba(255, 255, 255, 0.05);
+            /* --- DIMENSIONS --- */
+            --scanline-gap: 4px;
+            --container-width: 1600px;
         }
 
-        /* --- RESET & GLOBAL --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* --- GLOBAL RESET --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; /* Custom cursor used */ }
         
         body {
+            background-color: var(--void);
+            color: var(--signal-white);
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-body);
-            line-height: 1.6;
             overflow-x: hidden;
+            line-height: 1.5;
         }
 
-        h1, h2, h3, h4 { 
-            font-family: 'Space Grotesk', sans-serif; 
-            color: var(--text-head);
-            letter-spacing: -0.03em;
+        /* --- NOISE GRAIN OVERLAY --- */
+        .noise {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 999;
         }
 
-        .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.05em;}
-        a { text-decoration: none; color: inherit; }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 24px 120px;
+        /* --- CUSTOM CURSOR --- */
+        .cursor {
+            position: fixed; width: 20px; height: 20px;
+            border: 1px solid var(--signal-white);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none; z-index: 1000;
+            mix-blend-mode: difference;
+            transition: width 0.2s, height 0.2s, background 0.2s;
         }
+        .cursor.hovered { width: 50px; height: 50px; background: white; opacity: 0.1; }
 
-        /* --- HEADER --- */
-        header {
-            padding: 140px 0 80px;
-            text-align: left;
-            position: relative;
-        }
-
-        /* Accent Line */
-        header::before {
-            content: '';
-            position: absolute; top: 20px; left: 24px; width: 1px; height: 100px;
-            background: linear-gradient(to bottom, var(--acc-indigo), transparent);
-            opacity: 0.7;
-        }
-
-        h1 { 
-            font-size: clamp(3.5rem, 8vw, 6rem); 
-            line-height: 0.95; 
-            margin-bottom: 24px; 
-            font-weight: 700;
-        }
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 { font-family: 'Syncopate', sans-serif; text-transform: uppercase; letter-spacing: -0.05em; }
+        .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: -0.05em; }
         
-        .accent-text {
-            background: linear-gradient(to right, #fff, #999);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .intro-block {
-            max-width: 800px;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: var(--text-body);
-            border-left: 2px solid var(--border-base);
-            padding-left: 32px;
-            margin-top: 32px;
-        }
-        
-        .intro-block strong { color: var(--text-head); font-weight: 500; }
-        .intro-block p { margin-bottom: 24px; }
-        .intro-block p:last-child { margin-bottom: 0; }
-
-        .tag-scroller {
-            margin-top: 40px;
-            display: flex; gap: 12px; flex-wrap: wrap;
-        }
-        .tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            padding: 6px 14px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-base);
-            color: var(--text-muted);
-            transition: 0.2s;
-        }
-        .tag:hover { border-color: var(--acc-indigo); color: var(--text-head); transform: translateY(-2px); }
-
-        /* --- SECTIONS --- */
-        .section-head {
-            display: flex; align-items: flex-end; justify-content: space-between;
-            margin: 120px 0 40px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-base);
-        }
-        .section-head h2 { font-size: 2.2rem; }
-        .section-sub { font-family: 'JetBrains Mono', monospace; color: var(--acc-indigo); font-size: 0.8rem; }
-
-        /* --- BENTO GRID --- */
-        .grid {
+        /* --- LAYOUT UTILS --- */
+        .grid-wrapper {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 20px;
-            auto-rows: minmax(280px, auto);
+            grid-template-columns: 300px 1fr;
+            min-height: 100vh;
         }
 
-        .card {
-            position: relative;
-            background: var(--bg-card);
-            border: 1px solid var(--border-base);
-            border-radius: var(--radius-card);
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
-            grid-column: span 4;
-            overflow: hidden;
+        /* --- SIDEBAR (HUD) --- */
+        .sidebar {
+            position: sticky; top: 0; height: 100vh;
+            border-right: 1px solid var(--border);
+            padding: 40px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            background: var(--surface);
         }
-
-        /* Spotlight Effect */
-        .card::before {
-            content: "";
-            position: absolute;
-            height: 100%; width: 100%; top: 0; left: 0;
-            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);
-            opacity: 0; transition: opacity 0.4s; z-index: 1; pointer-events: none;
-        }
-        .card:hover::before { opacity: 1; }
-        .card:hover { transform: translateY(-4px); border-color: var(--border-hover); }
-
-        /* LINK INDICATOR */
-        .link-icon {
-            position: absolute;
-            top: 24px; right: 24px;
-            color: var(--text-muted);
-            opacity: 0.5;
-            transition: 0.2s;
-            z-index: 5;
-        }
-        .card:hover .link-icon { opacity: 1; color: var(--acc-indigo); transform: translate(2px, -2px); }
-
-        /* Card Content */
-        .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; position: relative; z-index: 2; }
-        .card h3 { font-size: 1.4rem; margin-bottom: 8px; position: relative; z-index: 2; }
-        .card p { font-size: 0.95rem; line-height: 1.6; color: var(--text-body); max-width: 95%; position: relative; z-index: 2; }
         
-        .badge {
-            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; font-weight: 700; 
-            padding: 4px 8px; border-radius: 4px; border: 1px solid transparent;
-            text-transform: uppercase;
-        }
-        /* Badge Variants */
-        .badge.graphite { color: var(--acc-indigo); background: rgba(129, 140, 248, 0.1); border-color: rgba(129, 140, 248, 0.2); }
-        .badge.audio { color: var(--acc-gold); background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.2); }
-        .badge.local { color: var(--acc-teal); background: rgba(45, 212, 191, 0.1); border-color: rgba(45, 212, 191, 0.2); }
-        .badge.visual { color: var(--acc-rose); background: rgba(251, 113, 133, 0.1); border-color: rgba(251, 113, 133, 0.2); }
+        .brand { font-size: 1.5rem; line-height: 1; margin-bottom: 60px; }
+        .brand span { color: var(--signal-dim); display: block; font-size: 0.8rem; margin-top: 10px; font-family: 'JetBrains Mono', monospace;}
 
-        /* Tech Stack */
-        .stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; position: relative; z-index: 2; }
-        .pill {
-            font-size: 0.7rem; padding: 4px 10px; border-radius: 100px;
-            background: rgba(255,255,255,0.03); color: var(--text-muted); border: 1px solid var(--border-base);
+        .nav-link {
+            display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+            color: var(--signal-dim); text-decoration: none; margin-bottom: 16px;
+            transition: 0.3s; position: relative;
+        }
+        .nav-link:hover { color: var(--signal-white); padding-left: 10px; }
+        .nav-link::before { 
+            content: '>'; position: absolute; left: 0; opacity: 0; transition: 0.3s; 
+        }
+        .nav-link:hover::before { opacity: 1; left: -15px; color: var(--signal-accent); }
+
+        .status-block {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--signal-dim);
+            border-top: 1px solid var(--border); padding-top: 20px;
+        }
+        .status-indicator {
+            display: inline-block; width: 8px; height: 8px; background: #10b981;
+            border-radius: 50%; margin-right: 8px; box-shadow: 0 0 10px #10b981;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        main { padding: 0; }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 90vh;
+            padding: 100px 80px;
+            display: flex; flex-direction: column; justify-content: center;
+            border-bottom: 1px solid var(--border);
+            background: radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.05), transparent 40%);
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 7vw, 7rem);
+            line-height: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .hero-manifesto {
+            max-width: 800px;
+            font-size: 1.25rem;
+            color: #a3a3a3;
+            border-left: 2px solid var(--signal-accent);
+            padding-left: 30px;
+        }
+        .hero-manifesto strong { color: white; font-weight: 400; }
+
+        /* --- PROJECT GRID SYSTEM --- */
+        .domain-header {
+            padding: 60px 80px 20px;
+            display: flex; justify-content: space-between; align-items: flex-end;
+            border-bottom: 1px solid var(--border);
+            background: var(--void);
+            position: sticky; top: 0; z-index: 10;
+        }
+        .domain-title { font-size: 2rem; }
+        .domain-meta { font-family: 'JetBrains Mono', monospace; color: var(--signal-dim); }
+
+        .project-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* PROJECT MODULE */
+        .module {
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 50px 40px;
+            background: var(--void);
+            transition: background 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: flex; flex-direction: column; justify-content: space-between;
+            min-height: 400px;
+        }
+
+        .module:hover { background: var(--surface-2); }
+        .module::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: currentColor; transform: scaleX(0); transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .module:hover::after { transform: scaleX(1); }
+
+        /* Module Typography */
+        .mod-header { margin-bottom: 30px; }
+        .mod-id { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; opacity: 0.5; margin-bottom: 10px; display: block;}
+        .mod-title { font-size: 2rem; font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: -0.03em; margin-bottom: 10px; }
+        .mod-desc { font-size: 1rem; color: #888; line-height: 1.6; }
+        
+        /* Tech Specs */
+        .tech-matrix {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 30px;
+        }
+        .spec-tag {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+            padding: 4px 8px; border: 1px solid var(--border);
+            color: var(--signal-dim); text-transform: uppercase;
+        }
+
+        /* Module Colors by Domain */
+        .domain-graphite .module { color: var(--signal-accent); }
+        .domain-audio .module { color: var(--signal-audio); }
+        .domain-intel .module { color: var(--signal-local); }
+        .domain-ext .module { color: var(--signal-data); }
+
+        /* Links */
+        .module-link {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5;
+        }
+
+        /* --- EXTERNAL SIGNALS (Pianobook & HF) --- */
+        .external-wrapper {
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .ext-block {
+            padding: 80px;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        .ext-block h3 { font-size: 3rem; margin-bottom: 20px; }
+        .stat-row {
+            display: flex; gap: 40px; margin-top: 40px;
             font-family: 'JetBrains Mono', monospace;
         }
-
-        /* Full Link Overlay */
-        .card-link { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; }
-
-        /* --- SIZING UTILS --- */
-        .span-12 { grid-column: span 12; }
-        .span-8 { grid-column: span 8; }
-        .span-6 { grid-column: span 6; }
-        .span-4 { grid-column: span 4; }
-        .span-3 { grid-column: span 3; }
-
-        /* Highlight Cards */
-        .graphite-highlight {
-            background: linear-gradient(160deg, rgba(25,25,25,0.8), rgba(10,10,10,1));
-            border-color: rgba(255, 255, 255, 0.1);
+        .stat-item strong { display: block; font-size: 2rem; color: white; }
+        .stat-item span { color: var(--signal-dim); font-size: 0.8rem; }
+        
+        .btn-glitch {
+            margin-top: 40px;
+            display: inline-block;
+            padding: 15px 30px;
+            border: 1px solid currentColor;
+            font-family: 'JetBrains Mono', monospace;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
         }
+        .btn-glitch:hover { background: rgba(255,255,255,0.1); }
 
-        /* --- FOOTER --- */
-        footer { border-top: 1px solid var(--border-base); padding: 60px 0; margin-top: 120px; display: flex; justify-content: space-between; align-items: center; }
-        .socials { display: flex; gap: 24px; }
-        .social-link { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-muted); transition: color 0.2s; }
-        .social-link:hover { color: var(--text-head); }
 
-        /* --- ANIMATION --- */
-        .fade-up { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .visible { opacity: 1; transform: translateY(0); }
-
+        /* --- RESPONSIVE --- */
         @media (max-width: 1024px) {
-            .span-8, .span-6, .span-4, .span-3 { grid-column: span 6; }
-            .span-12 { grid-column: span 12; }
-        }
-        @media (max-width: 768px) {
-            h1 { font-size: 3rem; }
-            .grid { grid-template-columns: 1fr; }
-            .span-12, .span-8, .span-6, .span-4, .span-3 { grid-column: span 1; }
-            .intro-block { border: none; padding-left: 0; margin-top: 20px; }
-            header::before { display: none; }
+            .grid-wrapper { grid-template-columns: 1fr; }
+            .sidebar { height: auto; position: relative; border-bottom: 1px solid var(--border); padding: 20px; }
+            .hero-title { font-size: 3rem; }
+            .project-list { grid-template-columns: 1fr; }
+            .external-wrapper { grid-template-columns: 1fr; }
+            .nav-link { display: inline-block; margin-right: 20px; }
+            .cursor { display: none; }
+            * { cursor: auto; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        
-        <!-- HERO -->
-        <header class="fade-up">
-            <div class="mono" style="color: var(--acc-indigo); margin-bottom: 16px;">/// CREATIVE SYSTEMS ARCHITECT</div>
-            <h1>
-                MATTHEW<br>
-                <span class="accent-text">WESNEY</span>
-            </h1>
-            
-            <div class="intro-block">
-                <p>
-                    I engineer <strong>Agentic Workspaces</strong> and high-performance browser engines. My work dismantles the friction between intent and execution by treating the browser as a sovereign operating system for creativity and logic.
-                </p>
-                <p>
-                    From <strong>Graphite</strong>, a suite of AI-native IDEs, a desktop-class polyphonic synthesizer running in Chrome, I build tools that act as partners—not just utilities. I focus on local-first privacy, zero-latency DSP, and human-AI collaboration that scales from prototype to production.
-                </p>
-            </div>
+    <!-- VISUAL FX -->
+    <div class="noise"></div>
+    <div class="cursor" id="cursor"></div>
 
-            <div class="tag-scroller">
-                <span class="tag">GRAPHITE PROTOCOL</span>
-                <span class="tag">REACT 19</span>
-                <span class="tag">GEMINI 3 PRO</span>
-                <span class="tag">WEBAUDIO DSP</span>
-                <span class="tag">OLLAMA</span>
-                <span class="tag">AGENTS</span>
-            </div>
-        </header>
-
-        <!-- SECTION 01: THE GRAPHITE ECOSYSTEM -->
-        <div class="section-head fade-up">
-            <h2>Agentic Workspaces</h2>
-            <span class="section-sub">01 // GRAPHITE PROTOCOL</span>
-        </div>
+    <div class="grid-wrapper">
         
-        <div class="grid">
-            
-            <!-- Graphite: Phlow -->
-            <article class="card span-8 graphite-highlight fade-up">
-                <a href="https://github.com/dovvnloading/Graphite-Phlow" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+        <!-- SIDEBAR HUD -->
+        <aside class="sidebar">
+            <div>
+                <div class="brand">
+                    MATTHEW<br>WESNEY
+                    <span class="mono">/// DOVVNLOADING</span>
+                </div>
                 
-                <div class="card-head">
-                    <h3>Graphite: Phlow</h3>
-                    <span class="badge graphite">AI-NATIVE IDE</span>
-                </div>
-                <p>
-                    A browser-based IDE where the AI lives inside the file system. Features a "Shadow Output" protocol that allows agents to write code, debug errors, and manage project files autonomously in a sandboxed virtual environment.
-                </p>
-                <div class="stack">
-                    <span class="pill">Virtual FS</span>
-                    <span class="pill">Agent Swarm</span>
-                    <span class="pill">React 19</span>
-                </div>
-            </article>
-
-            <!-- Graphite: Logica -->
-            <article class="card span-4 graphite-highlight fade-up">
-                <div class="card-head">
-                    <h3>Graphite: Logica</h3>
-                    <span class="badge graphite">SPATIAL LOGIC</span>
-                </div>
-                <p>
-                    Replaces linear chat with infinite spatial computing. Connect "Thought Nodes" and "Tool Nodes" to visually architect complex AI workflows using a drag-and-drop interface.
-                </p>
-                <div class="stack">
-                    <span class="pill">Node Graph</span>
-                    <span class="pill">Visual Programming</span>
-                </div>
-            </article>
-
-            <!-- Graphite: AdGeni -->
-            <article class="card span-6 fade-up">
-                <div class="card-head">
-                    <h3>Graphite: AdGeni</h3>
-                    <span class="badge graphite">CREATIVE SUITE</span>
-                </div>
-                <p>
-                    A unified vertical application for brand consistency. Generates copy, visuals, and voiceovers that adhere to a specific "Brand DNA," featuring a client-side video compositor.
-                </p>
-                <div class="stack">
-                    <span class="pill">Video Composition</span>
-                    <span class="pill">Canvas API</span>
-                </div>
-            </article>
-
-            <!-- Graphite: Git -->
-            <article class="card span-6 fade-up">
-                <a href="https://github.com/dovvnloading/Graphite-Git" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
-                <div class="card-head">
-                    <h3>Graphite: Git</h3>
-                    <span class="badge graphite">CLIENT</span>
-                </div>
-                <p>
-                    A local-first "Head" for GitHub. Consolidates repo management, CI/CD monitoring, and network auditing into a single dashboard, powered by an embedded AI engineering agent.
-                </p>
-                <div class="stack">
-                    <span class="pill">GitHub API</span>
-                    <span class="pill">Local Storage</span>
-                </div>
-            </article>
-        </div>
-
-        <!-- SECTION 02: HIGH-PERFORMANCE AUDIO -->
-        <div class="section-head fade-up">
-            <h2>Browser-Based DSP</h2>
-            <span class="section-sub">02 // SONIC ENGINEERING</span>
-        </div>
-
-        <div class="grid">
-            <!-- ERIN -->
-            <article class="card span-8 fade-up">
-                <div class="card-head">
-                    <h3>Enhanced Real-time Instrument Nexus</h3>
-                    <span class="badge audio">SYNTH WORKSTATION</span>
-                </div>
-                <p>
-                    Enhanced Real-time Instrument Nexus. A desktop-grade polyphonic synthesizer running in Chrome. Features custom multi-band dynamics (OTT), spectral folding, and a decoupled audio thread for glitch-free performance.
-                </p>
-                <div class="stack">
-                    <span class="pill">Web Audio API</span>
-                    <span class="pill">AudioWorklet</span>
-                    <span class="pill">Procedural Reverb</span>
-                </div>
-            </article>
-
-            <!-- LitePlay -->
-            <article class="card span-4 fade-up">
-                <div class="card-head">
-                    <h3>LitePlay VST</h3>
-                    <span class="badge audio">GENERATIVE</span>
-                </div>
-                <p>
-                    Natural Language Synthesis. Users control sound design via prompts (e.g., "Make it sound like a rainy blade runner scene"), using Function Calling to manipulate the ADSR and filters.
-                </p>
-                <div class="stack">
-                    <span class="pill">Gemini SDK</span>
-                    <span class="pill">Function Calling</span>
-                </div>
-            </article>
-
-            <!-- GlassNode -->
-            <article class="card span-6 fade-up">
-                <div class="card-head"><h3>GlassNode</h3></div>
-                <p>Modular audio environment. Visually patch cables between oscillators and filters in a 2D web interface, offering a tactile sound design experience.</p>
-                <div class="stack"><span class="pill">Modular</span><span class="pill">Nodes</span></div>
-            </article>
-
-            <!-- Poly-Rhythm 2 -->
-            <article class="card span-6 fade-up">
-                <div class="card-head"><h3>Poly-Rhythm 2</h3></div>
-                <p>Euclidean rhythm sequencer. Visualizes mathematical phase relationships and polyrhythms that are difficult to conceptualize mentally.</p>
-                <div class="stack"><span class="pill">Euclidean Math</span><span class="pill">Visualization</span></div>
-            </article>
-        </div>
-
-        <!-- SECTION 03: SOVEREIGN INTELLIGENCE -->
-        <div class="section-head fade-up">
-            <h2>Sovereign Intelligence</h2>
-            <span class="section-sub">03 // LOCAL & PRIVATE AI</span>
-        </div>
-
-        <div class="grid">
-            <!-- Cortex -->
-            <article class="card span-6 fade-up">
-                <a href="https://github.com/dovvnloading/Cortex" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
-                <div class="card-head">
-                    <h3>Cortex</h3>
-                    <span class="badge local">DESKTOP APP</span>
-                </div>
-                <p>
-                    A privacy-first frontend for local LLMs (Ollama). Implements a "Three-Tier Memory" system (Short-term, SQLite History, Permanent Nuggets) to retain user context without cloud data transfer.
-                </p>
-                <div class="stack">
-                    <span class="pill">Python</span>
-                    <span class="pill">PySide6</span>
-                    <span class="pill">SQLite</span>
-                </div>
-            </article>
-
-            <!-- Os-Scholar -->
-            <article class="card span-6 fade-up">
-                <div class="card-head">
-                    <h3>Os-Scholar</h3>
-                    <span class="badge local">MULTIMODAL</span>
-                </div>
-                <p>
-                    Academic companion featuring real-time, bi-directional voice tutoring. Mimics a phone call for language learning and utilizes vision for complex problem solving.
-                </p>
-                <div class="stack">
-                    <span class="pill">WebSockets</span>
-                    <span class="pill">Voice-to-Voice</span>
-                </div>
-            </article>
-
-            <!-- SDK Distiller -->
-            <article class="card span-4 fade-up">
-                <div class="card-head"><h3>SDK Distiller</h3></div>
-                <p>Solves "Documentation Drift." Ingests raw source code (C++, Python) and automatically generates interactive, RAG-enabled documentation sites.</p>
-            </article>
-
-             <!-- Ouroboros -->
-             <article class="card span-8 fade-up">
-                <div class="card-head"><h3>Ouroboros Dashboard</h3></div>
-                <p>A recursive, self-building runtime. An AI agent acts as the developer, writing and hot-loading React widgets directly into the live interface based on user prompts.</p>
-                <div class="stack"><span class="pill">Runtime Compilation</span><span class="pill">Babel Standalone</span></div>
-            </article>
-        </div>
-
-        <!-- SECTION 04: VISUAL ENGINEERING -->
-        <div class="section-head fade-up">
-            <h2>Visual Engineering</h2>
-            <span class="section-sub">04 // PIXEL & MESH</span>
-        </div>
-
-        <div class="grid">
-            <!-- Dither Pro 2.0 -->
-            <article class="card span-6 fade-up">
-                <div class="card-head">
-                    <h3>Dither Pro 2.0</h3>
-                    <span class="badge visual">IMAGE PROCESSOR</span>
-                </div>
-                <p>
-                    A retro-modernist engine implementing 15+ dithering algorithms (Floyd-Steinberg, Atkinson). Offloads pixel math to Web Workers for 4K processing in-browser.
-                </p>
-                <div class="stack">
-                    <span class="pill">Web Workers</span>
-                    <span class="pill">Bit-Depth</span>
-                </div>
-            </article>
-
-            <!-- Graphite: Shaders -->
-            <article class="card span-6 fade-up">
-                <div class="card-head">
-                    <h3>Graphite: Shaders</h3>
-                    <span class="badge visual">STYLING ENGINE</span>
-                </div>
-                <p>
-                    Procedural CSS generator. Automates complex UI trends like "Claymorphism" and "Neo-Brutalism" using advanced box-shadow layering instead of WebGL.
-                </p>
-                <div class="stack">
-                    <span class="pill">CSS Engine</span>
-                    <span class="pill">DOM Manipulation</span>
-                </div>
-            </article>
-
-             <!-- Voxel Command -->
-             <article class="card span-12 fade-up">
-                <div class="card-head"><h3>Voxel Command</h3></div>
-                <p>Browser-based RTS engine. A hybrid AI system uses deterministic Behavior Trees for unit tactics and LLM planning for high-level economy management, rendered via a custom 2.5D canvas engine.</p>
-                <div class="stack"><span class="pill">Game Engine</span><span class="pill">Hybrid AI</span></div>
-            </article>
-        </div>
-
-        <!-- FOOTER -->
-        <footer class="fade-up">
-            <div class="mono" style="font-size: 0.75rem; color: var(--text-muted);">
-                &copy; 2025 MATTHEW WESNEY. GRAPHITE PROTOCOL.
+                <nav>
+                    <a href="#graphite" class="nav-link hovered-trigger">01. GRAPHITE ECOSYSTEM</a>
+                    <a href="#audio" class="nav-link hovered-trigger">02. SONIC ENGINEERING</a>
+                    <a href="#intel" class="nav-link hovered-trigger">03. SOVEREIGN INTEL</a>
+                    <a href="#visual" class="nav-link hovered-trigger">04. VISUAL / PIXEL</a>
+                    <a href="#external" class="nav-link hovered-trigger">05. EXT. SIGNALS</a>
+                </nav>
             </div>
-            <div class="socials">
-                <a href="https://github.com/dovvnloading" target="_blank" class="social-link">GITHUB</a>
-                <a href="https://x.com/D3VAUX" target="_blank" class="social-link">TWITTER/X</a>
-                <a href="mailto:devaux.mail@gmail.com" class="social-link">CONTACT</a>
-            </div>
-        </footer>
 
+            <div class="status-block">
+                <span class="status-indicator"></span> SYSTEM ONLINE<br>
+                REACT 19 / GEMINI 3 PRO / WEBAUDIO<br>
+                <a href="mailto:devaux.mail@gmail.com" style="color:white; margin-top:10px; display:block;">ESTABLISH COMMS -></a>
+            </div>
+        </aside>
+
+        <!-- MAIN VIEWPORT -->
+        <main>
+            
+            <!-- HERO -->
+            <section class="hero">
+                <div class="mono" style="color: var(--signal-accent); margin-bottom: 20px;">/// ARCHITECTURAL STATEMENT</div>
+                <h1 class="hero-title">ENGINEERING<br>THE POST-IDE<br>ERA</h1>
+                
+                <div class="hero-manifesto">
+                    <p>
+                        I build <strong>Agentic Workspaces</strong> and high-performance browser engines. 
+                        My work dismantles the friction between intent and execution by treating the browser 
+                        as a sovereign operating system. I don't build websites; I build <strong>engines</strong>.
+                    </p>
+                </div>
+            </section>
+
+            <!-- DOMAIN 01: GRAPHITE -->
+            <div id="graphite" class="domain-graphite">
+                <div class="domain-header">
+                    <h2 class="domain-title">GRAPHITE PROTOCOL</h2>
+                    <span class="domain-meta mono">AGENTIC IDE / VIRTUAL FILESYSTEMS</span>
+                </div>
+                
+                <div class="project-list">
+                    <!-- PHLOW -->
+                    <div class="module hovered-trigger">
+                        <a href="https://github.com/dovvnloading/Graphite-Phlow" target="_blank" class="module-link"></a>
+                        <div class="mod-header">
+                            <span class="mod-id">SYS.01</span>
+                            <h3 class="mod-title">GRAPHITE: PHLOW</h3>
+                        </div>
+                        <p class="mod-desc">
+                            The AI-Native IDE. Features a browser-based virtual file system where "Shadow Output" protocols allow agent swarms to read, write, and debug code autonomously inside a sandboxed environment. No backend required.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">React 19</span>
+                            <span class="spec-tag">WebContainer</span>
+                            <span class="spec-tag">Agent Swarm</span>
+                        </div>
+                    </div>
+
+                    <!-- GIT -->
+                    <div class="module hovered-trigger">
+                        <a href="https://github.com/dovvnloading/Graphite-Git" target="_blank" class="module-link"></a>
+                        <div class="mod-header">
+                            <span class="mod-id">SYS.02</span>
+                            <h3 class="mod-title">GRAPHITE: GIT</h3>
+                        </div>
+                        <p class="mod-desc">
+                            A local-first "Head" for GitHub. Consolidates repo management, CI/CD, and network auditing. Includes a "Safety Net" for bulk operations and an embedded engineering agent for refactoring via API.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">GitHub API</span>
+                            <span class="spec-tag">Local Storage</span>
+                            <span class="spec-tag">ReAct Pattern</span>
+                        </div>
+                    </div>
+
+                    <!-- LOGICA -->
+                    <div class="module hovered-trigger">
+                        <div class="mod-header">
+                            <span class="mod-id">SYS.03</span>
+                            <h3 class="mod-title">GRAPHITE: LOGICA</h3>
+                        </div>
+                        <p class="mod-desc">
+                            Spatial Logic Computer. Replaces linear chat with an infinite node canvas. Decouples probabilistic LLM inference from deterministic logic loops. Visually architect workflows and transpile to Python.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">Node Graph</span>
+                            <span class="spec-tag">Visual Scripting</span>
+                            <span class="spec-tag">Transpiler</span>
+                        </div>
+                    </div>
+
+                    <!-- ADGENI -->
+                    <div class="module hovered-trigger">
+                        <a href="https://dovvnloading.github.io/AdGeni/" target="_blank" class="module-link"></a>
+                        <div class="mod-header">
+                            <span class="mod-id">SYS.04</span>
+                            <h3 class="mod-title">GRAPHITE: ADGENI</h3>
+                        </div>
+                        <p class="mod-desc">
+                            Vertical Creative Suite. Enforces Brand DNA across multi-modal generation. Features a client-side video compositor using Canvas API to stitch AI-generated audio, video, and copy.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">Canvas Video</span>
+                            <span class="spec-tag">Multi-Modal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOMAIN 02: AUDIO DSP -->
+            <div id="audio" class="domain-audio">
+                <div class="domain-header">
+                    <h2 class="domain-title">SONIC ENGINEERING</h2>
+                    <span class="domain-meta mono">WEBAUDIO / DSP / SYNTHESIS</span>
+                </div>
+
+                <div class="project-list">
+                    <!-- ERIN -->
+                    <div class="module hovered-trigger">
+                        <div class="mod-header">
+                            <span class="mod-id">DSP.01</span>
+                            <h3 class="mod-title">Enhanced Real-time Instrument Nexus</h3>
+                        </div>
+                        <p class="mod-desc">
+                            A desktop-class polyphonic synth in the browser. Features custom OTT-style multiband compression, spectral folding, and decoupled audio threads for glitch-free performance.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">AudioWorklet</span>
+                            <span class="spec-tag">Bit-Crushing</span>
+                            <span class="spec-tag">Procedural Reverb</span>
+                        </div>
+                    </div>
+
+                    <!-- LITEPLAY -->
+                    <div class="module hovered-trigger">
+                        <div class="mod-header">
+                            <span class="mod-id">DSP.02</span>
+                            <h3 class="mod-title">LITEPLAY VST</h3>
+                        </div>
+                        <p class="mod-desc">
+                            Generative Synthesis. Users control sound design via natural language ("Make it sound like Blade Runner"). Uses Function Calling to map semantics to ADSR and Filter parameters.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">Gemini SDK</span>
+                            <span class="spec-tag">Function Calling</span>
+                            <span class="spec-tag">Claymorphism</span>
+                        </div>
+                    </div>
+
+                    <!-- GLASSNODE -->
+                    <div class="module hovered-trigger">
+                        <div class="mod-header">
+                            <span class="mod-id">DSP.03</span>
+                            <h3 class="mod-title">GLASSNODE</h3>
+                        </div>
+                        <p class="mod-desc">
+                            Modular patching environment. Visually connect oscillators, filters, and LFOs with virtual cables. Demonstrates complex state management between React UI and the imperative AudioContext graph.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">Modular</span>
+                            <span class="spec-tag">Patching</span>
+                        </div>
+                    </div>
+
+                    <!-- POLY-RHYTHM -->
+                    <div class="module hovered-trigger">
+                        <a href="https://github.com/dovvnloading/POLYARBOR-Rhythm-Generator" target="_blank" class="module-link"></a>
+                        <div class="mod-header">
+                            <span class="mod-id">DSP.04</span>
+                            <h3 class="mod-title">POLY-RHYTHM 2</h3>
+                        </div>
+                        <p class="mod-desc">
+                            Euclidean Sequencer. Visualizes phase relationships and polyrhythms using radial geometry. Solves the main-thread blocking issue via lookahead scheduling.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">Euclidean Math</span>
+                            <span class="spec-tag">Scheduling</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOMAIN 03: EXTERNAL SIGNALS (FIXED) -->
+            <div id="external" class="domain-ext">
+                <div class="domain-header">
+                    <h2 class="domain-title">EXTERNAL SIGNALS</h2>
+                    <span class="domain-meta mono">COMMUNITY CONTRIBUTIONS / DATASETS</span>
+                </div>
+
+                <div class="external-wrapper">
+                    <!-- PIANOBOOK -->
+                    <div class="ext-block hovered-trigger" style="color: var(--signal-audio);">
+                        <span class="mod-id">EXT.01</span>
+                        <h3>PIANOBOOK<br>PROFILE</h3>
+                        <p class="mod-desc">
+                            A collection of highly detailed sample libraries focusing on texture, degradation, and organic synthesis. Includes "The Synths," "Broken Piano," and "Hell Drones."
+                        </p>
+                        
+                        <div class="stat-row">
+                            <div class="stat-item">
+                                <strong>18K+</strong>
+                                <span>DOWNLOADS</span>
+                            </div>
+                            <div class="stat-item">
+                                <strong>4.9/5</strong>
+                                <span>RATING</span>
+                            </div>
+                        </div>
+
+                        <a href="https://www.pianobook.co.uk/profile/mattwesney/" target="_blank" class="btn-glitch">
+                            ACCESS LIBRARY ->
+                        </a>
+                    </div>
+
+                    <!-- HUGGING FACE -->
+                    <div class="ext-block hovered-trigger" style="color: var(--signal-data);">
+                        <span class="mod-id">EXT.02</span>
+                        <h3>HUGGING FACE<br>DATASETS</h3>
+                        <p class="mod-desc">
+                            "Synthetic Reasoning Data." A comprehensive dataset (151k+ Q&A) explicitly tailored for fine-tuning AI in logical reasoning (Chain of Thought / Tree of Thought).
+                        </p>
+
+                        <div class="stat-row">
+                            <div class="stat-item">
+                                <strong>151k</strong>
+                                <span>ENTRIES</span>
+                            </div>
+                            <div class="stat-item">
+                                <strong>CoT</strong>
+                                <span>STRUCTURE</span>
+                            </div>
+                        </div>
+
+                        <a href="https://huggingface.co/moremilk" target="_blank" class="btn-glitch">
+                            VIEW DATASET ->
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOMAIN 04: INTELLIGENCE -->
+            <div id="intel" class="domain-intel">
+                <div class="domain-header">
+                    <h2 class="domain-title">SOVEREIGN INTEL</h2>
+                    <span class="domain-meta mono">LOCAL AI / PRIVACY-FIRST</span>
+                </div>
+
+                <div class="project-list">
+                    <!-- CORTEX -->
+                    <div class="module hovered-trigger">
+                        <a href="https://github.com/dovvnloading/Cortex" target="_blank" class="module-link"></a>
+                        <div class="mod-header">
+                            <span class="mod-id">INT.01</span>
+                            <h3 class="mod-title">CORTEX DESKTOP</h3>
+                        </div>
+                        <p class="mod-desc">
+                            Privacy-first frontend for Ollama. Implements a "Three-Tier Memory" system (Short-term, SQLite History, Permanent Nuggets) to retain user context without cloud data transfer.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">Python</span>
+                            <span class="spec-tag">PySide6</span>
+                            <span class="spec-tag">SQLite</span>
+                        </div>
+                    </div>
+
+                    <!-- OS-SCHOLAR -->
+                    <div class="module hovered-trigger">
+                        <div class="mod-header">
+                            <span class="mod-id">INT.02</span>
+                            <h3 class="mod-title">OS-SCHOLAR</h3>
+                        </div>
+                        <p class="mod-desc">
+                            Multimodal academic companion. Features real-time, bi-directional voice tutoring via WebSockets and visual problem solving. Mimics a phone call interface for language learning.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">WebSockets</span>
+                            <span class="spec-tag">Voice-to-Voice</span>
+                        </div>
+                    </div>
+
+                    <!-- OUROBOROS -->
+                    <div class="module hovered-trigger">
+                        <div class="mod-header">
+                            <span class="mod-id">INT.03</span>
+                            <h3 class="mod-title">OUROBOROS</h3>
+                        </div>
+                        <p class="mod-desc">
+                            Recursive runtime. An AI agent acts as the developer, writing and hot-loading React widgets directly into the live interface based on user prompts. Self-building software.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">Runtime Compilation</span>
+                            <span class="spec-tag">Babel Standalone</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DOMAIN 05: VISUAL -->
+            <div id="visual" class="domain-graphite">
+                <div class="domain-header">
+                    <h2 class="domain-title">VISUAL ENGINEERING</h2>
+                    <span class="domain-meta mono">PIXEL / MESH / CSS</span>
+                </div>
+                <div class="project-list">
+                    <!-- DITHER PRO -->
+                    <div class="module hovered-trigger">
+                        <a href="https://drive.google.com/file/d/1O58cpS1IODfMPHoZBKDXbY9Wv__rUFPr/view" class="module-link"></a>
+                        <div class="mod-header">
+                            <span class="mod-id">VIS.01</span>
+                            <h3 class="mod-title">DITHER PRO 2.0</h3>
+                        </div>
+                        <p class="mod-desc">
+                            Retro-modernist image processor. Implements 15+ algorithms (Floyd-Steinberg, Atkinson) via Web Workers. Handles 4K image manipulation in-browser without UI locking.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">Web Workers</span>
+                            <span class="spec-tag">Bit Depth</span>
+                        </div>
+                    </div>
+
+                    <!-- SHADERS -->
+                    <div class="module hovered-trigger">
+                        <div class="mod-header">
+                            <span class="mod-id">VIS.02</span>
+                            <h3 class="mod-title">GRAPHITE: SHADERS</h3>
+                        </div>
+                        <p class="mod-desc">
+                            Procedural Styling Engine. Automates complex UI trends (Claymorphism, Neo-Brutalism) using advanced CSS box-shadow layering and DOM manipulation instead of heavy WebGL libraries.
+                        </p>
+                        <div class="tech-matrix">
+                            <span class="spec-tag">CSS Engine</span>
+                            <span class="spec-tag">DOM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer style="padding: 80px; border-top: 1px solid var(--border);">
+                <div class="mono" style="color: var(--signal-dim); margin-bottom: 20px;">/// END OF LINE</div>
+                <div style="display: flex; gap: 40px; font-family: 'Inter'; font-weight: 600;">
+                    <a href="https://github.com/dovvnloading" style="color:white; text-decoration: none;">GITHUB</a>
+                    <a href="https://x.com/D3VAUX" style="color:white; text-decoration: none;">TWITTER / X</a>
+                    <a href="mailto:devaux.mail@gmail.com" style="color:white; text-decoration: none;">CONTACT</a>
+                </div>
+            </footer>
+
+        </main>
     </div>
 
+    <!-- JAVASCRIPT FOR CURSOR -->
     <script>
-        // --- SPOTLIGHT MOUSE TRACKING ---
-        const cards = document.querySelectorAll('.card');
-        document.addEventListener('mousemove', e => {
-            cards.forEach(card => {
-                const rect = card.getBoundingClientRect();
-                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-            });
+        const cursor = document.getElementById('cursor');
+        const triggers = document.querySelectorAll('.hovered-trigger');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
         });
 
-        // --- SCROLL REVEAL ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.05 });
-
-        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+        triggers.forEach(trigger => {
+            trigger.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            trigger.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
     </script>
 </body>
 </html>
