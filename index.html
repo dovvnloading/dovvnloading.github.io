@@ -7,7 +7,6 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Inter for body, JetBrains Mono for data, Syncopate for headers -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
@@ -18,26 +17,25 @@
             --surface-hover: #111111;
             
             /* --- ARCHITECTURE --- */
-            --border: #1f1f1f;
+            --border: #262626; /* Slightly lighter for visibility */
             --border-highlight: #333;
-            --gap-size: 1px; /* The physical separation between panels */
             
             /* --- TYPOGRAPHY --- */
             --text-main: #e5e5e5;
-            --text-dim: #525252;
+            --text-dim: #666;
             --text-accent: #ffffff;
             
             /* --- DOMAIN COLORS --- */
-            --c-graphite: #3b82f6; /* Blue */
-            --c-audio: #eab308;    /* Gold */
-            --c-intel: #10b981;    /* Emerald */
-            --c-visual: #ec4899;   /* Pink */
+            --c-graphite: #3b82f6; 
+            --c-audio: #eab308;    
+            --c-intel: #10b981;    
+            --c-visual: #ec4899;   
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
         
         body {
-            background-color: var(--bg);
+            background-color: var(--border); /* The Grid Lines Color */
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -52,19 +50,22 @@
             transition: width 0.2s, height 0.2s;
         }
         body:hover #cursor { opacity: 1; }
-        .hover-target:hover ~ #cursor, .hover-target:hover { transform: scale(1.1); }
+        
+        /* HOVER STATES - NO SCALING TO PREVENT OVERLAP */
+        a:hover ~ #cursor, .card:hover ~ #cursor { transform: scale(1.5); background: #fff; mix-blend-mode: normal; opacity: 0.2;}
 
         /* --- LAYOUT --- */
         .wrapper {
             display: grid;
             grid-template-columns: 280px 1fr;
             min-height: 100vh;
+            gap: 1px; /* Vertical divider between sidebar and main */
+            background-color: var(--border);
         }
 
         /* --- SIDEBAR --- */
         .sidebar {
             position: sticky; top: 0; height: 100vh;
-            border-right: 1px solid var(--border);
             padding: 32px;
             display: flex; flex-direction: column; justify-content: space-between;
             background: var(--bg);
@@ -93,35 +94,37 @@
 
         /* --- MAIN CONTENT --- */
         main { 
-            position: relative; 
-            z-index: 1; 
-            background: var(--border); /* This creates the grid lines via the gap */
+            background: var(--border); 
             display: flex;
             flex-direction: column;
-            gap: 1px; /* Horizontal separation between sections */
-        }
-
-        /* SECTION CONTAINERS */
-        .content-section {
-            background: var(--bg);
+            gap: 1px; /* Horizontal separators between sections */
         }
 
         /* HERO */
         .hero {
             padding: 120px 60px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.01) 0%, var(--bg) 100%);
+            background-color: var(--bg);
+            background-image: linear-gradient(180deg, rgba(255,255,255,0.01) 0%, var(--bg) 100%);
         }
         .hero p {
             max-width: 600px; font-size: 24px; line-height: 1.4; letter-spacing: -0.02em; color: #888;
         }
         .hero strong { color: #eee; font-weight: 500; }
 
-        /* --- GRID SYSTEM (THE FIX) --- */
+        /* --- GRID SYSTEM --- */
+        /* This container background color acts as the border */
+        .content-section {
+            background-color: var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
         .domain-header {
             padding: 40px 60px 20px;
             display: flex; justify-content: space-between; align-items: flex-end;
-            position: sticky; top: 0; background: var(--bg); z-index: 40;
-            border-bottom: 1px solid var(--border);
+            background: var(--bg); 
+            z-index: 40;
         }
         .domain-header h2 { font-family: 'Syncopate', sans-serif; font-size: 16px; font-weight: 700; }
         .domain-header span { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); }
@@ -129,29 +132,31 @@
         .project-grid {
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 1px; /* THE GAP IS THE BORDER */
-            background-color: var(--border); /* BACKGROUND SHOWS THROUGH GAP */
-            border-bottom: 1px solid var(--border);
+            gap: 1px; /* This gap creates the vertical borders between cards */
+            background-color: var(--border); 
         }
 
         /* --- PROJECT CARD --- */
         .card {
-            background-color: var(--bg); /* Cards sit on top of grid lines */
+            background-color: var(--bg); 
             padding: 40px; 
             position: relative; 
             transition: background 0.2s;
             display: flex; 
             flex-direction: column; 
-            /* No fixed height, let content dictate, but Grid stretches them equal */
+            /* Let flexbox handle height naturally */
+            height: 100%; 
+            min-height: 380px; 
         }
         .card:hover { background: var(--surface-hover); }
 
-        /* Special styling for the Main App */
+        /* PRIME CARD: Spans full width */
         .card.prime-card {
-            background: rgba(59, 130, 246, 0.03);
-            grid-column: 1 / -1; /* Span full width */
+            background: #080b14; /* Very subtle blue tint */
+            grid-column: 1 / -1; 
         }
-        .card.prime-card:hover { background: rgba(59, 130, 246, 0.08); }
+        .card.prime-card:hover { background: #0c101c; }
+        .card.prime-card h3 { color: var(--c-graphite); font-size: 24px; }
 
         .card-meta {
             font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
@@ -164,8 +169,8 @@
         }
         
         .card p {
-            font-size: 13px; line-height: 1.6; color: #777; max-width: 90%;
-            margin-bottom: 24px;
+            font-size: 13px; line-height: 1.6; color: #888; max-width: 95%;
+            margin-bottom: 32px; flex-grow: 1;
         }
 
         .specs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
@@ -175,7 +180,7 @@
             color: #999; text-transform: uppercase;
         }
 
-        /* --- COLOR CODING --- */
+        /* --- COLOR ACCENTS --- */
         .c-graphite h3 { color: var(--c-graphite); }
         .c-audio h3 { color: var(--c-audio); }
         .c-intel h3 { color: var(--c-intel); }
@@ -208,7 +213,7 @@
         /* --- RESPONSIVE --- */
         @media (max-width: 1024px) {
             .wrapper { grid-template-columns: 1fr; }
-            .sidebar { height: auto; border-bottom: 1px solid var(--border); border-right: none; flex-direction: row; align-items: center; padding: 20px; }
+            .sidebar { height: auto; position: relative; border-bottom: 1px solid var(--border); border-right: none; flex-direction: row; align-items: center; padding: 20px; }
             .nav { display: none; }
             .project-grid { grid-template-columns: 1fr; }
             .ext-grid { grid-template-columns: 1fr; }
@@ -229,11 +234,11 @@
             </div>
 
             <nav class="nav">
-                <a href="#graphite" data-index="1" class="hover-target">GRAPHITE PROTOCOL</a>
-                <a href="#audio" data-index="2" class="hover-target">SONIC ENGINEERING</a>
-                <a href="#intel" data-index="3" class="hover-target">SOVEREIGN INTEL</a>
-                <a href="#visual" data-index="4" class="hover-target">VISUAL / PIXEL</a>
-                <a href="#external" data-index="5" class="hover-target">EXTERNAL SIGNALS</a>
+                <a href="#graphite" data-index="1">GRAPHITE PROTOCOL</a>
+                <a href="#audio" data-index="2">SONIC ENGINEERING</a>
+                <a href="#intel" data-index="3">SOVEREIGN INTEL</a>
+                <a href="#visual" data-index="4">VISUAL / PIXEL</a>
+                <a href="#external" data-index="5">EXTERNAL SIGNALS</a>
             </nav>
 
             <div class="meta-status">
@@ -244,7 +249,7 @@
 
         <main>
             <!-- HERO -->
-            <section class="content-section hero">
+            <section class="hero">
                 <p>
                     I construct <strong>Agentic Workspaces</strong> and high-performance browser engines. 
                     From zero-backend IDEs to polyphonic synthesizers in the browser, I dismantle the friction between intent and execution.
@@ -260,15 +265,15 @@
                 <div class="project-grid">
                     
                     <!-- GRAPHITE PRIME (MAIN APP) -->
-                    <article class="card hover-target prime-card">
+                    <article class="card prime-card">
                          <div class="card-meta"><span>ORCHESTRATOR</span><span>v2.1</span></div>
                         <h3>GRAPHITE: PRIME</h3>
-                        <p>The sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control via secure local-runtime bridging. Features a "Just-In-Time" persona injection system and a hybrid IPC architecture for arbitrary code synthesis beyond the browser sandbox.</p>
-                        <div class="specs"><span class="spec">Recursive Agents</span><span class="spec">Local Runtime Bridge</span><span class="spec">Spatial Canvas</span></div>
+                        <p>The sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control via secure local-runtime bridging. Features a "Just-In-Time" persona injection system and a hybrid IPC architecture that breaks the browser sandbox to synthesize code, execute scripts, and manipulate local files.</p>
+                        <div class="specs"><span class="spec">Recursive Agents</span><span class="spec">Local Runtime Bridge</span><span class="spec">Spatial Canvas</span><span class="spec">IPC</span></div>
                     </article>
 
                     <!-- PHLOW -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <a href="https://github.com/dovvnloading/Graphite-Phlow" target="_blank" class="card-link"></a>
                         <div class="card-meta"><span>IDE</span><span>v1.2</span></div>
                         <h3>GRAPHITE: PHLOW</h3>
@@ -277,7 +282,7 @@
                     </article>
 
                     <!-- LOGICA -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>LOGIC</span><span>v2.0</span></div>
                         <h3>GRAPHITE: LOGICA</h3>
                         <p>Visual Flow Engineering. Decouples probabilistic LLM inference from deterministic logic loops. Architect workflows via "Thought Nodes" and transpile visual graphs to Python scripts.</p>
@@ -285,7 +290,7 @@
                     </article>
 
                     <!-- GIT -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <a href="https://github.com/dovvnloading/Graphite-Git" target="_blank" class="card-link"></a>
                         <div class="card-meta"><span>CLIENT</span><span>v1.0</span></div>
                         <h3>GRAPHITE: GIT</h3>
@@ -294,7 +299,7 @@
                     </article>
 
                     <!-- WEBDEV -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <a href="https://www.google.com/search?q=https://github.com/dovvnloading/Graphite-WebDev" target="_blank" class="card-link"></a>
                         <div class="card-meta"><span>ENV</span><span>v1.5</span></div>
                         <h3>GRAPHITE: WEBDEV</h3>
@@ -303,7 +308,7 @@
                     </article>
                     
                      <!-- SIGNALFLOW -->
-                     <article class="card hover-target">
+                     <article class="card">
                         <div class="card-meta"><span>FILTER</span><span>v1.0</span></div>
                         <h3>GRAPHITE: SIGNALFLOW</h3>
                         <p>Information distillation engine. Generates a "Surgical Log" (diff-view) of rhetorical noise removal. Visualizes argument topology via custom ClaySankey and LogicGraph SVG components.</p>
@@ -311,7 +316,7 @@
                     </article>
 
                     <!-- COGNITION -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>PYTHON</span><span>v0.9</span></div>
                         <h3>GRAPHITE: COGNITION</h3>
                         <p>Python-specific agentic workspace. Features a custom regex-based tokenizer for syntax highlighting and a "Typo Detection" service using Levenshtein distance.</p>
@@ -328,7 +333,7 @@
                 </div>
                 <div class="project-grid">
                     <!-- ERIN -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>SYNTH</span><span>v3.0</span></div>
                         <h3>ERIN WORKSTATION</h3>
                         <p>Desktop-class polyphonic synth. Implements custom OTT-style multiband compression and spectral folding. Decouples the AudioGraph from React state for glitch-free performance.</p>
@@ -336,7 +341,7 @@
                     </article>
 
                     <!-- LITEPLAY -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>VST</span><span>v2.1</span></div>
                         <h3>LITEPLAY VST</h3>
                         <p>Generative Synthesis. Maps natural language to ADSR and Filter parameters via Function Calling. Features algorithmically generated impulse responses for convolution reverb.</p>
@@ -344,7 +349,7 @@
                     </article>
 
                     <!-- POLY-RHYTHM -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <a href="https://github.com/dovvnloading/POLYARBOR-Rhythm-Generator" target="_blank" class="card-link"></a>
                         <div class="card-meta"><span>SEQ</span><span>v2.0</span></div>
                         <h3>POLY-RHYTHM 2</h3>
@@ -353,7 +358,7 @@
                     </article>
                     
                     <!-- GLASSNODE -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>MODULAR</span><span>v1.0</span></div>
                         <h3>GLASSNODE</h3>
                         <p>Visual patching environment. Features a custom HTML5/SVG hybrid engine for rendering bezier cables. Implements Hermite Cubic Interpolation for wavetable morphing.</p>
@@ -361,7 +366,7 @@
                     </article>
                     
                     <!-- SOMNIUM -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>AMBIENT</span><span>v1.0</span></div>
                         <h3>SOMNIUM</h3>
                         <p>Procedural sleep soundscape. Synthesizes Pink Noise via Paul Kellett's refinement method. Features a "Mastering Chain" (Safe Mode) to prevent digital clipping artifacts.</p>
@@ -369,7 +374,7 @@
                     </article>
 
                     <!-- ERN-DND -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>GAME</span><span>v1.0</span></div>
                         <h3>ErN-DnD</h3>
                         <p>DJ Controller & Rhythm Game. Analyzes FFT data to procedurally generate game levels from local audio files. Features physics-based scratch emulation via playbackRate manipulation.</p>
@@ -386,7 +391,7 @@
                 </div>
                 <div class="project-grid">
                     <!-- CORTEX -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <a href="https://github.com/dovvnloading/Cortex" target="_blank" class="card-link"></a>
                         <div class="card-meta"><span>DESKTOP</span><span>v4.0</span></div>
                         <h3>CORTEX</h3>
@@ -395,7 +400,7 @@
                     </article>
 
                     <!-- OUROBOROS -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>RUNTIME</span><span>v3.0</span></div>
                         <h3>OUROBOROS</h3>
                         <p>Recursive Dashboard. An AI agent writes and hot-loads React widgets into the live runtime using Babel Standalone. Features a synthetic `require` loop for dependency injection.</p>
@@ -403,7 +408,7 @@
                     </article>
                     
                     <!-- OS-SCHOLAR -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>EDU</span><span>v1.0</span></div>
                         <h3>OS-SCHOLAR</h3>
                         <p>Multimodal academic tool. Establishes bi-directional WebSocket connections for voice tutoring. Converts raw Float32 audio to PCM Int16 for Gemini Live streaming.</p>
@@ -411,7 +416,7 @@
                     </article>
 
                     <!-- SDK DISTILLER -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>DOCS</span><span>v1.0</span></div>
                         <h3>SDK DISTILLER</h3>
                         <p>Documentation generator. Ingests raw source code (C++/Python) to build RAG-enabled docs. Implements a client-side vector store and hybrid keyword/vector search.</p>
@@ -419,7 +424,7 @@
                     </article>
 
                     <!-- EXILE'S ORACLE -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>GAME AI</span><span>v1.0</span></div>
                         <h3>EXILE'S ORACLE</h3>
                         <p>Path of Exile domain expert. Uses strict "Immutable Laws" context injection to prevent hallucination. Features dynamic theming based on selected persona.</p>
@@ -427,7 +432,7 @@
                     </article>
                     
                     <!-- SORTIFY -->
-                    <article class="card hover-target">
+                    <article class="card">
                          <div class="card-meta"><span>EDU</span><span>v1.0</span></div>
                         <h3>SORTIFY</h3>
                         <p>Algorithm visualizer. Uses JavaScript Generator functions (`function*`) to step through sorting logic without freezing the main thread. Features FM synthesis audio feedback.</p>
@@ -444,7 +449,7 @@
                 </div>
                 <div class="project-grid">
                     <!-- DITHER PRO -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <a href="https://drive.google.com/file/d/1O58cpS1IODfMPHoZBKDXbY9Wv__rUFPr/view" class="card-link"></a>
                         <div class="card-meta"><span>IMAGE</span><span>v2.0</span></div>
                         <h3>DITHER PRO 2.0</h3>
@@ -453,7 +458,7 @@
                     </article>
 
                     <!-- GENESIS o1 -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>3D</span><span>v1.0</span></div>
                         <h3>GENESIS o1</h3>
                         <p>Panoramic generator. Features a custom `AnimusBlockMaterial` shader for particle transition effects and automated ElevenLabs audio stem layering.</p>
@@ -461,7 +466,7 @@
                     </article>
                     
                     <!-- VOXEL COMMAND -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>GAME</span><span>v1.0</span></div>
                         <h3>VOXEL COMMAND</h3>
                         <p>Browser RTS engine. Renders 2.5D voxels via HTML5 Canvas. Features a hybrid AI combining Behavior Trees (Tactical) and LLM Planning (Strategic).</p>
@@ -469,7 +474,7 @@
                     </article>
                     
                     <!-- OS-VE -->
-                    <article class="card hover-target">
+                    <article class="card">
                          <div class="card-meta"><span>VIDEO</span><span>v1.0</span></div>
                         <h3>OS-VE</h3>
                         <p>Client-side video editor. Features a magnetic timeline and a `requestAnimationFrame` render loop decoupled from React. Exports via MediaRecorder API.</p>
@@ -477,7 +482,7 @@
                     </article>
 
                     <!-- SHADERS -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <div class="card-meta"><span>CSS</span><span>v1.0</span></div>
                         <h3>GRAPHITE: SHADERS</h3>
                         <p>Procedural Styling Engine. Automates Claymorphism and Neo-brutalism trends using advanced DOM box-shadow layering rather than WebGL.</p>
@@ -485,7 +490,7 @@
                     </article>
                     
                     <!-- ADGENI -->
-                    <article class="card hover-target">
+                    <article class="card">
                         <a href="https://dovvnloading.github.io/AdGeni/" target="_blank" class="card-link"></a>
                          <div class="card-meta"><span>SUITE</span><span>v1.0</span></div>
                         <h3>GRAPHITE: ADGENI</h3>
@@ -503,7 +508,7 @@
                 </div>
                 <div class="ext-grid">
                     <!-- PIANOBOOK -->
-                    <div class="ext-item hover-target" style="color: var(--c-audio)">
+                    <div class="ext-item" style="color: var(--c-audio)">
                         <div class="card-meta"><span>SAMPLE LIBRARY</span></div>
                         <h3 class="big-stat">18K+<br>DLs</h3>
                         <p style="margin-bottom: 20px;">
@@ -513,7 +518,7 @@
                     </div>
                     
                     <!-- HUGGING FACE -->
-                    <div class="ext-item hover-target" style="color: var(--c-visual)">
+                    <div class="ext-item" style="color: var(--c-visual)">
                         <div class="card-meta"><span>DATASET</span></div>
                         <h3 class="big-stat">151K<br>ROWS</h3>
                         <p style="margin-bottom: 20px;">
