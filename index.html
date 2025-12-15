@@ -86,12 +86,6 @@
         .nav a::before { content: '0' attr(data-index) ' '; margin-right: 8px; opacity: 0.3; }
         .nav a:hover { color: var(--text-accent); padding-left: 8px; }
 
-        .meta-status {
-            font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
-            border-top: 1px solid var(--border); padding-top: 16px;
-        }
-        .ping { display: inline-block; width: 6px; height: 6px; background: #22c55e; border-radius: 50%; margin-right: 6px; }
-
         /* --- MAIN CONTENT --- */
         main { 
             background: var(--border); 
@@ -240,13 +234,12 @@
                 <a href="#visual" data-index="4">VISUAL / PIXEL</a>
                 <a href="#external" data-index="5">EXTERNAL SIGNALS</a>
             </nav>
-
-            
+            <!-- Removed System Online Block -->
         </aside>
 
         <main>
             <!-- HERO -->
-            <section class="hero">
+            <section class="content-section hero">
                 <p>
                     I construct <strong>Agentic Workspaces</strong> and high-performance browser engines. 
                     From zero-backend IDEs to polyphonic synthesizers in the browser, I dismantle the friction between intent and execution.
@@ -265,7 +258,7 @@
                     <article class="card prime-card">
                          <div class="card-meta"><span>ORCHESTRATOR</span><span>v2.1</span></div>
                         <h3>GRAPHITE: PRIME</h3>
-                        <p>The sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control via secure local-runtime bridging. Features a "Just-In-Time" persona injection system and a hybrid IPC architecture that breaks the browser sandbox to synthesize code, execute scripts, and manipulate local files.</p>
+                        <p>The sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control via secure local-runtime bridging. Features a "Just-In-Time" persona injection system and a hybrid IPC architecture for arbitrary code synthesis beyond the browser sandbox.</p>
                         <div class="specs"><span class="spec">Recursive Agents</span><span class="spec">Local Runtime Bridge</span><span class="spec">Spatial Canvas</span><span class="spec">IPC</span></div>
                     </article>
 
@@ -546,4 +539,3 @@
     </script>
 </body>
 </html>
-
