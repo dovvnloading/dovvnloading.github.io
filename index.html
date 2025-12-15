@@ -179,10 +179,11 @@
             padding: 4px 8px; border-radius: 4px; border: 1px solid transparent;
             text-transform: uppercase;
         }
+        /* Badge Variants */
         .badge.graphite { color: var(--acc-indigo); background: rgba(129, 140, 248, 0.1); border-color: rgba(129, 140, 248, 0.2); }
-        .badge.hf { color: var(--acc-gold); background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.2); }
-        .badge.pb { color: var(--acc-teal); background: rgba(45, 212, 191, 0.1); border-color: rgba(45, 212, 191, 0.2); }
-        .badge.red { color: var(--acc-rose); background: rgba(251, 113, 133, 0.1); border-color: rgba(251, 113, 133, 0.2); }
+        .badge.audio { color: var(--acc-gold); background: rgba(251, 191, 36, 0.1); border-color: rgba(251, 191, 36, 0.2); }
+        .badge.local { color: var(--acc-teal); background: rgba(45, 212, 191, 0.1); border-color: rgba(45, 212, 191, 0.2); }
+        .badge.visual { color: var(--acc-rose); background: rgba(251, 113, 133, 0.1); border-color: rgba(251, 113, 133, 0.2); }
 
         /* Tech Stack */
         .stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; position: relative; z-index: 2; }
@@ -237,7 +238,7 @@
         
         <!-- HERO -->
         <header class="fade-up">
-            <div class="mono" style="color: var(--acc-indigo); margin-bottom: 16px;">/// CREATIVE TECHNOLOGIST</div>
+            <div class="mono" style="color: var(--acc-indigo); margin-bottom: 16px;">/// CREATIVE SYSTEMS ARCHITECT</div>
             <h1>
                 MATTHEW<br>
                 <span class="accent-text">WESNEY</span>
@@ -245,10 +246,10 @@
             
             <div class="intro-block">
                 <p>
-                    I make tools that let creative people <strong>think and perform at scale</strong>. My projects combine deep technical craft with a designer’s insistence on clarity — from VSTs and browser-based performance environments to large node-based ecosystems that model entire workflows. I obsess over <strong>latency, expressivity, and interface logic</strong>: the goal isn’t novelty, it’s a durable tool that professionals actually choose to use.
+                    I engineer <strong>Agentic Workspaces</strong> and high-performance browser engines. My work dismantles the friction between intent and execution by treating the browser as a sovereign operating system for creativity and logic.
                 </p>
                 <p>
-                    <strong>Practically-minded and opinionated</strong>, I cut through fluff to ship systems that are dense in capability but clean to operate. If you want pragmatic innovation that scales from studio demo to production, let’s talk.
+                    From <strong>Graphite</strong>, a suite of AI-native IDEs, a desktop-class polyphonic synthesizer running in Chrome, I build tools that act as partners—not just utilities. I focus on local-first privacy, zero-latency DSP, and human-AI collaboration that scales from prototype to production.
                 </p>
             </div>
 
@@ -256,277 +257,245 @@
                 <span class="tag">GRAPHITE PROTOCOL</span>
                 <span class="tag">REACT 19</span>
                 <span class="tag">GEMINI 3 PRO</span>
-                <span class="tag">PYTHON / PYSIDE6</span>
-                <span class="tag">WEBAUDIO</span>
-                <span class="tag">SYNTHETIC DATA</span>
+                <span class="tag">WEBAUDIO DSP</span>
+                <span class="tag">OLLAMA</span>
+                <span class="tag">AGENTS</span>
             </div>
         </header>
 
-        <!-- SECTION: GRAPHITE SUITE -->
+        <!-- SECTION 01: THE GRAPHITE ECOSYSTEM -->
         <div class="section-head fade-up">
-            <h2>The Graphite Ecosystem</h2>
-            <span class="section-sub">01 // FLAGSHIP SUITE</span>
+            <h2>Agentic Workspaces</h2>
+            <span class="section-sub">01 // GRAPHITE PROTOCOL</span>
         </div>
         
         <div class="grid">
             
-            <!-- Graphite: Git (Main Feature) -->
+            <!-- Graphite: Phlow -->
             <article class="card span-8 graphite-highlight fade-up">
-                <a href="https://github.com/dovvnloading/graphite-git" target="_blank" class="card-link"></a>
-                <!-- LINK INDICATOR -->
+                <a href="https://github.com/dovvnloading/Graphite-Phlow" target="_blank" class="card-link"></a>
                 <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
                 
                 <div class="card-head">
-                    <h3>Graphite: Git</h3>
-                    <span class="badge graphite">CLIENT-SIDE</span>
+                    <h3>Graphite: Phlow</h3>
+                    <span class="badge graphite">AI-NATIVE IDE</span>
                 </div>
                 <p>
-                    A secure, local-first GitHub client with an integrated AI engineering agent. Unlike standard clients, Graphite:Git operates entirely in the browser. Manage repos, edit code, and audit your network with a "Safety Net" feature.
+                    A browser-based IDE where the AI lives inside the file system. Features a "Shadow Output" protocol that allows agents to write code, debug errors, and manage project files autonomously in a sandboxed virtual environment.
                 </p>
                 <div class="stack">
-                    <span class="pill">React</span>
-                    <span class="pill">Gemini Agent</span>
-                    <span class="pill">Local Storage</span>
-                    <span class="pill">Vite</span>
-                </div>
-            </article>
-
-            <!-- Graphite: WebDev -->
-            <article class="card span-4 graphite-highlight fade-up">
-                <div class="card-head">
-                    <h3>Graphite: WebDev</h3>
-                    <span class="badge graphite">IDE</span>
-                </div>
-                <p>
-                    An Agentic Web IDE. A browser-native environment where natural language prompts are converted into functional apps via a "Shadow Output" protocol.
-                </p>
-                <div class="stack">
-                    <span class="pill">Vibe Coding</span>
                     <span class="pill">Virtual FS</span>
-                    <span class="pill">Multi-Agent</span>
+                    <span class="pill">Agent Swarm</span>
+                    <span class="pill">React 19</span>
                 </div>
             </article>
 
             <!-- Graphite: Logica -->
-            <article class="card span-6 graphite-highlight fade-up">
+            <article class="card span-4 graphite-highlight fade-up">
                 <div class="card-head">
                     <h3>Graphite: Logica</h3>
-                    <span class="badge graphite">PROTOCOL</span>
+                    <span class="badge graphite">SPATIAL LOGIC</span>
                 </div>
                 <p>
-                    Visual Flow Engineering. Decouples probabilistic inference (LLM) from deterministic logic. Construct reliable, loop-safe AI workflows visually and transpile them to Python.
+                    Replaces linear chat with infinite spatial computing. Connect "Thought Nodes" and "Tool Nodes" to visually architect complex AI workflows using a drag-and-drop interface.
                 </p>
                 <div class="stack">
-                    <span class="pill">Visual Scripting</span>
-                    <span class="pill">Graph Theory</span>
+                    <span class="pill">Node Graph</span>
+                    <span class="pill">Visual Programming</span>
+                </div>
+            </article>
+
+            <!-- Graphite: AdGeni -->
+            <article class="card span-6 fade-up">
+                <div class="card-head">
+                    <h3>Graphite: AdGeni</h3>
+                    <span class="badge graphite">CREATIVE SUITE</span>
+                </div>
+                <p>
+                    A unified vertical application for brand consistency. Generates copy, visuals, and voiceovers that adhere to a specific "Brand DNA," featuring a client-side video compositor.
+                </p>
+                <div class="stack">
+                    <span class="pill">Video Composition</span>
+                    <span class="pill">Canvas API</span>
+                </div>
+            </article>
+
+            <!-- Graphite: Git -->
+            <article class="card span-6 fade-up">
+                <a href="https://github.com/dovvnloading/Graphite-Git" target="_blank" class="card-link"></a>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head">
+                    <h3>Graphite: Git</h3>
+                    <span class="badge graphite">CLIENT</span>
+                </div>
+                <p>
+                    A local-first "Head" for GitHub. Consolidates repo management, CI/CD monitoring, and network auditing into a single dashboard, powered by an embedded AI engineering agent.
+                </p>
+                <div class="stack">
+                    <span class="pill">GitHub API</span>
+                    <span class="pill">Local Storage</span>
+                </div>
+            </article>
+        </div>
+
+        <!-- SECTION 02: HIGH-PERFORMANCE AUDIO -->
+        <div class="section-head fade-up">
+            <h2>Browser-Based DSP</h2>
+            <span class="section-sub">02 // SONIC ENGINEERING</span>
+        </div>
+
+        <div class="grid">
+            <!-- ERIN -->
+            <article class="card span-8 fade-up">
+                <div class="card-head">
+                    <h3>Enhanced Real-time Instrument Nexus</h3>
+                    <span class="badge audio">SYNTH WORKSTATION</span>
+                </div>
+                <p>
+                    Enhanced Real-time Instrument Nexus. A desktop-grade polyphonic synthesizer running in Chrome. Features custom multi-band dynamics (OTT), spectral folding, and a decoupled audio thread for glitch-free performance.
+                </p>
+                <div class="stack">
+                    <span class="pill">Web Audio API</span>
+                    <span class="pill">AudioWorklet</span>
+                    <span class="pill">Procedural Reverb</span>
+                </div>
+            </article>
+
+            <!-- LitePlay -->
+            <article class="card span-4 fade-up">
+                <div class="card-head">
+                    <h3>LitePlay VST</h3>
+                    <span class="badge audio">GENERATIVE</span>
+                </div>
+                <p>
+                    Natural Language Synthesis. Users control sound design via prompts (e.g., "Make it sound like a rainy blade runner scene"), using Function Calling to manipulate the ADSR and filters.
+                </p>
+                <div class="stack">
+                    <span class="pill">Gemini SDK</span>
+                    <span class="pill">Function Calling</span>
+                </div>
+            </article>
+
+            <!-- GlassNode -->
+            <article class="card span-6 fade-up">
+                <div class="card-head"><h3>GlassNode</h3></div>
+                <p>Modular audio environment. Visually patch cables between oscillators and filters in a 2D web interface, offering a tactile sound design experience.</p>
+                <div class="stack"><span class="pill">Modular</span><span class="pill">Nodes</span></div>
+            </article>
+
+            <!-- Poly-Rhythm 2 -->
+            <article class="card span-6 fade-up">
+                <div class="card-head"><h3>Poly-Rhythm 2</h3></div>
+                <p>Euclidean rhythm sequencer. Visualizes mathematical phase relationships and polyrhythms that are difficult to conceptualize mentally.</p>
+                <div class="stack"><span class="pill">Euclidean Math</span><span class="pill">Visualization</span></div>
+            </article>
+        </div>
+
+        <!-- SECTION 03: SOVEREIGN INTELLIGENCE -->
+        <div class="section-head fade-up">
+            <h2>Sovereign Intelligence</h2>
+            <span class="section-sub">03 // LOCAL & PRIVATE AI</span>
+        </div>
+
+        <div class="grid">
+            <!-- Cortex -->
+            <article class="card span-6 fade-up">
+                <a href="https://github.com/dovvnloading/Cortex" target="_blank" class="card-link"></a>
+                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
+
+                <div class="card-head">
+                    <h3>Cortex</h3>
+                    <span class="badge local">DESKTOP APP</span>
+                </div>
+                <p>
+                    A privacy-first frontend for local LLMs (Ollama). Implements a "Three-Tier Memory" system (Short-term, SQLite History, Permanent Nuggets) to retain user context without cloud data transfer.
+                </p>
+                <div class="stack">
                     <span class="pill">Python</span>
+                    <span class="pill">PySide6</span>
+                    <span class="pill">SQLite</span>
                 </div>
             </article>
 
-            <!-- Graphite: Phlow -->
-            <article class="card span-6 graphite-highlight fade-up">
-                <a href="https://dovvnloading.github.io/Graphite-Phlow" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
+            <!-- Os-Scholar -->
+            <article class="card span-6 fade-up">
                 <div class="card-head">
-                    <h3>Graphite-Phlow</h3>
-                    <span class="badge graphite">ASSISTANT</span>
+                    <h3>Os-Scholar</h3>
+                    <span class="badge local">MULTIMODAL</span>
                 </div>
                 <p>
-                    Client-side agentic IDE. Uses "Context Stuffing" to eliminate RAG, featuring a live code preview and project-aware memory for small-to-medium builds.
+                    Academic companion featuring real-time, bi-directional voice tutoring. Mimics a phone call for language learning and utilizes vision for complex problem solving.
                 </p>
                 <div class="stack">
-                    <span class="pill">React 19</span>
-                    <span class="pill">WebContainer</span>
-                    <span class="pill">Swarm</span>
+                    <span class="pill">WebSockets</span>
+                    <span class="pill">Voice-to-Voice</span>
                 </div>
             </article>
 
-            <!-- Graphite: Genesis -->
+            <!-- SDK Distiller -->
             <article class="card span-4 fade-up">
-                <div class="card-head"><h3>Graphite: Genesis o1</h3></div>
-                <p>Panoramic Environment Generator. Create and explore immersive 360-degree worlds generated on the fly.</p>
-                <div class="stack"><span class="pill">3D</span><span class="pill">Generative</span></div>
+                <div class="card-head"><h3>SDK Distiller</h3></div>
+                <p>Solves "Documentation Drift." Ingests raw source code (C++, Python) and automatically generates interactive, RAG-enabled documentation sites.</p>
             </article>
 
-            <!-- Graphite: Desktop -->
-            <article class="card span-4 fade-up">
-                <div class="card-head"><h3>Graphite: Desktop</h3></div>
-                <p>The original orchestrator. A PyQT6 node-based workspace connecting Ollama, OpenAI, and Anthropic.</p>
-                <div class="stack"><span class="pill">PyQt6</span><span class="pill">Local</span></div>
-            </article>
-
-            <!-- Graphite: Canvas -->
-            <article class="card span-4 fade-up">
-                <div class="card-head"><h3>Graphite: Canvas</h3></div>
-                <p>UI Design Suite. Bridges visual editing with AI code generation in a charcoal monochrome aesthetic.</p>
-                <div class="stack"><span class="pill">Design</span><span class="pill">UI/UX</span></div>
+             <!-- Ouroboros -->
+             <article class="card span-8 fade-up">
+                <div class="card-head"><h3>Ouroboros Dashboard</h3></div>
+                <p>A recursive, self-building runtime. An AI agent acts as the developer, writing and hot-loading React widgets directly into the live interface based on user prompts.</p>
+                <div class="stack"><span class="pill">Runtime Compilation</span><span class="pill">Babel Standalone</span></div>
             </article>
         </div>
 
-        <!-- SECTION: SONIC ENGINEERING -->
+        <!-- SECTION 04: VISUAL ENGINEERING -->
         <div class="section-head fade-up">
-            <h2>Sonic Engineering</h2>
-            <span class="section-sub">02 // AUDIO DSP</span>
+            <h2>Visual Engineering</h2>
+            <span class="section-sub">04 // PIXEL & MESH</span>
         </div>
 
         <div class="grid">
-            <!-- Pianobook -->
+            <!-- Dither Pro 2.0 -->
             <article class="card span-6 fade-up">
-                <a href="https://www.pianobook.co.uk/profile/mattwesney/" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-                
-                <div class="card-head">
-                    <h3>Pianobook Profile</h3>
-                    <span class="badge pb">18K+ DLs</span>
-                </div>
-                <p>
-                    A collection of highly detailed sample libraries including "The Synths," "Broken Piano," and "Hell Drones." Focusing on texture and degradation.
-                </p>
-                <div class="stack">
-                    <span class="pill">Sampling</span>
-                    <span class="pill">Sound Design</span>
-                    <span class="pill">Kontakt</span>
-                </div>
-            </article>
-
-            <!-- EchoLingua -->
-            <article class="card span-3 fade-up">
-                <a href="https://github.com/dovvnloading/echolingua-ai" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
-                <div class="card-head"><h3>EchoLingua</h3></div>
-                <p>Real-time interpretation lab. Streams PCM audio via WebSockets to Gemini Live.</p>
-                <div class="stack"><span class="pill">WebSockets</span></div>
-            </article>
-
-            <!-- PolyArbor -->
-            <article class="card span-3 fade-up">
-                <a href="https://github.com/dovvnloading/POLYARBOR-Rhythm-Generator" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
-                <div class="card-head"><h3>PolyArbor</h3></div>
-                <p>Generative Sequencer visualizing conflicting rhythms as organic vector scopes.</p>
-                <div class="stack"><span class="pill">Canvas</span><span class="pill">Math</span></div>
-            </article>
-
-            <!-- Os-Daw (Adjusted to Full Width) -->
-            <article class="card span-12 fade-up">
-                <div class="card-head"><h3>Os-Daw</h3></div>
-                <p>Open Source DAW. Browser-based workstation with AI assistance, 3-oscillator synthesis, and step sequencing.</p>
-                <div class="stack"><span class="pill">WebAudio</span><span class="pill">Synthesizer</span></div>
-            </article>
-        </div>
-
-        <!-- SECTION: VISUAL TOOLS -->
-        <div class="section-head fade-up">
-            <h2>Visual & Creative</h2>
-            <span class="section-sub">03 // PIXEL & MESH</span>
-        </div>
-
-        <div class="grid">
-            <!-- Dither Pro -->
-            <article class="card span-6 fade-up">
-                <a href="https://drive.google.com/file/d/1O58cpS1IODfMPHoZBKDXbY9Wv__rUFPr/view" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
                 <div class="card-head">
                     <h3>Dither Pro 2.0</h3>
-                    <span class="badge red">APP</span>
+                    <span class="badge visual">IMAGE PROCESSOR</span>
                 </div>
                 <p>
-                    Professional Image Dithering Suite. Offloads processing to Web Workers for privacy. Comparison view, custom palettes, and error diffusion algorithms.
+                    A retro-modernist engine implementing 15+ dithering algorithms (Floyd-Steinberg, Atkinson). Offloads pixel math to Web Workers for 4K processing in-browser.
                 </p>
                 <div class="stack">
                     <span class="pill">Web Workers</span>
-                    <span class="pill">Image Processing</span>
+                    <span class="pill">Bit-Depth</span>
                 </div>
             </article>
 
-            <!-- Os-Sculpt -->
+            <!-- Graphite: Shaders -->
             <article class="card span-6 fade-up">
-                <a href="https://github.com/dovvnloading/Os-Sculpt" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
-                <div class="card-head"><h3>Os-Sculpt</h3></div>
-                <p>3D Sculpting Engine. Direct buffer manipulation for real-time mesh deformation and vertex painting.</p>
-                <div class="stack"><span class="pill">Three.js</span><span class="pill">WebGL</span></div>
-            </article>
-
-            <!-- AdGeni -->
-            <article class="card span-12 fade-up">
-                <a href="https://dovvnloading.github.io/AdGeni/" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
-                <div class="card-head"><h3>AdGeni</h3></div>
-                <p>Ad Campaign Suite. Generate product photography, packaging, and video ads ensuring asset consistency.</p>
-            </article>
-        </div>
-
-        <!-- SECTION: INTELLIGENCE -->
-        <div class="section-head fade-up">
-            <h2>Intelligence & Research</h2>
-            <span class="section-sub">04 // DATA</span>
-        </div>
-
-        <div class="grid">
-            <!-- Synthetic Data -->
-            <article class="card span-6 fade-up">
-                <a href="https://huggingface.co/moremilk" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
                 <div class="card-head">
-                    <h3>Synthetic Reasoning Data</h3>
-                    <span class="badge hf">HUGGINGFACE</span>
+                    <h3>Graphite: Shaders</h3>
+                    <span class="badge visual">STYLING ENGINE</span>
                 </div>
                 <p>
-                    A comprehensive collection (151k+ Q&A) tailored for training AI in logical reasoning (CoT/ToT). Spans deductive, inductive, and abductive reasoning.
+                    Procedural CSS generator. Automates complex UI trends like "Claymorphism" and "Neo-Brutalism" using advanced box-shadow layering instead of WebGL.
                 </p>
-                <div class="stack"><span class="pill">Dataset</span><span class="pill">Fine-tuning</span></div>
+                <div class="stack">
+                    <span class="pill">CSS Engine</span>
+                    <span class="pill">DOM Manipulation</span>
+                </div>
             </article>
 
-            <!-- Cortex -->
-            <article class="card span-6 fade-up">
-                <a href="https://dovvnloading.github.io/Cortex/" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
-                <div class="card-head"><h3>Cortex</h3></div>
-                <p>Private desktop AI assistant backed by SQLite. Features permanent memory, conversation forking, and response regeneration.</p>
-                <div class="stack"><span class="pill">Ollama</span><span class="pill">Python</span></div>
-            </article>
-
-            <!-- Leadz -->
-            <article class="card span-4 fade-up">
-                <a href="https://github.com/dovvnloading/Leadz" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
-                <div class="card-head"><h3>Leadz</h3></div>
-                <p>AI job search automation. Scrapes listings, ranks relevance via embeddings, and extracts data to dashboard.</p>
-            </article>
-
-            <!-- Polyglot -->
-            <article class="card span-4 fade-up">
-                <a href="https://dovvnloading.github.io/Polyglot-Code-Analyzer/" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
-                <div class="card-head"><h3>Polyglot Analyzer</h3></div>
-                <p>Static code analysis tool identifying tech debt across 50+ file types using regex patterns.</p>
-            </article>
-
-            <!-- File2MD -->
-             <article class="card span-4 fade-up">
-                <a href="https://github.com/dovvnloading/File2MD" target="_blank" class="card-link"></a>
-                <svg class="link-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"></path></svg>
-
-                <div class="card-head"><h3>File2MD</h3></div>
-                <p>Sleek desktop app converting text to Markdown using private, local AI (Ollama).</p>
+             <!-- Voxel Command -->
+             <article class="card span-12 fade-up">
+                <div class="card-head"><h3>Voxel Command</h3></div>
+                <p>Browser-based RTS engine. A hybrid AI system uses deterministic Behavior Trees for unit tactics and LLM planning for high-level economy management, rendered via a custom 2.5D canvas engine.</p>
+                <div class="stack"><span class="pill">Game Engine</span><span class="pill">Hybrid AI</span></div>
             </article>
         </div>
 
         <!-- FOOTER -->
         <footer class="fade-up">
             <div class="mono" style="font-size: 0.75rem; color: var(--text-muted);">
-                &copy; 2025 MATTHEW WESNEY. ALL SYSTEMS NOMINAL.
+                &copy; 2025 MATTHEW WESNEY. GRAPHITE PROTOCOL.
             </div>
             <div class="socials">
                 <a href="https://github.com/dovvnloading" target="_blank" class="social-link">GITHUB</a>
