@@ -7,29 +7,26 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* --- THE VOID --- */
-            --bg: #050505;
-            --surface: #0a0a0a;
-            --surface-hover: #111111;
+            /* --- PALETTE: SWISS DARK --- */
+            --bg: #080808;
+            --surface: #0f0f0f;
+            --surface-hover: #161616;
             
-            /* --- ARCHITECTURE --- */
-            --border: #262626; 
+            /* --- STRUCTURE --- */
+            --border: #222; 
             --border-highlight: #333;
             
             /* --- TYPOGRAPHY --- */
-            --text-main: #e5e5e5;
+            --text-main: #f0f0f0;
             --text-dim: #888;
-            --text-accent: #ffffff;
+            --text-accent: #fff;
             
-            /* --- DOMAIN COLORS --- */
-            --c-graphite: #3b82f6; 
-            --c-audio: #eab308;    
-            --c-intel: #10b981;    
-            --c-visual: #ec4899;   
+            /* --- ACCENTS (Subdued) --- */
+            --c-primary: #3b82f6; 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
@@ -40,6 +37,7 @@
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             font-size: 14px;
+            line-height: 1.5;
         }
 
         /* --- CUSTOM CURSOR --- */
@@ -50,16 +48,16 @@
             z-index: 99999; 
             mix-blend-mode: difference;
             transition: width 0.2s, height 0.2s;
-            border-radius: 50%; /* Softer circle */
+            border-radius: 50%;
         }
         body:hover #cursor { opacity: 1; }
         
-        /* HOVER STATES */
+        /* HOVER INTERACTION */
         a:hover ~ #cursor, 
         .card:hover ~ #cursor, 
         .stream-item:hover ~ #cursor,
         .stream-intro:hover ~ #cursor { 
-            transform: scale(2.0); 
+            transform: scale(2.5); 
             background: #fff; 
             mix-blend-mode: normal; 
             opacity: 0.1;
@@ -68,7 +66,7 @@
         /* --- LAYOUT --- */
         .wrapper {
             display: grid;
-            grid-template-columns: 280px 1fr;
+            grid-template-columns: 260px 1fr;
             min-height: 100vh;
             gap: 1px;
             background-color: var(--border);
@@ -77,25 +75,38 @@
         /* --- SIDEBAR --- */
         .sidebar {
             position: sticky; top: 0; height: 100vh;
-            padding: 32px;
+            padding: 40px 32px;
             display: flex; flex-direction: column; justify-content: space-between;
             background: var(--bg);
             z-index: 50; 
         }
 
         .identity h1 {
-            font-family: 'Syncopate', sans-serif; font-weight: 700; font-size: 18px;
-            letter-spacing: -1px; line-height: 1.1; margin-bottom: 4px;
+            font-family: 'Inter', sans-serif; 
+            font-weight: 600; 
+            font-size: 14px;
+            letter-spacing: 0.02em; 
+            margin-bottom: 6px;
+            text-transform: uppercase;
         }
-        .identity span { font-family: 'JetBrains Mono', monospace; color: var(--text-dim); font-size: 11px; }
+        .identity span { 
+            font-family: 'Inter', sans-serif; 
+            color: var(--text-dim); 
+            font-size: 12px; 
+        }
 
-        .nav { margin-top: 64px; display: flex; flex-direction: column; gap: 12px; }
+        .nav { margin-top: 64px; display: flex; flex-direction: column; gap: 8px; }
         .nav a {
-            text-decoration: none; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;
-            font-size: 11px; transition: 0.2s; display: flex; align-items: center;
+            text-decoration: none; 
+            color: var(--text-dim); 
+            font-family: 'Inter', sans-serif;
+            font-size: 13px; 
+            transition: 0.2s; 
+            display: flex; align-items: center;
+            padding: 8px 0;
         }
-        .nav a::before { content: '0' attr(data-index) ' '; margin-right: 8px; opacity: 0.3; }
-        .nav a:hover { color: var(--text-accent); padding-left: 8px; }
+        .nav a:hover { color: var(--text-accent); transform: translateX(4px); }
+        .nav a.active { color: var(--text-accent); }
 
         /* --- MAIN CONTENT --- */
         main { 
@@ -107,18 +118,23 @@
 
         /* HERO */
         .hero {
-            padding: 120px 60px;
+            padding: 140px 80px;
             background-color: var(--bg);
-            background-image: linear-gradient(180deg, rgba(255,255,255,0.01) 0%, var(--bg) 100%);
         }
         .hero p {
-            max-width: 600px; font-size: 24px; line-height: 1.4; letter-spacing: -0.02em; color: #888;
+            max-width: 640px; 
+            font-size: 26px; 
+            font-weight: 300;
+            line-height: 1.4; 
+            letter-spacing: -0.01em; 
+            color: #999;
         }
+        .hero strong { color: #eee; font-weight: 400; }
 
-        /* --- ASSET STREAM (REFACTORED: GALLERY STYLE) --- */
+        /* --- ASSET STREAM (GALLERY) --- */
         .asset-stream-container {
             background: #080808;
-            height: 420px; /* Slightly taller for elegance */
+            height: 440px;
             width: 100%;
             position: relative;
             overflow: hidden;
@@ -127,18 +143,17 @@
             border-bottom: 1px solid var(--border);
         }
 
-        /* HEADER: Minimalist Line */
         .stream-header {
-            padding: 24px 60px 0; /* Align with content */
+            padding: 24px 80px 0; 
             display: flex; justify-content: flex-start;
             background: #080808;
             z-index: 10;
         }
         .stream-label {
             font-family: 'Inter', sans-serif; 
-            font-size: 11px; 
-            font-weight: 500;
-            letter-spacing: 0.05em;
+            font-size: 10px; 
+            font-weight: 600;
+            letter-spacing: 0.1em;
             color: var(--text-dim);
             text-transform: uppercase;
         }
@@ -163,15 +178,15 @@
             will-change: transform;
         }
 
-        /* THE MANIFESTO BLOCK (EDITORIAL STYLE) */
+        /* MANIFESTO BLOCK */
         .stream-intro {
-            height: 280px;
-            width: 400px; 
+            height: 300px;
+            width: 420px; 
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding-left: 60px; /* Align with page grid */
+            padding-left: 80px; 
             padding-right: 40px;
             margin-right: 20px;
             position: relative;
@@ -181,11 +196,11 @@
         .stream-intro h4 {
             font-family: 'Inter', sans-serif;
             font-weight: 400;
-            font-size: 20px;
+            font-size: 22px;
             color: var(--text-main);
             margin-bottom: 24px;
             line-height: 1.2;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.02em;
         }
         
         .stream-intro p {
@@ -196,22 +211,18 @@
             max-width: 300px;
         }
 
-        /* SEPARATOR LINE IN INTRO */
         .stream-intro::after {
             content: '';
             position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            height: 40px;
-            width: 1px;
+            right: 0; top: 50%; transform: translateY(-50%);
+            height: 40px; width: 1px;
             background: #222;
         }
 
         /* STREAM IMAGES */
         .stream-item {
-            height: 280px; /* Taller images */
-            margin-right: 4px; /* Clean separation */
+            height: 300px; 
+            margin-right: 4px; 
             position: relative;
             flex-shrink: 0;
             user-select: none;
@@ -223,26 +234,23 @@
             width: auto;
             display: block;
             pointer-events: none;
-            /* Base state: Desaturated but high fidelity */
-            filter: grayscale(100%) opacity(0.6);
-            transition: filter 0.5s ease; /* Smooth transition instead of abrupt */
+            filter: grayscale(100%) opacity(0.5);
+            transition: filter 0.6s ease; 
             will-change: filter; 
         }
         
-        /* LOADING MSG */
         .stream-msg {
-            font-family: 'Inter', sans-serif; font-size: 11px; color: #333; 
+            font-family: 'Inter', sans-serif; font-size: 10px; color: #444; 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             pointer-events: none;
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
 
-        /* ASSET LIGHTBOX */
+        /* LIGHTBOX */
         .lightbox {
             position: fixed; inset: 0; z-index: 10000;
-            background: rgba(0,0,0,0.92);
-            backdrop-filter: blur(0px); /* Clean cut, no blur for performance/style */
+            background: rgba(0,0,0,0.95);
             display: flex; justify-content: center; align-items: center;
             opacity: 0; pointer-events: none;
             transition: opacity 0.4s ease;
@@ -250,57 +258,116 @@
         .lightbox.active { opacity: 1; pointer-events: auto; }
         .lightbox img {
             max-width: 90vw; max-height: 90vh;
-            box-shadow: 0 20px 80px rgba(0,0,0,0.8);
-            border: none; /* Removed border for cleaner look */
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
         }
         .lightbox-close {
             position: absolute; top: 40px; right: 40px;
             font-family: 'Inter', sans-serif; color: #666;
-            font-size: 14px; cursor: pointer;
-            transition: color 0.2s;
+            font-size: 12px; cursor: pointer; letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
         .lightbox-close:hover { color: #fff; }
 
         /* --- GRID SYSTEM --- */
         .content-section { background: var(--border); display: flex; flex-direction: column; gap: 1px; }
-        .domain-header { padding: 40px 60px 20px; display: flex; justify-content: space-between; align-items: flex-end; background: var(--bg); z-index: 40; }
-        .domain-header h2 { font-family: 'Syncopate', sans-serif; font-size: 16px; font-weight: 700; }
-        .domain-header span { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); }
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1px; background-color: var(--border); }
-        .card { background-color: var(--bg); padding: 40px; position: relative; transition: background 0.2s; display: flex; flex-direction: column; height: 100%; min-height: 380px; }
+        
+        .domain-header {
+            padding: 60px 80px 30px;
+            display: flex; justify-content: space-between; align-items: flex-end;
+            background: var(--bg); 
+            z-index: 40;
+        }
+        .domain-header h2 { 
+            font-family: 'Inter', sans-serif; 
+            font-size: 14px; 
+            font-weight: 600; 
+            letter-spacing: 0.05em; 
+            text-transform: uppercase;
+        }
+        .domain-header span { 
+            font-family: 'Inter', sans-serif; 
+            font-size: 11px; 
+            color: var(--text-dim); 
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .project-grid {
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1px;
+            background-color: var(--border); 
+        }
+
+        /* --- CARD DESIGN --- */
+        .card {
+            background-color: var(--bg); 
+            padding: 60px; /* More breathing room */
+            position: relative; 
+            transition: background 0.3s ease;
+            display: flex; flex-direction: column; height: 100%; min-height: 420px; 
+        }
         .card:hover { background: var(--surface-hover); }
-        .card.prime-card { background: #080b14; grid-column: 1 / -1; }
-        .card.prime-card:hover { background: #0c101c; }
-        .card.prime-card h3 { color: var(--c-graphite); font-size: 24px; }
-        .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); margin-bottom: 16px; display: flex; justify-content: space-between; }
-        .card h3 { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 500; margin-bottom: 12px; letter-spacing: -0.03em; }
-        .card p { font-size: 13px; line-height: 1.6; color: #888; max-width: 95%; margin-bottom: 32px; flex-grow: 1; }
-        .specs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
-        .spec { font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 4px 8px; border: 1px solid var(--border-highlight); color: #999; text-transform: uppercase; }
-        .c-graphite h3 { color: var(--c-graphite); }
-        .c-audio h3 { color: var(--c-audio); }
-        .c-intel h3 { color: var(--c-intel); }
-        .c-visual h3 { color: var(--c-visual); }
+
+        .card.prime-card { background: #0c0c0c; grid-column: 1 / -1; }
+        .card.prime-card:hover { background: #111; }
+        .card.prime-card h3 { font-size: 28px; }
+
+        .card-meta {
+            font-family: 'Inter', sans-serif; 
+            font-size: 11px; color: var(--text-dim);
+            margin-bottom: 24px; display: flex; justify-content: space-between;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        
+        .card h3 {
+            font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 500;
+            margin-bottom: 16px; letter-spacing: -0.02em; color: var(--text-main);
+        }
+        
+        .card p {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px; line-height: 1.6; color: #777; 
+            max-width: 90%; margin-bottom: 40px; flex-grow: 1;
+        }
+
+        .specs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+        .spec {
+            font-family: 'Inter', sans-serif; font-size: 10px; 
+            padding: 6px 10px; border: 1px solid var(--border-highlight);
+            color: #666; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+
         .card-link { position: absolute; inset: 0; z-index: 2; }
+
+        /* --- EXTERNAL --- */
         .ext-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: var(--border); }
-        .ext-item { background-color: var(--bg); padding: 60px; transition: background 0.2s; }
+        .ext-item { background-color: var(--bg); padding: 80px; transition: background 0.2s; }
         .ext-item:hover { background: var(--surface-hover); }
-        .big-stat { font-family: 'Syncopate', sans-serif; font-size: 48px; line-height: 1; margin: 20px 0; }
-        .footer { background: var(--bg); padding: 60px; }
+        .big-stat { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 56px; line-height: 1; margin: 24px 0; letter-spacing: -0.03em;}
+
+        .footer { background: var(--bg); padding: 80px; display: flex; justify-content: space-between; align-items: flex-end;}
+        .footer a { color: #555; text-decoration: none; font-size: 12px; margin-right: 24px; transition: 0.2s; }
+        .footer a:hover { color: #fff; }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 1024px) {
             .wrapper { grid-template-columns: 1fr; }
-            .sidebar { height: auto; position: relative; border-bottom: 1px solid var(--border); border-right: none; flex-direction: row; align-items: center; padding: 20px; }
+            .sidebar { height: auto; position: relative; border-bottom: 1px solid var(--border); padding: 24px; flex-direction: row; align-items: center; }
             .nav { display: none; }
             .project-grid { grid-template-columns: 1fr; }
             .ext-grid { grid-template-columns: 1fr; }
             #cursor { display: none; }
             * { cursor: auto; }
+            .hero { padding: 80px 24px; }
+            .hero p { font-size: 20px; }
             .asset-stream-container { height: 350px; }
-            .stream-header { padding: 16px 20px; }
+            .stream-header { padding: 16px 24px; }
             .stream-item, .stream-intro { height: 220px; }
-            .stream-intro { width: 300px; padding-left: 20px; padding-right: 20px; }
+            .stream-intro { width: 300px; padding-left: 24px; padding-right: 20px; }
+            .domain-header { padding: 40px 24px 20px; }
+            .card { padding: 40px 24px; }
+            .footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; gap: 20px;}
         }
     </style>
 </head>
@@ -309,23 +376,24 @@
     <div id="cursor"></div>
 
     <div class="lightbox" id="lightbox">
-        <div class="lightbox-close" id="lightbox-close">CLOSE</div>
+        <div class="lightbox-close" id="lightbox-close">CLOSE VIEW</div>
         <img id="lightbox-img" src="" alt="Full view">
     </div>
 
     <div class="wrapper">
         <aside class="sidebar">
             <div class="identity">
-                <h1>MATTHEW<br>WESNEY</h1>
-                <span>/// DOVVNLOADING</span>
+                <h1>Matthew Wesney</h1>
+                <span>Portfolio 2024</span>
             </div>
 
             <nav class="nav">
-                <a href="#graphite" data-index="1">GRAPHITE PROTOCOL</a>
-                <a href="#audio" data-index="2">SONIC ENGINEERING</a>
-                <a href="#intel" data-index="3">SOVEREIGN INTEL</a>
-                <a href="#visual" data-index="4">VISUAL / PIXEL</a>
-                <a href="#external" data-index="5">EXTERNAL SIGNALS</a>
+                <!-- PROFESSIONAL TERMINOLOGY -->
+                <a href="#graphite">Systems Architecture</a>
+                <a href="#audio">Audio & DSP</a>
+                <a href="#intel">Research & AI</a>
+                <a href="#visual">Graphics & Rendering</a>
+                <a href="#external">Community & Data</a>
             </nav>
         </aside>
 
@@ -333,272 +401,207 @@
             <!-- HERO -->
             <section class="content-section hero">
                 <p>
-                    I build agentic workspaces and execution-centric tools that collapse the gap between intent, reasoning, and action—spanning zero-backend IDEs, autonomous SDK analysis, and high-performance browser engines.
+                    I build <strong>agentic workspaces</strong> and execution-centric tools that collapse the gap between intent and action—spanning zero-backend IDEs, autonomous analysis, and high-performance browser engines.
                 </p>
             </section>
 
             <!-- ASSET STREAM -->
             <div class="asset-stream-container">
                 <div class="stream-header">
-                    <span class="stream-label">Selected Works / Independent Index</span>
+                    <span class="stream-label">Visual Index / Selected Works</span>
                 </div>
                 <div class="stream-viewport" id="stream-viewport">
                     <div class="stream-track" id="stream-track">
-                        <!-- MANIFESTO MODULE: Editorial Style -->
+                        <!-- MANIFESTO MODULE: Professional -->
                         <div class="stream-intro">
                             <h4>Independent Architecture</h4>
                             <p>
-                                The following index represents 100% individual output.
+                                The following visual index represents 100% individual output.
                                 <br><br>
                                 Every interface, system, and logic loop visible here was architected and deployed solo. No teams, no corporate dependencies.
                             </p>
                         </div>
                         <!-- DYNAMIC IMAGES APPENDED HERE -->
                     </div>
-                    <div id="stream-loading-msg" class="stream-msg">Loading Archive...</div>
+                    <div id="stream-loading-msg" class="stream-msg">Loading Index...</div>
                 </div>
             </div>
 
-            <!-- DOMAIN 1: GRAPHITE -->
-            <div id="graphite" class="content-section c-graphite">
+            <!-- DOMAIN 1: SYSTEMS -->
+            <div id="graphite" class="content-section">
                 <div class="domain-header">
-                    <h2>GRAPHITE ECOSYSTEM</h2>
-                    <span>IDE / AGENTS / PROTOCOLS</span>
+                    <h2>Systems Architecture</h2>
+                    <span>Development Environments</span>
                 </div>
                 <div class="project-grid">
                     
                     <!-- GRAPHITE PRIME -->
                     <article class="card prime-card">
-                         <div class="card-meta"><span>ORCHESTRATOR</span><span>v2.1</span></div>
-                        <h3>GRAPHITE: PRIME</h3>
-                        <p>The sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control via secure local-runtime bridging. Features a "Just-In-Time" persona injection system and a hybrid IPC architecture for arbitrary code synthesis beyond the browser sandbox.</p>
-                        <div class="specs"><span class="spec">Recursive Agents</span><span class="spec">Local Runtime Bridge</span><span class="spec">Spatial Canvas</span><span class="spec">IPC</span></div>
+                         <div class="card-meta"><span>Application</span><span>v2.1</span></div>
+                        <h3>Graphite: Prime</h3>
+                        <p>A sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control via secure local-runtime bridging.</p>
+                        <div class="specs"><span class="spec">Recursive Agents</span><span class="spec">Runtime Bridge</span><span class="spec">Spatial Canvas</span></div>
                     </article>
 
                     <!-- PHLOW -->
                     <article class="card">
                         <a href="https://github.com/dovvnloading/Graphite-Phlow" target="_blank" class="card-link"></a>
                         <div class="card-meta"><span>IDE</span><span>v1.2</span></div>
-                        <h3>GRAPHITE: PHLOW</h3>
-                        <p>Zero-backend AI IDE. Features a "Shadow Output" protocol allowing agents to perform surgical edits on a virtual file system. Includes iframe sandboxing with infinite-loop protection.</p>
+                        <h3>Graphite: Phlow</h3>
+                        <p>Zero-backend AI IDE. Features a shadow output protocol allowing agents to perform surgical edits on a virtual file system.</p>
                         <div class="specs"><span class="spec">Virtual FS</span><span class="spec">React 19</span><span class="spec">Agent Swarm</span></div>
                     </article>
 
                     <!-- LOGICA -->
                     <article class="card">
-                        <div class="card-meta"><span>LOGIC</span><span>v2.0</span></div>
-                        <h3>GRAPHITE: LOGICA</h3>
-                        <p>Visual Flow Engineering. Decouples probabilistic LLM inference from deterministic logic loops. Architect workflows via "Thought Nodes" and transpile visual graphs to Python scripts.</p>
+                        <div class="card-meta"><span>Logic</span><span>v2.0</span></div>
+                        <h3>Graphite: Logica</h3>
+                        <p>Visual Flow Engineering. Decouples probabilistic LLM inference from deterministic logic loops. Architect workflows via nodes and transpile to Python.</p>
                         <div class="specs"><span class="spec">Graph Theory</span><span class="spec">Transpiler</span><span class="spec">Visual Scripting</span></div>
                     </article>
 
                     <!-- GIT -->
                     <article class="card">
                         <a href="https://github.com/dovvnloading/Graphite-Git" target="_blank" class="card-link"></a>
-                        <div class="card-meta"><span>CLIENT</span><span>v1.0</span></div>
-                        <h3>GRAPHITE: GIT</h3>
-                        <p>Local-first GitHub head. Integrates a "ReAct" pattern agent for autonomous refactoring via API. Features a "Safety Net" for bulk network auditing and blob-url rendering for HTML safety.</p>
-                        <div class="specs"><span class="spec">GitHub API</span><span class="spec">Local Storage</span><span class="spec">ReAct Agent</span></div>
+                        <div class="card-meta"><span>Client</span><span>v1.0</span></div>
+                        <h3>Graphite: Git</h3>
+                        <p>Local-first GitHub head. Integrates a pattern agent for autonomous refactoring via API with bulk network auditing.</p>
+                        <div class="specs"><span class="spec">GitHub API</span><span class="spec">Local Storage</span></div>
                     </article>
 
                     <!-- WEBDEV -->
                     <article class="card">
                         <a href="https://www.google.com/search?q=https://github.com/dovvnloading/Graphite-WebDev" target="_blank" class="card-link"></a>
-                        <div class="card-meta"><span>ENV</span><span>v1.5</span></div>
-                        <h3>GRAPHITE: WEBDEV</h3>
-                        <p>Browser-based OS. Implements "Smart Truncate" logic to optimize context windows for large projects. Features Babel Standalone integration for real-time React compilation.</p>
-                        <div class="specs"><span class="spec">Context Opt</span><span class="spec">Babel</span><span class="spec">Claymorphism</span></div>
+                        <div class="card-meta"><span>Environment</span><span>v1.5</span></div>
+                        <h3>Graphite: WebDev</h3>
+                        <p>Browser-based OS. Implements smart truncation logic to optimize context windows for large projects. Features real-time React compilation.</p>
+                        <div class="specs"><span class="spec">Context Opt</span><span class="spec">Babel</span></div>
                     </article>
                     
                      <!-- SIGNALFLOW -->
                      <article class="card">
-                        <div class="card-meta"><span>FILTER</span><span>v1.0</span></div>
-                        <h3>GRAPHITE: SIGNALFLOW</h3>
-                        <p>Information distillation engine. Generates a "Surgical Log" (diff-view) of rhetorical noise removal. Visualizes argument topology via custom ClaySankey and LogicGraph SVG components.</p>
+                        <div class="card-meta"><span>Analysis</span><span>v1.0</span></div>
+                        <h3>SignalFlow</h3>
+                        <p>Information distillation engine. Generates a surgical log of rhetorical noise removal. Visualizes argument topology via custom vector components.</p>
                         <div class="specs"><span class="spec">Sankey</span><span class="spec">Diff Logic</span><span class="spec">Gemini Pro</span></div>
                     </article>
 
                     <!-- COGNITION -->
                     <article class="card">
-                        <div class="card-meta"><span>PYTHON</span><span>v0.9</span></div>
-                        <h3>GRAPHITE: COGNITION</h3>
-                        <p>Python-specific agentic workspace. Features a custom regex-based tokenizer for syntax highlighting and a "Typo Detection" service using Levenshtein distance.</p>
-                        <div class="specs"><span class="spec">Python</span><span class="spec">Levenshtein</span><span class="spec">ReAct Loop</span></div>
+                        <div class="card-meta"><span>Python</span><span>v0.9</span></div>
+                        <h3>Graphite: Cognition</h3>
+                        <p>Python-specific agentic workspace. Features a custom regex-based tokenizer for syntax highlighting and typo detection.</p>
+                        <div class="specs"><span class="spec">Python</span><span class="spec">Levenshtein</span></div>
                     </article>
                 </div>
             </div>
 
             <!-- DOMAIN 2: AUDIO -->
-            <div id="audio" class="content-section c-audio">
+            <div id="audio" class="content-section">
                 <div class="domain-header">
-                    <h2>SONIC ENGINEERING</h2>
-                    <span>DSP / WEBAUDIO / SYNTHESIS</span>
+                    <h2>Audio & DSP</h2>
+                    <span>Synthesis / WebAudio</span>
                 </div>
                 <div class="project-grid">
                     <!-- ERIN -->
                     <article class="card">
-                        <div class="card-meta"><span>SYNTH</span><span>v3.0</span></div>
-                        <h3>ERIN WORKSTATION</h3>
-                        <p>Desktop-class polyphonic synth. Implements custom OTT-style multiband compression and spectral folding. Decouples the AudioGraph from React state for glitch-free performance.</p>
+                        <div class="card-meta"><span>Synthesizer</span><span>v3.0</span></div>
+                        <h3>Erin Workstation</h3>
+                        <p>Desktop-class polyphonic synth. Implements custom multiband compression and spectral folding. Decouples the AudioGraph from React state.</p>
                         <div class="specs"><span class="spec">AudioWorklet</span><span class="spec">Bit-Crushing</span><span class="spec">Spectral Folding</span></div>
                     </article>
 
                     <!-- LITEPLAY -->
                     <article class="card">
                         <div class="card-meta"><span>VST</span><span>v2.1</span></div>
-                        <h3>LITEPLAY VST</h3>
-                        <p>Generative Synthesis. Maps natural language to ADSR and Filter parameters via Function Calling. Features algorithmically generated impulse responses for convolution reverb.</p>
-                        <div class="specs"><span class="spec">Function Calling</span><span class="spec">Procedural IR</span><span class="spec">Lookahead</span></div>
+                        <h3>Liteplay VST</h3>
+                        <p>Generative Synthesis. Maps natural language to ADSR and Filter parameters via function calling. Features procedural impulse responses.</p>
+                        <div class="specs"><span class="spec">Function Calling</span><span class="spec">Procedural IR</span></div>
                     </article>
 
                     <!-- POLY-RHYTHM -->
                     <article class="card">
                         <a href="https://github.com/dovvnloading/POLYARBOR-Rhythm-Generator" target="_blank" class="card-link"></a>
-                        <div class="card-meta"><span>SEQ</span><span>v2.0</span></div>
-                        <h3>POLY-RHYTHM 2</h3>
-                        <p>Euclidean Sequencer. Visualizes phase relationships and polyrhythms using radial geometry. Solves main-thread blocking via Web Audio lookahead scheduling.</p>
-                        <div class="specs"><span class="spec">Euclidean Math</span><span class="spec">Scheduling</span><span class="spec">Canvas</span></div>
+                        <div class="card-meta"><span>Sequencer</span><span>v2.0</span></div>
+                        <h3>Poly-Rhythm 2</h3>
+                        <p>Euclidean Sequencer. Visualizes phase relationships and polyrhythms using radial geometry. Solves main-thread blocking via lookahead scheduling.</p>
+                        <div class="specs"><span class="spec">Euclidean Math</span><span class="spec">Scheduling</span></div>
                     </article>
                     
                     <!-- GLASSNODE -->
                     <article class="card">
-                        <div class="card-meta"><span>MODULAR</span><span>v1.0</span></div>
-                        <h3>GLASSNODE</h3>
-                        <p>Visual patching environment. Features a custom HTML5/SVG hybrid engine for rendering bezier cables. Implements Hermite Cubic Interpolation for wavetable morphing.</p>
-                        <div class="specs"><span class="spec">Wavetable</span><span class="spec">SVG Engine</span><span class="spec">Cubic Interpolation</span></div>
-                    </article>
-                    
-                    <!-- SOMNIUM -->
-                    <article class="card">
-                        <div class="card-meta"><span>AMBIENT</span><span>v1.0</span></div>
-                        <h3>SOMNIUM</h3>
-                        <p>Procedural sleep soundscape. Synthesizes Pink Noise via Paul Kellett's refinement method. Features a "Mastering Chain" (Safe Mode) to prevent digital clipping artifacts.</p>
-                        <div class="specs"><span class="spec">DSP</span><span class="spec">Noise Gen</span><span class="spec">Mastering</span></div>
-                    </article>
-
-                    <!-- ERN-DND -->
-                    <article class="card">
-                        <div class="card-meta"><span>GAME</span><span>v1.0</span></div>
-                        <h3>ErN-DnD</h3>
-                        <p>DJ Controller & Rhythm Game. Analyzes FFT data to procedurally generate game levels from local audio files. Features physics-based scratch emulation via playbackRate manipulation.</p>
-                        <div class="specs"><span class="spec">FFT Analysis</span><span class="spec">Physics</span><span class="spec">Procedural Gen</span></div>
+                        <div class="card-meta"><span>Modular</span><span>v1.0</span></div>
+                        <h3>Glassnode</h3>
+                        <p>Visual patching environment. Features a custom HTML5/SVG hybrid engine for rendering bezier cables with cubic interpolation.</p>
+                        <div class="specs"><span class="spec">Wavetable</span><span class="spec">SVG Engine</span></div>
                     </article>
                 </div>
             </div>
 
-            <!-- DOMAIN 3: INTEL -->
-            <div id="intel" class="content-section c-intel">
+            <!-- DOMAIN 3: RESEARCH -->
+            <div id="intel" class="content-section">
                 <div class="domain-header">
-                    <h2>SOVEREIGN INTEL</h2>
-                    <span>LOCAL AI / RESEARCH / DOCS</span>
+                    <h2>Research & AI</h2>
+                    <span>Local Intelligence</span>
                 </div>
                 <div class="project-grid">
                     <!-- CORTEX -->
                     <article class="card">
                         <a href="https://github.com/dovvnloading/Cortex" target="_blank" class="card-link"></a>
-                        <div class="card-meta"><span>DESKTOP</span><span>v4.0</span></div>
-                        <h3>CORTEX</h3>
-                        <p>Local LLM frontend. Implements a "Three-Tier Memory" system (Short-term, SQLite History, Permanent Nuggets) to retain user context without cloud transfer.</p>
+                        <div class="card-meta"><span>Desktop</span><span>v4.0</span></div>
+                        <h3>Cortex</h3>
+                        <p>Local LLM frontend. Implements a three-tier memory system (Short-term, SQLite History, Permanent Nuggets) to retain user context locally.</p>
                         <div class="specs"><span class="spec">PySide6</span><span class="spec">SQLite</span><span class="spec">Ollama</span></div>
                     </article>
 
                     <!-- OUROBOROS -->
                     <article class="card">
-                        <div class="card-meta"><span>RUNTIME</span><span>v3.0</span></div>
-                        <h3>OUROBOROS</h3>
-                        <p>Recursive Dashboard. An AI agent writes and hot-loads React widgets into the live runtime using Babel Standalone. Features a synthetic `require` loop for dependency injection.</p>
-                        <div class="specs"><span class="spec">Babel</span><span class="spec">Recursive</span><span class="spec">Sandboxing</span></div>
+                        <div class="card-meta"><span>Runtime</span><span>v3.0</span></div>
+                        <h3>Ouroboros</h3>
+                        <p>Recursive Dashboard. An AI agent writes and hot-loads React widgets into the live runtime. Features a synthetic require loop for dependency injection.</p>
+                        <div class="specs"><span class="spec">Babel</span><span class="spec">Recursive</span></div>
                     </article>
                     
-                    <!-- OS-SCHOLAR -->
-                    <article class="card">
-                        <div class="card-meta"><span>EDU</span><span>v1.0</span></div>
-                        <h3>OS-SCHOLAR</h3>
-                        <p>Multimodal academic tool. Establishes bi-directional WebSocket connections for voice tutoring. Converts raw Float32 audio to PCM Int16 for Gemini Live streaming.</p>
-                        <div class="specs"><span class="spec">WebSockets</span><span class="spec">PCM Streaming</span><span class="spec">Voice-to-Voice</span></div>
-                    </article>
-
                     <!-- SDK DISTILLER -->
                     <article class="card">
-                        <div class="card-meta"><span>DOCS</span><span>v1.0</span></div>
-                        <h3>SDK DISTILLER</h3>
-                        <p>Documentation generator. Ingests raw source code (C++/Python) to build RAG-enabled docs. Implements a client-side vector store and hybrid keyword/vector search.</p>
-                        <div class="specs"><span class="spec">RAG</span><span class="spec">Vector Store</span><span class="spec">Hybrid Search</span></div>
-                    </article>
-
-                    <!-- EXILE'S ORACLE -->
-                    <article class="card">
-                        <div class="card-meta"><span>GAME AI</span><span>v1.0</span></div>
-                        <h3>EXILE'S ORACLE</h3>
-                        <p>Path of Exile domain expert. Uses strict "Immutable Laws" context injection to prevent hallucination. Features dynamic theming based on selected persona.</p>
-                        <div class="specs"><span class="spec">Context Injection</span><span class="spec">Theming Engine</span></div>
-                    </article>
-                    
-                    <!-- SORTIFY -->
-                    <article class="card">
-                         <div class="card-meta"><span>EDU</span><span>v1.0</span></div>
-                        <h3>SORTIFY</h3>
-                        <p>Algorithm visualizer. Uses JavaScript Generator functions (`function*`) to step through sorting logic without freezing the main thread. Features FM synthesis audio feedback.</p>
-                        <div class="specs"><span class="spec">Generators</span><span class="spec">FM Synthesis</span><span class="spec">Algo Vis</span></div>
+                        <div class="card-meta"><span>Docs</span><span>v1.0</span></div>
+                        <h3>SDK Distiller</h3>
+                        <p>Documentation generator. Ingests raw source code to build RAG-enabled docs. Implements a client-side vector store and hybrid search.</p>
+                        <div class="specs"><span class="spec">RAG</span><span class="spec">Vector Store</span></div>
                     </article>
                 </div>
             </div>
 
             <!-- DOMAIN 4: VISUAL -->
-            <div id="visual" class="content-section c-visual">
+            <div id="visual" class="content-section">
                 <div class="domain-header">
-                    <h2>VISUAL ENGINEERING</h2>
-                    <span>PIXEL / MESH / RENDER</span>
+                    <h2>Graphics & Rendering</h2>
+                    <span>Pixel / Mesh / Canvas</span>
                 </div>
                 <div class="project-grid">
                     <!-- DITHER PRO -->
                     <article class="card">
                         <a href="https://drive.google.com/file/d/1O58cpS1IODfMPHoZBKDXbY9Wv__rUFPr/view" class="card-link"></a>
-                        <div class="card-meta"><span>IMAGE</span><span>v2.0</span></div>
-                        <h3>DITHER PRO 2.0</h3>
-                        <p>Retro-modernist processor. Implements 15+ algorithms (Floyd-Steinberg, Atkinson) via Web Workers. Features custom "Serpentine Scanning" to reduce diagonal artifacts.</p>
-                        <div class="specs"><span class="spec">Web Workers</span><span class="spec">Bit Depth</span><span class="spec">Typed Arrays</span></div>
+                        <div class="card-meta"><span>Processing</span><span>v2.0</span></div>
+                        <h3>Dither Pro 2.0</h3>
+                        <p>Modernist image processor. Implements 15+ algorithms via Web Workers. Features custom serpentine scanning to reduce diagonal artifacts.</p>
+                        <div class="specs"><span class="spec">Web Workers</span><span class="spec">Bit Depth</span></div>
                     </article>
 
                     <!-- GENESIS o1 -->
                     <article class="card">
                         <div class="card-meta"><span>3D</span><span>v1.0</span></div>
-                        <h3>GENESIS o1</h3>
-                        <p>Panoramic generator. Features a custom `AnimusBlockMaterial` shader for particle transition effects and automated ElevenLabs audio stem layering.</p>
-                        <div class="specs"><span class="spec">Three.js</span><span class="spec">Shaders</span><span class="spec">Equirectangular</span></div>
+                        <h3>Genesis o1</h3>
+                        <p>Panoramic generator. Features a custom block material shader for particle transition effects and automated audio stem layering.</p>
+                        <div class="specs"><span class="spec">Three.js</span><span class="spec">Shaders</span></div>
                     </article>
                     
                     <!-- VOXEL COMMAND -->
                     <article class="card">
-                        <div class="card-meta"><span>GAME</span><span>v1.0</span></div>
-                        <h3>VOXEL COMMAND</h3>
-                        <p>Browser RTS engine. Renders 2.5D voxels via HTML5 Canvas. Features a hybrid AI combining Behavior Trees (Tactical) and LLM Planning (Strategic).</p>
-                        <div class="specs"><span class="spec">Canvas 2.5D</span><span class="spec">Flow Fields</span><span class="spec">Hybrid AI</span></div>
-                    </article>
-                    
-                    <!-- OS-VE -->
-                    <article class="card">
-                         <div class="card-meta"><span>VIDEO</span><span>v1.0</span></div>
-                        <h3>OS-VE</h3>
-                        <p>Client-side video editor. Features a magnetic timeline and a `requestAnimationFrame` render loop decoupled from React. Exports via MediaRecorder API.</p>
-                        <div class="specs"><span class="spec">Video Compositor</span><span class="spec">MediaRecorder</span></div>
-                    </article>
-
-                    <!-- SHADERS -->
-                    <article class="card">
-                        <div class="card-meta"><span>CSS</span><span>v1.0</span></div>
-                        <h3>GRAPHITE: SHADERS</h3>
-                        <p>Procedural Styling Engine. Automates Claymorphism and Neo-brutalism trends using advanced DOM box-shadow layering rather than WebGL.</p>
-                        <div class="specs"><span class="spec">CSS Engine</span><span class="spec">DOM</span><span class="spec">Font Injection</span></div>
-                    </article>
-                    
-                    <!-- ADGENI -->
-                    <article class="card">
-                        <a href="https://dovvnloading.github.io/AdGeni/" target="_blank" class="card-link"></a>
-                         <div class="card-meta"><span>SUITE</span><span>v1.0</span></div>
-                        <h3>GRAPHITE: ADGENI</h3>
-                        <p>Creative vertical suite. Features a client-side video composition engine to stitch generated assets. Enforces brand consistency across text/image/audio modalities.</p>
-                        <div class="specs"><span class="spec">Video Comp</span><span class="spec">Brand DNA</span></div>
+                        <div class="card-meta"><span>Game</span><span>v1.0</span></div>
+                        <h3>Voxel Command</h3>
+                        <p>Browser RTS engine. Renders 2.5D voxels via HTML5 Canvas. Features a hybrid AI combining Behavior Trees and LLM Planning.</p>
+                        <div class="specs"><span class="spec">Canvas 2.5D</span><span class="spec">Flow Fields</span></div>
                     </article>
                 </div>
             </div>
@@ -606,38 +609,38 @@
             <!-- DOMAIN 5: EXTERNAL -->
             <div id="external" class="content-section">
                 <div class="domain-header">
-                    <h2>EXTERNAL SIGNALS</h2>
-                    <span>COMMUNITY / DATASETS</span>
+                    <h2>Community & Data</h2>
+                    <span>Open Source / Libraries</span>
                 </div>
                 <div class="ext-grid">
                     <!-- PIANOBOOK -->
-                    <div class="ext-item" style="color: var(--c-audio)">
-                        <div class="card-meta"><span>SAMPLE LIBRARY</span></div>
-                        <h3 class="big-stat">18K+<br>DLs</h3>
+                    <div class="ext-item">
+                        <div class="card-meta"><span>Sample Library</span></div>
+                        <h3 class="big-stat">18K+ DLs</h3>
                         <p style="margin-bottom: 20px;">
                             High-fidelity Kontakt libraries focused on texture and degradation. Includes "The Synths" and "Broken Piano."
                         </p>
-                        <a href="https://www.pianobook.co.uk/profile/mattwesney/" target="_blank" style="color: inherit; text-decoration: underline;">ACCESS LIBRARY -></a>
+                        <a href="https://www.pianobook.co.uk/profile/mattwesney/" target="_blank" style="text-decoration: underline;">Access Library -></a>
                     </div>
                     
                     <!-- HUGGING FACE -->
-                    <div class="ext-item" style="color: var(--c-visual)">
-                        <div class="card-meta"><span>DATASET</span></div>
-                        <h3 class="big-stat">151K<br>ROWS</h3>
+                    <div class="ext-item">
+                        <div class="card-meta"><span>Dataset</span></div>
+                        <h3 class="big-stat">151K Rows</h3>
                         <p style="margin-bottom: 20px;">
                             "Synthetic Reasoning Data." A dataset explicitly tailored for fine-tuning AI in logical reasoning (Chain of Thought).
                         </p>
-                        <a href="https://huggingface.co/moremilk" target="_blank" style="color: inherit; text-decoration: underline;">VIEW DATASET -></a>
+                        <a href="https://huggingface.co/moremilk" target="_blank" style="text-decoration: underline;">View Dataset -></a>
                     </div>
                 </div>
             </div>
 
             <footer class="footer">
-                <div class="mono" style="color: #444; margin-bottom: 20px;">/// END OF LINE</div>
-                <div style="display: flex; gap: 30px;">
-                    <a href="https://github.com/dovvnloading" style="color: #666; text-decoration: none;">GITHUB</a>
-                    <a href="https://x.com/D3VAUX" style="color: #666; text-decoration: none;">TWITTER</a>
-                    <a href="mailto:devaux.mail@gmail.com" style="color: #666; text-decoration: none;">CONTACT</a>
+                <div style="color: #444; font-size: 11px;">© 2024 MATTHEW WESNEY</div>
+                <div>
+                    <a href="https://github.com/dovvnloading">GITHUB</a>
+                    <a href="https://x.com/D3VAUX">TWITTER</a>
+                    <a href="mailto:devaux.mail@gmail.com">CONTACT</a>
                 </div>
             </footer>
         </main>
@@ -730,7 +733,6 @@
             }
 
             renderAssets(files) {
-                // Clear only dynamic items, preserve Intro
                 const dynamicItems = this.track.querySelectorAll('.stream-item');
                 dynamicItems.forEach(el => el.remove());
                 
@@ -798,7 +800,6 @@
             }
 
             openLightbox(src) {
-                // Prevent accidental clicks during heavy scroll
                 if (Math.abs(this.state.current - this.state.target) > 10) return;
                 this.lightboxImg.src = src;
                 this.lightbox.classList.add('active');
@@ -814,10 +815,8 @@
 
                 this.state.current += (this.state.target - this.state.current) * 0.1;
                 
-                // NO SKEW - Pure Translation for Gallery Feel
                 this.track.style.transform = `translate3d(${this.state.current}px, 0, 0)`;
 
-                // Focus Logic (Center Brightness)
                 const trackX = this.state.current;
                 const centerPoint = this.viewportCenter; 
                 
@@ -825,17 +824,13 @@
                      const itemScreenCenter = metric.center + trackX;
                      const dist = Math.abs(itemScreenCenter - centerPoint);
                      
-                     // 500px falloff radius for smoother transitions
                      let intensity = 1 - (dist / 500); 
                      if (intensity < 0) intensity = 0;
                      
-                     // Opacity: 0.3 (dim) -> 1.0 (bright)
                      const opacity = 0.3 + (intensity * 0.7); 
-                     // Grayscale: 1 (gray) -> 0 (color)
                      const gray = 1 - intensity;
                      
                      metric.element.style.filter = `grayscale(${gray}) opacity(${opacity})`;
-                     // Slight scale for active item
                      metric.element.style.transform = `scale(${0.95 + (intensity * 0.05)})`;
                 });
 
