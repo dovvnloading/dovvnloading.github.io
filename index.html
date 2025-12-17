@@ -17,7 +17,7 @@
             --surface-hover: #111111;
             
             /* --- ARCHITECTURE --- */
-            --border: #262626; /* Slightly lighter for visibility */
+            --border: #262626; 
             --border-highlight: #333;
             
             /* --- TYPOGRAPHY --- */
@@ -35,7 +35,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
         
         body {
-            background-color: var(--border); /* The Grid Lines Color */
+            background-color: var(--border);
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
@@ -51,15 +51,23 @@
         }
         body:hover #cursor { opacity: 1; }
         
-        /* HOVER STATES - NO SCALING TO PREVENT OVERLAP */
-        a:hover ~ #cursor, .card:hover ~ #cursor { transform: scale(1.5); background: #fff; mix-blend-mode: normal; opacity: 0.2;}
+        /* STATE: HOVER EXPANSION */
+        a:hover ~ #cursor, 
+        .card:hover ~ #cursor, 
+        .stream-item:hover ~ #cursor,
+        .control-btn:hover ~ #cursor { 
+            transform: scale(1.5); 
+            background: #fff; 
+            mix-blend-mode: normal; 
+            opacity: 0.2;
+        }
 
         /* --- LAYOUT --- */
         .wrapper {
             display: grid;
             grid-template-columns: 280px 1fr;
             min-height: 100vh;
-            gap: 1px; /* Vertical divider between sidebar and main */
+            gap: 1px;
             background-color: var(--border);
         }
 
@@ -91,7 +99,7 @@
             background: var(--border); 
             display: flex;
             flex-direction: column;
-            gap: 1px; /* Horizontal separators between sections */
+            gap: 1px;
         }
 
         /* HERO */
@@ -103,10 +111,119 @@
         .hero p {
             max-width: 600px; font-size: 24px; line-height: 1.4; letter-spacing: -0.02em; color: #888;
         }
-        .hero strong { color: #eee; font-weight: 500; }
+
+        /* --- ASSET STREAM (NEW COMPONENT) --- */
+        .asset-stream-container {
+            background: #080808;
+            height: 380px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stream-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg);
+            z-index: 10;
+        }
+        .stream-meta {
+            font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
+            display: flex; gap: 16px; align-items: center;
+        }
+        .stream-indicator {
+            width: 8px; height: 8px; background: var(--c-intel); border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        .stream-indicator.offline { background: #ef4444; animation: none; }
+        .stream-indicator.loading { background: #eab308; animation: blink 0.5s infinite; }
+
+        .stream-viewport {
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: grab; 
+        }
+        .stream-viewport:active { cursor: grabbing; }
+
+        .stream-track {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            position: absolute;
+            left: 0; top: 0;
+            padding: 0 60px; 
+            will-change: transform;
+        }
+
+        .stream-item {
+            height: 240px;
+            margin-right: 2px; /* Tight gap */
+            position: relative;
+            flex-shrink: 0;
+            user-select: none;
+            transition: opacity 0.3s;
+            background: #111;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .stream-item img {
+            height: 100%;
+            width: auto;
+            display: block;
+            pointer-events: none;
+            filter: grayscale(100%) contrast(1.1);
+            transition: filter 0.3s;
+        }
+        .stream-item:hover img {
+            filter: grayscale(0%) contrast(1.0);
+        }
+        
+        .item-overlay {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 8px;
+            background: rgba(0,0,0,0.8);
+            font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #fff;
+            transform: translateY(100%);
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(4px);
+            border-top: 1px solid var(--border-highlight);
+        }
+        .stream-item:hover .item-overlay { transform: translateY(0); }
+
+        /* LOADING MESSAGE */
+        .stream-msg {
+            font-family: 'JetBrains Mono', monospace; color: #444; 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        /* ASSET LIGHTBOX */
+        .lightbox {
+            position: fixed; inset: 0; z-index: 10000;
+            background: rgba(5,5,5,0.95);
+            backdrop-filter: blur(10px);
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .lightbox.active { opacity: 1; pointer-events: auto; }
+        .lightbox img {
+            max-width: 90vw; max-height: 90vh;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-highlight);
+        }
+        .lightbox-close {
+            position: absolute; top: 40px; right: 40px;
+            font-family: 'JetBrains Mono', monospace; color: #fff;
+            font-size: 24px; cursor: pointer;
+        }
+
 
         /* --- GRID SYSTEM --- */
-        /* This container background color acts as the border */
         .content-section {
             background-color: var(--border);
             display: flex;
@@ -126,7 +243,7 @@
         .project-grid {
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 1px; /* This gap creates the vertical borders between cards */
+            gap: 1px;
             background-color: var(--border); 
         }
 
@@ -138,15 +255,13 @@
             transition: background 0.2s;
             display: flex; 
             flex-direction: column; 
-            /* Let flexbox handle height naturally */
             height: 100%; 
             min-height: 380px; 
         }
         .card:hover { background: var(--surface-hover); }
 
-        /* PRIME CARD: Spans full width */
         .card.prime-card {
-            background: #080b14; /* Very subtle blue tint */
+            background: #080b14;
             grid-column: 1 / -1; 
         }
         .card.prime-card:hover { background: #0c101c; }
@@ -174,16 +289,14 @@
             color: #999; text-transform: uppercase;
         }
 
-        /* --- COLOR ACCENTS --- */
         .c-graphite h3 { color: var(--c-graphite); }
         .c-audio h3 { color: var(--c-audio); }
         .c-intel h3 { color: var(--c-intel); }
         .c-visual h3 { color: var(--c-visual); }
 
-        /* --- EXTERNAL LINKS --- */
         .card-link { position: absolute; inset: 0; z-index: 2; }
 
-        /* --- EXTERNAL SECTION --- */
+        /* --- EXTERNAL --- */
         .ext-grid { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
@@ -198,11 +311,14 @@
         .ext-item:hover { background: var(--surface-hover); }
         .big-stat { font-family: 'Syncopate', sans-serif; font-size: 48px; line-height: 1; margin: 20px 0; }
 
-        /* --- FOOTER --- */
-        .footer {
-            background: var(--bg);
-            padding: 60px;
+        .footer { background: var(--bg); padding: 60px; }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; box-shadow: 0 0 0 rgba(16, 185, 129, 0); }
+            50% { opacity: 1; box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
+            100% { opacity: 0.5; box-shadow: 0 0 0 rgba(16, 185, 129, 0); }
         }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 1024px) {
@@ -213,12 +329,20 @@
             .ext-grid { grid-template-columns: 1fr; }
             #cursor { display: none; }
             * { cursor: auto; }
+            .asset-stream-container { height: 300px; }
+            .stream-item { height: 180px; }
         }
     </style>
 </head>
 <body>
 
     <div id="cursor"></div>
+
+    <!-- LIGHTBOX OVERLAY -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-close" id="lightbox-close">[X]</div>
+        <img id="lightbox-img" src="" alt="Full view">
+    </div>
 
     <div class="wrapper">
         <aside class="sidebar">
@@ -234,7 +358,6 @@
                 <a href="#visual" data-index="4">VISUAL / PIXEL</a>
                 <a href="#external" data-index="5">EXTERNAL SIGNALS</a>
             </nav>
-            <!-- Removed System Online Block -->
         </aside>
 
         <main>
@@ -245,6 +368,26 @@
                 </p>
             </section>
 
+            <!-- ASSET STREAM -->
+            <div class="asset-stream-container">
+                <div class="stream-header">
+                    <div class="stream-meta">
+                        <div class="stream-indicator loading" id="stream-status-light"></div>
+                        <span id="stream-status-text">CONNECTING_GITHUB_API...</span>
+                    </div>
+                    <div class="stream-meta">
+                        <span>DRAG TO SCAN</span>
+                        <span>[ <span id="asset-count">--</span> ]</span>
+                    </div>
+                </div>
+                <div class="stream-viewport" id="stream-viewport">
+                    <div class="stream-track" id="stream-track">
+                        <!-- JS WILL INJECT IMAGES HERE -->
+                    </div>
+                    <div id="stream-loading-msg" class="stream-msg">INITIALIZING UPLINK...</div>
+                </div>
+            </div>
+
             <!-- DOMAIN 1: GRAPHITE -->
             <div id="graphite" class="content-section c-graphite">
                 <div class="domain-header">
@@ -253,7 +396,7 @@
                 </div>
                 <div class="project-grid">
                     
-                    <!-- GRAPHITE PRIME (MAIN APP) -->
+                    <!-- GRAPHITE PRIME -->
                     <article class="card prime-card">
                          <div class="card-meta"><span>ORCHESTRATOR</span><span>v2.1</span></div>
                         <h3>GRAPHITE: PRIME</h3>
@@ -530,12 +673,209 @@
     </div>
 
     <script>
+        // --- CUSTOM CURSOR ---
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
+
+        // --- DYNAMIC REPO ASSET STREAM ---
+        const API_URL = "https://api.github.com/repos/dovvnloading/dovvnloading.github.io/contents/assets";
+
+        class KineticStream {
+            constructor() {
+                this.track = document.getElementById('stream-track');
+                this.viewport = document.getElementById('stream-viewport');
+                this.lightbox = document.getElementById('lightbox');
+                this.lightboxImg = document.getElementById('lightbox-img');
+                
+                // Status Elements
+                this.statusText = document.getElementById('stream-status-text');
+                this.statusLight = document.getElementById('stream-status-light');
+                this.countDisplay = document.getElementById('asset-count');
+                this.msgDisplay = document.getElementById('stream-loading-msg');
+                
+                this.state = {
+                    current: 0,
+                    target: 0,
+                    isDragging: false,
+                    startX: 0,
+                    startScroll: 0,
+                    limit: 0,
+                    velocity: 0,
+                    initialized: false
+                };
+
+                // Bind Methods
+                this.onDown = this.onDown.bind(this);
+                this.onMove = this.onMove.bind(this);
+                this.onUp = this.onUp.bind(this);
+                this.onWheel = this.onWheel.bind(this);
+
+                this.init();
+            }
+
+            async init() {
+                // 1. Fetch Assets from GitHub API
+                try {
+                    const files = await this.fetchAssets();
+                    if (files.length > 0) {
+                        this.renderAssets(files);
+                        this.setStatus("LIVE_STREAM", "active");
+                        this.countDisplay.innerText = files.length.toString().padStart(2, '0');
+                        this.msgDisplay.style.display = 'none'; // Hide loading text
+                        
+                        // Wait for images to render before calc
+                        setTimeout(() => this.calcBounds(), 500); 
+                        setTimeout(() => this.calcBounds(), 2000); // Re-check after potential load
+                    } else {
+                        throw new Error("No image assets found.");
+                    }
+                } catch (e) {
+                    console.error(e);
+                    this.setStatus("UPLINK_FAILED // REPO_EMPTY", "offline");
+                    this.msgDisplay.innerText = "NO DATA PACKETS FOUND IN /ASSETS";
+                    return;
+                }
+
+                // 2. Bind Events
+                this.viewport.addEventListener('mousedown', this.onDown);
+                window.addEventListener('mousemove', this.onMove);
+                window.addEventListener('mouseup', this.onUp);
+                this.viewport.addEventListener('wheel', this.onWheel, { passive: false });
+                window.addEventListener('resize', () => this.calcBounds());
+
+                // Lightbox
+                document.getElementById('lightbox-close').onclick = () => {
+                    this.lightbox.classList.remove('active');
+                };
+                
+                // 3. Start Loop
+                this.state.initialized = true;
+                this.raf();
+            }
+
+            async fetchAssets() {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error("GitHub API rate limit or network error");
+                
+                const data = await response.json();
+                
+                // Filter specifically for images in the root of that folder
+                const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
+                
+                return data.filter(item => {
+                    if (item.type !== 'file') return false;
+                    const lowerName = item.name.toLowerCase();
+                    return imageExtensions.some(ext => lowerName.endsWith(ext));
+                });
+            }
+
+            renderAssets(files) {
+                this.track.innerHTML = '';
+                
+                files.forEach((file, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'stream-item';
+                    
+                    // Optimization: Use raw.githubusercontent for better caching/speed than API download_url
+                    // However, download_url is safer if structure changes. We use download_url provided by API.
+                    const img = document.createElement('img');
+                    img.src = file.download_url;
+                    img.loading = "lazy";
+                    img.alt = file.name;
+
+                    const overlay = document.createElement('div');
+                    overlay.className = 'item-overlay';
+                    overlay.innerHTML = `<span>${file.name.substring(0, 15)}</span><span style="float:right">RAW</span>`;
+
+                    div.appendChild(img);
+                    div.appendChild(overlay);
+                    div.onclick = () => this.openLightbox(file.download_url);
+                    
+                    this.track.appendChild(div);
+                });
+            }
+
+            setStatus(text, type) {
+                this.statusText.innerText = text;
+                this.statusLight.className = `stream-indicator ${type === 'offline' ? 'offline' : ''}`;
+                if (type === 'active') {
+                    this.statusLight.style.background = 'var(--c-intel)';
+                    this.statusLight.style.animation = 'pulse 2s infinite';
+                }
+            }
+
+            calcBounds() {
+                const trackWidth = this.track.scrollWidth;
+                const viewWidth = this.viewport.offsetWidth;
+                // If content is smaller than viewport, no scrolling needed
+                if (trackWidth <= viewWidth) {
+                    this.state.limit = 0;
+                } else {
+                    this.state.limit = -(trackWidth - viewWidth) - 120; // 120px padding at end
+                }
+            }
+
+            onDown(e) {
+                if (!this.state.initialized) return;
+                this.state.isDragging = true;
+                this.state.startX = e.clientX;
+                this.state.startScroll = this.state.target;
+                this.viewport.style.cursor = 'grabbing';
+            }
+
+            onMove(e) {
+                if (!this.state.isDragging) return;
+                const delta = e.clientX - this.state.startX;
+                this.state.target = this.state.startScroll + (delta * 1.5); 
+            }
+
+            onUp() {
+                this.state.isDragging = false;
+                this.viewport.style.cursor = 'grab';
+            }
+
+            onWheel(e) {
+                if (!this.state.initialized) return;
+                e.preventDefault();
+                // Horizontal scrolling via vertical wheel
+                this.state.target -= e.deltaY;
+            }
+
+            openLightbox(src) {
+                if (Math.abs(this.state.velocity) > 2) return; 
+                this.lightboxImg.src = src;
+                this.lightbox.classList.add('active');
+            }
+
+            raf() {
+                if (!this.state.initialized) return;
+
+                // Soft Clamping logic
+                if (!this.state.isDragging) {
+                    if (this.state.target > 0) this.state.target = 0;
+                    if (this.state.target < this.state.limit) this.state.target = this.state.limit;
+                }
+
+                const oldCurrent = this.state.current;
+                // Interpolation for smooth physics
+                this.state.current += (this.state.target - this.state.current) * 0.1;
+                
+                this.state.velocity = this.state.current - oldCurrent;
+                
+                // Velocity-based Skew
+                const skew = this.state.velocity * 0.15; 
+                this.track.style.transform = `translate3d(${this.state.current}px, 0, 0) skewX(${skew}deg)`;
+
+                requestAnimationFrame(() => this.raf());
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new KineticStream();
+        });
     </script>
 </body>
 </html>
-
