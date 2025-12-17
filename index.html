@@ -42,11 +42,14 @@
             font-size: 14px;
         }
 
-        /* --- CUSTOM CURSOR --- */
+        /* --- CUSTOM CURSOR (FIXED Z-INDEX) --- */
         #cursor {
             position: fixed; top: 0; left: 0; width: 12px; height: 12px;
             background: var(--text-accent); transform: translate(-50%, -50%);
-            pointer-events: none; z-index: 9999; mix-blend-mode: difference;
+            pointer-events: none; 
+            /* CRITICAL FIX: Z-Index higher than lightbox (10000) */
+            z-index: 99999; 
+            mix-blend-mode: difference;
             transition: width 0.2s, height 0.2s;
         }
         body:hover #cursor { opacity: 1; }
@@ -112,7 +115,7 @@
             max-width: 600px; font-size: 24px; line-height: 1.4; letter-spacing: -0.02em; color: #888;
         }
 
-        /* --- ASSET STREAM (NEW COMPONENT) --- */
+        /* --- ASSET STREAM --- */
         .asset-stream-container {
             background: #080808;
             height: 380px;
@@ -130,6 +133,7 @@
             display: flex; justify-content: space-between; align-items: center;
             background: var(--bg);
             z-index: 10;
+            min-height: 48px;
         }
         .stream-meta {
             font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
@@ -156,17 +160,16 @@
             height: 100%;
             position: absolute;
             left: 0; top: 0;
-            padding: 0 60px; 
+            padding: 0 50vw; /* Center the first item */
             will-change: transform;
         }
 
         .stream-item {
             height: 240px;
-            margin-right: 2px; /* Tight gap */
+            margin-right: 2px;
             position: relative;
             flex-shrink: 0;
             user-select: none;
-            transition: opacity 0.3s;
             background: #111;
             display: flex; align-items: center; justify-content: center;
         }
@@ -175,25 +178,12 @@
             width: auto;
             display: block;
             pointer-events: none;
-            filter: grayscale(100%) contrast(1.1);
-            transition: filter 0.3s;
-        }
-        .stream-item:hover img {
-            filter: grayscale(0%) contrast(1.0);
+            /* Default state is handled via JS, but base style: */
+            filter: grayscale(100%) brightness(0.5);
+            /* Important: Transition must be very fast or removed for per-frame JS updates to look smooth */
+            will-change: filter; 
         }
         
-        .item-overlay {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            padding: 8px;
-            background: rgba(0,0,0,0.8);
-            font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #fff;
-            transform: translateY(100%);
-            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            backdrop-filter: blur(4px);
-            border-top: 1px solid var(--border-highlight);
-        }
-        .stream-item:hover .item-overlay { transform: translateY(0); }
-
         /* LOADING MESSAGE */
         .stream-msg {
             font-family: 'JetBrains Mono', monospace; color: #444; 
@@ -331,6 +321,7 @@
             * { cursor: auto; }
             .asset-stream-container { height: 300px; }
             .stream-item { height: 180px; }
+            .stream-track { padding: 0 20px; }
         }
     </style>
 </head>
@@ -372,12 +363,8 @@
             <div class="asset-stream-container">
                 <div class="stream-header">
                     <div class="stream-meta">
+                        <!-- REMOVED TEXT, ONLY STATUS LIGHT -->
                         <div class="stream-indicator loading" id="stream-status-light"></div>
-                        <span id="stream-status-text">CONNECTING_GITHUB_API...</span>
-                    </div>
-                    <div class="stream-meta">
-                        <span>DRAG TO SCAN</span>
-                        <span>[ <span id="asset-count">--</span> ]</span>
                     </div>
                 </div>
                 <div class="stream-viewport" id="stream-viewport">
@@ -691,9 +678,7 @@
                 this.lightboxImg = document.getElementById('lightbox-img');
                 
                 // Status Elements
-                this.statusText = document.getElementById('stream-status-text');
                 this.statusLight = document.getElementById('stream-status-light');
-                this.countDisplay = document.getElementById('asset-count');
                 this.msgDisplay = document.getElementById('stream-loading-msg');
                 
                 this.state = {
@@ -706,35 +691,38 @@
                     velocity: 0,
                     initialized: false
                 };
+                
+                // Cache for item metrics to avoid layout thrashing in RAF
+                this.itemsMetrics = []; 
 
                 // Bind Methods
                 this.onDown = this.onDown.bind(this);
                 this.onMove = this.onMove.bind(this);
                 this.onUp = this.onUp.bind(this);
                 this.onWheel = this.onWheel.bind(this);
+                this.raf = this.raf.bind(this);
 
                 this.init();
             }
 
             async init() {
-                // 1. Fetch Assets from GitHub API
+                // 1. Fetch Assets
                 try {
                     const files = await this.fetchAssets();
                     if (files.length > 0) {
                         this.renderAssets(files);
-                        this.setStatus("LIVE_STREAM", "active");
-                        this.countDisplay.innerText = files.length.toString().padStart(2, '0');
-                        this.msgDisplay.style.display = 'none'; // Hide loading text
+                        this.setStatus("active");
+                        this.msgDisplay.style.display = 'none'; 
                         
                         // Wait for images to render before calc
-                        setTimeout(() => this.calcBounds(), 500); 
-                        setTimeout(() => this.calcBounds(), 2000); // Re-check after potential load
+                        setTimeout(() => this.recalculateMetrics(), 500); 
+                        setTimeout(() => this.recalculateMetrics(), 2000); 
                     } else {
                         throw new Error("No image assets found.");
                     }
                 } catch (e) {
                     console.error(e);
-                    this.setStatus("UPLINK_FAILED // REPO_EMPTY", "offline");
+                    this.setStatus("offline");
                     this.msgDisplay.innerText = "NO DATA PACKETS FOUND IN /ASSETS";
                     return;
                 }
@@ -744,7 +732,7 @@
                 window.addEventListener('mousemove', this.onMove);
                 window.addEventListener('mouseup', this.onUp);
                 this.viewport.addEventListener('wheel', this.onWheel, { passive: false });
-                window.addEventListener('resize', () => this.calcBounds());
+                window.addEventListener('resize', () => this.recalculateMetrics());
 
                 // Lightbox
                 document.getElementById('lightbox-close').onclick = () => {
@@ -753,7 +741,7 @@
                 
                 // 3. Start Loop
                 this.state.initialized = true;
-                this.raf();
+                requestAnimationFrame(this.raf);
             }
 
             async fetchAssets() {
@@ -762,7 +750,6 @@
                 
                 const data = await response.json();
                 
-                // Filter specifically for images in the root of that folder
                 const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
                 
                 return data.filter(item => {
@@ -775,31 +762,26 @@
             renderAssets(files) {
                 this.track.innerHTML = '';
                 
-                files.forEach((file, index) => {
+                files.forEach((file) => {
                     const div = document.createElement('div');
                     div.className = 'stream-item';
                     
-                    // Optimization: Use raw.githubusercontent for better caching/speed than API download_url
-                    // However, download_url is safer if structure changes. We use download_url provided by API.
                     const img = document.createElement('img');
                     img.src = file.download_url;
                     img.loading = "lazy";
                     img.alt = file.name;
 
-                    const overlay = document.createElement('div');
-                    overlay.className = 'item-overlay';
-                    overlay.innerHTML = `<span>${file.name.substring(0, 15)}</span><span style="float:right">RAW</span>`;
+                    // No text overlay requested in latest revision, keeping it clean
+                    // But if you wanted it back, insert here.
 
                     div.appendChild(img);
-                    div.appendChild(overlay);
                     div.onclick = () => this.openLightbox(file.download_url);
                     
                     this.track.appendChild(div);
                 });
             }
 
-            setStatus(text, type) {
-                this.statusText.innerText = text;
+            setStatus(type) {
                 this.statusLight.className = `stream-indicator ${type === 'offline' ? 'offline' : ''}`;
                 if (type === 'active') {
                     this.statusLight.style.background = 'var(--c-intel)';
@@ -807,15 +789,30 @@
                 }
             }
 
-            calcBounds() {
+            recalculateMetrics() {
+                // 1. Calc Scroll Limit
                 const trackWidth = this.track.scrollWidth;
                 const viewWidth = this.viewport.offsetWidth;
-                // If content is smaller than viewport, no scrolling needed
+                const viewCenter = viewWidth / 2;
+
                 if (trackWidth <= viewWidth) {
                     this.state.limit = 0;
                 } else {
-                    this.state.limit = -(trackWidth - viewWidth) - 120; // 120px padding at end
+                    // Adjust limit to account for center padding
+                    this.state.limit = -(trackWidth - viewWidth); 
                 }
+
+                // 2. Cache metrics for every item to perform fast Proximity check
+                // We need the offsetLeft relative to the TRACK, and the width.
+                const items = Array.from(document.querySelectorAll('.stream-item'));
+                this.itemsMetrics = items.map(item => ({
+                    element: item.querySelector('img'),
+                    left: item.offsetLeft,
+                    width: item.offsetWidth,
+                    center: item.offsetLeft + (item.offsetWidth / 2)
+                }));
+                
+                this.viewportCenter = viewCenter;
             }
 
             onDown(e) {
@@ -840,7 +837,6 @@
             onWheel(e) {
                 if (!this.state.initialized) return;
                 e.preventDefault();
-                // Horizontal scrolling via vertical wheel
                 this.state.target -= e.deltaY;
             }
 
@@ -853,23 +849,51 @@
             raf() {
                 if (!this.state.initialized) return;
 
-                // Soft Clamping logic
+                // 1. Physics Engine
                 if (!this.state.isDragging) {
+                    // Elastic borders
                     if (this.state.target > 0) this.state.target = 0;
                     if (this.state.target < this.state.limit) this.state.target = this.state.limit;
                 }
 
                 const oldCurrent = this.state.current;
-                // Interpolation for smooth physics
                 this.state.current += (this.state.target - this.state.current) * 0.1;
-                
                 this.state.velocity = this.state.current - oldCurrent;
                 
-                // Velocity-based Skew
+                // 2. Apply Transform
                 const skew = this.state.velocity * 0.15; 
                 this.track.style.transform = `translate3d(${this.state.current}px, 0, 0) skewX(${skew}deg)`;
 
-                requestAnimationFrame(() => this.raf());
+                // 3. Proximity Focus Engine (The SOTA Part)
+                // We calculate distance from viewport center to item center
+                // To do this: ItemScreenX = ItemTrackX + CurrentScroll
+                const trackX = this.state.current;
+                const centerPoint = this.viewportCenter; // e.g. 500
+                
+                // Loop is fast because we use cached metrics, no DOM reads
+                this.itemsMetrics.forEach(metric => {
+                     const itemScreenCenter = metric.center + trackX;
+                     const dist = Math.abs(itemScreenCenter - centerPoint);
+                     
+                     // Thresholds:
+                     // 0px dist = 100% color, 100% brightness
+                     // 400px dist = 0% color, 50% brightness
+                     
+                     let intensity = 1 - (dist / 400); // 400px falloff radius
+                     if (intensity < 0) intensity = 0;
+                     
+                     // Map to CSS filters
+                     // Grayscale: 0 (color) -> 1 (grey)
+                     // Brightness: 1 (bright) -> 0.5 (dim)
+                     
+                     const gray = 1 - intensity; 
+                     const bright = 0.5 + (intensity * 0.5); 
+                     
+                     metric.element.style.filter = `grayscale(${gray}) brightness(${bright})`;
+                     metric.element.style.transform = `scale(${0.9 + (intensity * 0.1)})`; // Subtle scale up
+                });
+
+                requestAnimationFrame(this.raf);
             }
         }
 
