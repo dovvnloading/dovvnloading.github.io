@@ -11,22 +11,14 @@
     
     <style>
         :root {
-            /* --- PALETTE: SWISS DARK --- */
             --bg: #080808;
             --surface: #0f0f0f;
             --surface-hover: #161616;
-            
-            /* --- STRUCTURE --- */
             --border: #222; 
             --border-highlight: #333;
-            
-            /* --- TYPOGRAPHY --- */
             --text-main: #f0f0f0;
             --text-dim: #888;
             --text-accent: #fff;
-            
-            /* --- ACCENTS (Subdued) --- */
-            --c-primary: #3b82f6; 
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
@@ -40,19 +32,18 @@
             line-height: 1.5;
         }
 
-        /* --- CUSTOM CURSOR --- */
+        /* --- SOTA CURSOR --- */
         #cursor {
             position: fixed; top: 0; left: 0; width: 12px; height: 12px;
             background: var(--text-accent); transform: translate(-50%, -50%);
             pointer-events: none; 
-            z-index: 99999; 
+            z-index: 999999; 
             mix-blend-mode: difference;
             transition: width 0.2s, height 0.2s;
             border-radius: 50%;
         }
         body:hover #cursor { opacity: 1; }
         
-        /* HOVER INTERACTION */
         a:hover ~ #cursor, 
         .card:hover ~ #cursor, 
         .stream-item:hover ~ #cursor,
@@ -72,7 +63,6 @@
             background-color: var(--border);
         }
 
-        /* --- SIDEBAR --- */
         .sidebar {
             position: sticky; top: 0; height: 100vh;
             padding: 40px 32px;
@@ -89,285 +79,83 @@
             margin-bottom: 6px;
             text-transform: uppercase;
         }
-        .identity span { 
-            font-family: 'Inter', sans-serif; 
-            color: var(--text-dim); 
-            font-size: 12px; 
-        }
+        .identity span { font-size: 12px; color: var(--text-dim); }
 
         .nav { margin-top: 64px; display: flex; flex-direction: column; gap: 8px; }
         .nav a {
-            text-decoration: none; 
-            color: var(--text-dim); 
-            font-family: 'Inter', sans-serif;
-            font-size: 13px; 
-            transition: 0.2s; 
-            display: flex; align-items: center;
-            padding: 8px 0;
+            text-decoration: none; color: var(--text-dim); font-size: 13px; 
+            transition: 0.2s; padding: 8px 0;
         }
         .nav a:hover { color: var(--text-accent); transform: translateX(4px); }
-        .nav a.active { color: var(--text-accent); }
 
-        /* --- MAIN CONTENT --- */
-        main { 
-            background: var(--border); 
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-        }
+        main { background: var(--border); display: flex; flex-direction: column; gap: 1px; }
 
-        /* HERO */
-        .hero {
-            padding: 140px 80px;
-            background-color: var(--bg);
-        }
-        .hero p {
-            max-width: 640px; 
-            font-size: 26px; 
-            font-weight: 300;
-            line-height: 1.4; 
-            letter-spacing: -0.01em; 
-            color: #999;
-        }
+        /* --- HERO --- */
+        .hero { padding: 140px 80px; background-color: var(--bg); }
+        .hero p { max-width: 640px; font-size: 26px; font-weight: 300; line-height: 1.4; color: #999; }
         .hero strong { color: #eee; font-weight: 400; }
 
-        /* --- ASSET STREAM (GALLERY) --- */
+        /* --- GALLERY STREAM --- */
         .asset-stream-container {
-            background: #080808;
-            height: 440px;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+            background: #080808; height: 440px; position: relative;
+            overflow: hidden; display: flex; flex-direction: column;
             border-bottom: 1px solid var(--border);
         }
 
-        .stream-header {
-            padding: 24px 80px 0; 
-            display: flex; justify-content: flex-start;
-            background: #080808;
-            z-index: 10;
-        }
-        .stream-label {
-            font-family: 'Inter', sans-serif; 
-            font-size: 10px; 
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            color: var(--text-dim);
-            text-transform: uppercase;
-        }
+        .stream-header { padding: 24px 80px 0; z-index: 10; background: #080808; }
+        .stream-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: var(--text-dim); text-transform: uppercase; }
 
-        .stream-viewport {
-            flex-grow: 1;
-            position: relative;
-            overflow: hidden;
-            cursor: grab; 
-            display: flex;
-            align-items: center;
-        }
+        .stream-viewport { flex-grow: 1; position: relative; overflow: hidden; cursor: grab; display: flex; align-items: center; }
         .stream-viewport:active { cursor: grabbing; }
 
-        .stream-track {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            position: absolute;
-            left: 0; top: 0;
-            padding-right: 40vw; 
-            will-change: transform;
-        }
+        .stream-track { display: flex; align-items: center; height: 100%; position: absolute; left: 0; top: 0; padding-right: 40vw; will-change: transform; }
 
-        /* MANIFESTO BLOCK */
         .stream-intro {
-            height: 300px;
-            width: 420px; 
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-left: 80px; 
-            padding-right: 40px;
-            margin-right: 20px;
-            position: relative;
-            z-index: 2;
+            height: 300px; width: 420px; flex-shrink: 0; display: flex; flex-direction: column;
+            justify-content: center; padding-left: 80px; padding-right: 40px; margin-right: 20px;
+            position: relative; z-index: 2;
         }
-        
-        .stream-intro h4 {
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            font-size: 22px;
-            color: var(--text-main);
-            margin-bottom: 24px;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-        }
-        
-        .stream-intro p {
-            font-family: 'Inter', sans-serif;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #777;
-            max-width: 300px;
-        }
+        .stream-intro h4 { font-size: 22px; font-weight: 400; margin-bottom: 24px; color: var(--text-main); }
+        .stream-intro p { font-size: 13px; line-height: 1.6; color: #777; max-width: 300px; }
+        .stream-intro::after { content: ''; position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 40px; width: 1px; background: #222; }
 
-        .stream-intro::after {
-            content: '';
-            position: absolute;
-            right: 0; top: 50%; transform: translateY(-50%);
-            height: 40px; width: 1px;
-            background: #222;
-        }
-
-        /* STREAM IMAGES */
-        .stream-item {
-            height: 300px; 
-            margin-right: 4px; 
-            position: relative;
-            flex-shrink: 0;
-            user-select: none;
-            background: #0a0a0a;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .stream-item img {
-            height: 100%;
-            width: auto;
-            display: block;
-            pointer-events: none;
-            filter: grayscale(100%) opacity(0.5);
-            transition: filter 0.6s ease; 
-            will-change: filter; 
-        }
+        .stream-item { height: 300px; margin-right: 4px; flex-shrink: 0; user-select: none; background: #0a0a0a; display: flex; align-items: center; justify-content: center; }
+        .stream-item img { height: 100%; width: auto; display: block; filter: grayscale(100%) opacity(0.5); transition: filter 0.6s ease; will-change: filter; }
         
-        .stream-msg {
-            font-family: 'Inter', sans-serif; font-size: 10px; color: #444; 
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            pointer-events: none;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
+        .stream-msg { font-size: 10px; color: #444; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-transform: uppercase; letter-spacing: 0.1em; }
 
-        /* LIGHTBOX */
-        .lightbox {
-            position: fixed; inset: 0; z-index: 10000;
-            background: rgba(0,0,0,0.95);
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
+        /* --- LIGHTBOX --- */
+        .lightbox { position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
         .lightbox.active { opacity: 1; pointer-events: auto; }
-        .lightbox img {
-            max-width: 90vw; max-height: 90vh;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-        }
-        .lightbox-close {
-            position: absolute; top: 40px; right: 40px;
-            font-family: 'Inter', sans-serif; color: #666;
-            font-size: 12px; cursor: pointer; letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-        .lightbox-close:hover { color: #fff; }
+        .lightbox img { max-width: 90vw; max-height: 90vh; box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
+        .lightbox-close { position: absolute; top: 40px; right: 40px; color: #666; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
 
-        /* --- GRID SYSTEM --- */
+        /* --- GRID --- */
         .content-section { background: var(--border); display: flex; flex-direction: column; gap: 1px; }
-        
-        .domain-header {
-            padding: 60px 80px 30px;
-            display: flex; justify-content: space-between; align-items: flex-end;
-            background: var(--bg); 
-            z-index: 40;
-        }
-        .domain-header h2 { 
-            font-family: 'Inter', sans-serif; 
-            font-size: 14px; 
-            font-weight: 600; 
-            letter-spacing: 0.05em; 
-            text-transform: uppercase;
-        }
-        .domain-header span { 
-            font-family: 'Inter', sans-serif; 
-            font-size: 11px; 
-            color: var(--text-dim); 
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .project-grid {
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 1px;
-            background-color: var(--border); 
-        }
-
-        /* --- CARD DESIGN --- */
-        .card {
-            background-color: var(--bg); 
-            padding: 60px; 
-            position: relative; 
-            transition: background 0.3s ease;
-            display: flex; flex-direction: column; height: 100%; min-height: 420px; 
-        }
+        .domain-header { padding: 60px 80px 30px; display: flex; justify-content: space-between; align-items: flex-end; background: var(--bg); z-index: 40; }
+        .domain-header h2 { font-size: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+        .domain-header span { font-size: 11px; color: var(--text-dim); text-transform: uppercase; }
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1px; background-color: var(--border); }
+        .card { background-color: var(--bg); padding: 60px; position: relative; transition: background 0.3s ease; display: flex; flex-direction: column; height: 100%; min-height: 420px; }
         .card:hover { background: var(--surface-hover); }
-
         .card.prime-card { background: #0c0c0c; grid-column: 1 / -1; }
-        .card.prime-card:hover { background: #111; }
-        .card.prime-card h3 { font-size: 28px; }
-
-        .card-meta {
-            font-family: 'Inter', sans-serif; 
-            font-size: 11px; color: var(--text-dim);
-            margin-bottom: 24px; display: flex; justify-content: space-between;
-            text-transform: uppercase; letter-spacing: 0.05em;
-        }
-        
-        .card h3 {
-            font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 500;
-            margin-bottom: 16px; letter-spacing: -0.02em; color: var(--text-main);
-        }
-        
-        .card p {
-            font-family: 'Inter', sans-serif;
-            font-size: 14px; line-height: 1.6; color: #777; 
-            max-width: 90%; margin-bottom: 40px; flex-grow: 1;
-        }
-
+        .card h3 { font-size: 20px; font-weight: 500; margin-bottom: 16px; color: var(--text-main); }
+        .card p { font-size: 14px; line-height: 1.6; color: #777; margin-bottom: 40px; flex-grow: 1; }
         .specs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
-        .spec {
-            font-family: 'Inter', sans-serif; font-size: 10px; 
-            padding: 6px 10px; border: 1px solid var(--border-highlight);
-            color: #666; text-transform: uppercase; letter-spacing: 0.05em;
-        }
-
+        .spec { font-size: 10px; padding: 6px 10px; border: 1px solid var(--border-highlight); color: #666; text-transform: uppercase; }
         .card-link { position: absolute; inset: 0; z-index: 2; }
-
-        /* --- EXTERNAL --- */
-        .ext-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: var(--border); }
-        .ext-item { background-color: var(--bg); padding: 80px; transition: background 0.2s; }
-        .ext-item:hover { background: var(--surface-hover); }
-        .big-stat { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 56px; line-height: 1; margin: 24px 0; letter-spacing: -0.03em;}
-
         .footer { background: var(--bg); padding: 80px; display: flex; justify-content: space-between; align-items: flex-end;}
-        .footer a { color: #555; text-decoration: none; font-size: 12px; margin-right: 24px; transition: 0.2s; }
-        .footer a:hover { color: #fff; }
+        .footer a { color: #555; text-decoration: none; font-size: 12px; margin-right: 24px; }
 
-        /* --- RESPONSIVE --- */
         @media (max-width: 1024px) {
             .wrapper { grid-template-columns: 1fr; }
-            .sidebar { height: auto; position: relative; border-bottom: 1px solid var(--border); padding: 24px; flex-direction: row; align-items: center; }
+            .sidebar { height: auto; position: relative; border-bottom: 1px solid var(--border); padding: 24px; flex-direction: row; }
             .nav { display: none; }
-            .project-grid { grid-template-columns: 1fr; }
-            .ext-grid { grid-template-columns: 1fr; }
-            #cursor { display: none; }
-            * { cursor: auto; }
             .hero { padding: 80px 24px; }
-            .hero p { font-size: 20px; }
-            .asset-stream-container { height: 350px; }
-            .stream-header { padding: 16px 24px; }
-            .stream-item, .stream-intro { height: 220px; }
-            .stream-intro { width: 300px; padding-left: 24px; padding-right: 20px; }
             .domain-header { padding: 40px 24px 20px; }
             .card { padding: 40px 24px; }
-            .footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; gap: 20px;}
+            #cursor { display: none; }
+            * { cursor: auto; }
         }
     </style>
 </head>
@@ -384,295 +172,102 @@
         <aside class="sidebar">
             <div class="identity">
                 <h1>Matthew Wesney</h1>
-                <span>Portfolio 2024</span>
+                <span>Systems Architect</span>
             </div>
 
             <nav class="nav">
-                <!-- PROFESSIONAL TERMINOLOGY -->
                 <a href="#graphite">Systems Architecture</a>
                 <a href="#audio">Audio & DSP</a>
-                <a href="#intel">Research & AI</a>
-                <a href="#visual">Graphics & Rendering</a>
-                <a href="#external">Community & Data</a>
+                <a href="#research">Research & AI</a>
+                <a href="#graphics">Graphics & Rendering</a>
+                <a href="#community">Community & Data</a>
             </nav>
         </aside>
 
         <main>
-            <!-- HERO -->
             <section class="content-section hero">
                 <p>
-                    I build <strong>agentic workspaces</strong> and execution-centric tools that collapse the gap between intent and action—spanning zero-backend IDEs, autonomous analysis, and high-performance browser engines.
+                    I build <strong>agentic workspaces</strong> and high-fidelity signal processing tools that collapse the gap between intent and action—spanning zero-backend IDEs and generative audio engines.
                 </p>
             </section>
 
-            <!-- ASSET STREAM -->
             <div class="asset-stream-container">
                 <div class="stream-header">
-                    <span class="stream-label">Visual Index / Selected Works</span>
+                    <span class="stream-label">Index // Randomized Selected Output</span>
                 </div>
                 <div class="stream-viewport" id="stream-viewport">
                     <div class="stream-track" id="stream-track">
-                        <!-- MANIFESTO MODULE: Professional -->
                         <div class="stream-intro">
                             <h4>Independent Architecture</h4>
                             <p>
-                                The following visual index represents 100% individual output.
+                                Every interface, system, and logic loop visible in this stream was architected solo.
                                 <br><br>
-                                Every interface, system, and logic loop visible here was architected and deployed solo. No teams, no corporate dependencies.
+                                No corporate templates. No team dependencies. Pure individual execution.
                             </p>
                         </div>
-                        <!-- DYNAMIC IMAGES APPENDED HERE -->
                     </div>
-                    <div id="stream-loading-msg" class="stream-msg">Loading Index...</div>
+                    <div id="stream-loading-msg" class="stream-msg">Synchronizing Archive...</div>
                 </div>
             </div>
 
-            <!-- DOMAIN 1: SYSTEMS -->
+            <!-- DOMAIN: SYSTEMS -->
             <div id="graphite" class="content-section">
                 <div class="domain-header">
                     <h2>Systems Architecture</h2>
                     <span>Development Environments</span>
                 </div>
                 <div class="project-grid">
-                    
-                    <!-- GRAPHITE PRIME -->
                     <article class="card prime-card">
-                         <div class="card-meta"><span>Application</span><span>v2.1</span></div>
                         <h3>Graphite: Prime</h3>
                         <p>A sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control via secure local-runtime bridging.</p>
-                        <div class="specs"><span class="spec">Recursive Agents</span><span class="spec">Runtime Bridge</span><span class="spec">Spatial Canvas</span></div>
+                        <div class="specs"><span class="spec">Recursive Agents</span><span class="spec">Runtime Bridge</span><span class="spec">IPC</span></div>
                     </article>
-
-                    <!-- PHLOW -->
                     <article class="card">
                         <a href="https://github.com/dovvnloading/Graphite-Phlow" target="_blank" class="card-link"></a>
-                        <div class="card-meta"><span>IDE</span><span>v1.2</span></div>
                         <h3>Graphite: Phlow</h3>
-                        <p>Zero-backend AI IDE. Features a shadow output protocol allowing agents to perform surgical edits on a virtual file system.</p>
-                        <div class="specs"><span class="spec">Virtual FS</span><span class="spec">React 19</span><span class="spec">Agent Swarm</span></div>
-                    </article>
-
-                    <!-- LOGICA -->
-                    <article class="card">
-                        <div class="card-meta"><span>Logic</span><span>v2.0</span></div>
-                        <h3>Graphite: Logica</h3>
-                        <p>Visual Flow Engineering. Decouples probabilistic LLM inference from deterministic logic loops. Architect workflows via nodes and transpile to Python.</p>
-                        <div class="specs"><span class="spec">Graph Theory</span><span class="spec">Transpiler</span><span class="spec">Visual Scripting</span></div>
-                    </article>
-
-                    <!-- GIT -->
-                    <article class="card">
-                        <a href="https://github.com/dovvnloading/Graphite-Git" target="_blank" class="card-link"></a>
-                        <div class="card-meta"><span>Client</span><span>v1.0</span></div>
-                        <h3>Graphite: Git</h3>
-                        <p>Local-first GitHub head. Integrates a pattern agent for autonomous refactoring via API with bulk network auditing.</p>
-                        <div class="specs"><span class="spec">GitHub API</span><span class="spec">Local Storage</span></div>
-                    </article>
-
-                    <!-- WEBDEV -->
-                    <article class="card">
-                        <a href="https://www.google.com/search?q=https://github.com/dovvnloading/Graphite-WebDev" target="_blank" class="card-link"></a>
-                        <div class="card-meta"><span>Environment</span><span>v1.5</span></div>
-                        <h3>Graphite: WebDev</h3>
-                        <p>Browser-based OS. Implements smart truncation logic to optimize context windows for large projects. Features real-time React compilation.</p>
-                        <div class="specs"><span class="spec">Context Opt</span><span class="spec">Babel</span></div>
-                    </article>
-                    
-                     <!-- SIGNALFLOW -->
-                     <article class="card">
-                        <div class="card-meta"><span>Analysis</span><span>v1.0</span></div>
-                        <h3>SignalFlow</h3>
-                        <p>Information distillation engine. Generates a surgical log of rhetorical noise removal. Visualizes argument topology via custom vector components.</p>
-                        <div class="specs"><span class="spec">Sankey</span><span class="spec">Diff Logic</span><span class="spec">Gemini Pro</span></div>
-                    </article>
-
-                    <!-- COGNITION -->
-                    <article class="card">
-                        <div class="card-meta"><span>Python</span><span>v0.9</span></div>
-                        <h3>Graphite: Cognition</h3>
-                        <p>Python-specific agentic workspace. Features a custom regex-based tokenizer for syntax highlighting and typo detection.</p>
-                        <div class="specs"><span class="spec">Python</span><span class="spec">Levenshtein</span></div>
+                        <p>Zero-backend AI IDE. Features a shadow output protocol allowing agents to perform surgical edits on a virtual file system via React 19 fiber nodes.</p>
+                        <div class="specs"><span class="spec">Virtual FS</span><span class="spec">Shadow DOM</span><span class="spec">Agent Swarm</span></div>
                     </article>
                 </div>
             </div>
 
-            <!-- DOMAIN 2: AUDIO -->
+            <!-- DOMAIN: AUDIO & DSP -->
             <div id="audio" class="content-section">
                 <div class="domain-header">
                     <h2>Audio & DSP</h2>
-                    <span>Synthesis / WebAudio</span>
+                    <span>Synthesis / Generative Signal Paths</span>
                 </div>
                 <div class="project-grid">
                     
-                    <!-- NEW: SONIC ARCHITECT -->
                     <article class="card">
-                        <div class="card-meta"><span>Workstation</span><span>v1.0</span></div>
+                        <h3>TrKRFT.vst</h3>
+                        <p>Professional-grade browser synthesizer. Features a 3-oscillator architecture, dual-biquad filter, and a stereo trance gate. Includes a custom piano roll MIDI editor and high-precision voice allocation.</p>
+                        <div class="specs"><span class="spec">Web Audio API</span><span class="spec">MIDI Editor</span><span class="spec">Supersaw Unison</span></div>
+                    </article>
+
+                    <article class="card">
                         <h3>Sonic Architect</h3>
-                        <p>Web-based DAW featuring a lookahead scheduler for precise timing. Includes a multi-core synth engine and a mastering chain with bus compression and saturation.</p>
-                        <div class="specs"><span class="spec">Scheduler</span><span class="spec">Mastering Chain</span><span class="spec">Cloud Engine</span></div>
+                        <p>Algorithmic DAW featuring a polyrhythmic "Cloud" engine. Implements a high-resolution lookahead scheduler for precision timing in complex generative sequences.</p>
+                        <div class="specs"><span class="spec">Algorithmic Seq</span><span class="spec">DAW</span><span class="spec">Cloud Logic</span></div>
                     </article>
 
-                    <!-- NEW: TrKRFT -->
                     <article class="card">
-                        <div class="card-meta"><span>Synthesizer</span><span>v1.0</span></div>
-                        <h3>TrKRFT</h3>
-                        <p>Browser-based polyphonic synthesizer. Features a three-oscillator architecture, dual-biquad flux filters, and a stereo trance gate. Includes a dedicated piano roll.</p>
-                        <div class="specs"><span class="spec">Flux Filter</span><span class="spec">Trance Gate</span><span class="spec">Piano Roll</span></div>
+                        <h3>Illuminia2</h3>
+                        <p>Generative FM synthesis system. Features real-time gesture recognition to classify playing styles and reactive tonality detection for harmonically locked counterpoint.</p>
+                        <div class="specs"><span class="spec">FM Synthesis</span><span class="spec">Gesture Recognition</span><span class="spec">Tonality AI</span></div>
                     </article>
 
-                    <!-- NEW: ILLUMINIA 2 -->
                     <article class="card">
-                        <div class="card-meta"><span>Generative</span><span>v2.0</span></div>
-                        <h3>Illuminia II: Nexus</h3>
-                        <p>Interactive musical system with Gesture Recognition. Detects playing styles (Swarm, Freeze) to trigger reactive FM synthesis and liquid cascade algorithms.</p>
-                        <div class="specs"><span class="spec">Gesture Analysis</span><span class="spec">FM Synthesis</span><span class="spec">Liquid Cascade</span></div>
-                    </article>
-                    
-                    <!-- NEW: EKOS -->
-                    <article class="card">
-                        <div class="card-meta"><span>Algorithm</span><span>v1.0</span></div>
                         <h3>Ekos</h3>
-                        <p>Semi-generative "Ghost Engine". For every manual note, it generates algorithmic accompaniment patterns. Features entropy control and "Hammer Noise" synthesis.</p>
-                        <div class="specs"><span class="spec">Ghost Notes</span><span class="spec">Entropy</span><span class="spec">Claymorphism</span></div>
+                        <p>Semi-generative synth with a "Ghost Note" engine. Produces algorithmic accompaniment in real-time, utilizing entropy-based pitch displacement and ADSR evolution.</p>
+                        <div class="specs"><span class="spec">Ghost Engine</span><span class="spec">Entropy Logic</span><span class="spec">ADSR</span></div>
                     </article>
-                    
-                    <!-- NEW: CRYSTALLINE -->
+
                     <article class="card">
-                        <div class="card-meta"><span>Atmosphere</span><span>v1.0</span></div>
                         <h3>Crystalline</h3>
-                        <p>Generative audio engine. Uses a "Harmonic Interpolation" system to derive scales from user input. Features an 8x8 pattern matrix and a particle phase visualizer.</p>
-                        <div class="specs"><span class="spec">Harmonic Math</span><span class="spec">Particle System</span><span class="spec">Cloud Engine</span></div>
+                        <p>Atmospheric generative engine based on a polyrhythmic synthesis model. Uses an 8x8 pattern matrix and harmonic interpolation to ensure absolute musical coherence.</p>
+                        <div class="specs"><span class="spec">Polyrhythmic</span><span class="spec">Matrix Logic</span><span class="spec">Visualizer</span></div>
                     </article>
-
-                    <!-- ERIN -->
-                    <article class="card">
-                        <div class="card-meta"><span>Synthesizer</span><span>v3.0</span></div>
-                        <h3>Erin Workstation</h3>
-                        <p>Desktop-class polyphonic synth. Implements custom multiband compression and spectral folding. Decouples the AudioGraph from React state.</p>
-                        <div class="specs"><span class="spec">AudioWorklet</span><span class="spec">Bit-Crushing</span><span class="spec">Spectral Folding</span></div>
-                    </article>
-
-                    <!-- LITEPLAY -->
-                    <article class="card">
-                        <div class="card-meta"><span>VST</span><span>v2.1</span></div>
-                        <h3>Liteplay VST</h3>
-                        <p>Generative Synthesis. Maps natural language to ADSR and Filter parameters via function calling. Features procedural impulse responses.</p>
-                        <div class="specs"><span class="spec">Function Calling</span><span class="spec">Procedural IR</span></div>
-                    </article>
-
-                    <!-- POLY-RHYTHM -->
-                    <article class="card">
-                        <a href="https://github.com/dovvnloading/POLYARBOR-Rhythm-Generator" target="_blank" class="card-link"></a>
-                        <div class="card-meta"><span>Sequencer</span><span>v2.0</span></div>
-                        <h3>Poly-Rhythm 2</h3>
-                        <p>Euclidean Sequencer. Visualizes phase relationships and polyrhythms using radial geometry. Solves main-thread blocking via lookahead scheduling.</p>
-                        <div class="specs"><span class="spec">Euclidean Math</span><span class="spec">Scheduling</span></div>
-                    </article>
-                    
-                    <!-- GLASSNODE -->
-                    <article class="card">
-                        <div class="card-meta"><span>Modular</span><span>v1.0</span></div>
-                        <h3>Glassnode</h3>
-                        <p>Visual patching environment. Features a custom HTML5/SVG hybrid engine for rendering bezier cables with cubic interpolation.</p>
-                        <div class="specs"><span class="spec">Wavetable</span><span class="spec">SVG Engine</span></div>
-                    </article>
-                </div>
-            </div>
-
-            <!-- DOMAIN 3: RESEARCH -->
-            <div id="intel" class="content-section">
-                <div class="domain-header">
-                    <h2>Research & AI</h2>
-                    <span>Local Intelligence</span>
-                </div>
-                <div class="project-grid">
-                    <!-- CORTEX -->
-                    <article class="card">
-                        <a href="https://github.com/dovvnloading/Cortex" target="_blank" class="card-link"></a>
-                        <div class="card-meta"><span>Desktop</span><span>v4.0</span></div>
-                        <h3>Cortex</h3>
-                        <p>Local LLM frontend. Implements a three-tier memory system (Short-term, SQLite History, Permanent Nuggets) to retain user context locally.</p>
-                        <div class="specs"><span class="spec">PySide6</span><span class="spec">SQLite</span><span class="spec">Ollama</span></div>
-                    </article>
-
-                    <!-- OUROBOROS -->
-                    <article class="card">
-                        <div class="card-meta"><span>Runtime</span><span>v3.0</span></div>
-                        <h3>Ouroboros</h3>
-                        <p>Recursive Dashboard. An AI agent writes and hot-loads React widgets into the live runtime. Features a synthetic require loop for dependency injection.</p>
-                        <div class="specs"><span class="spec">Babel</span><span class="spec">Recursive</span></div>
-                    </article>
-                    
-                    <!-- SDK DISTILLER -->
-                    <article class="card">
-                        <div class="card-meta"><span>Docs</span><span>v1.0</span></div>
-                        <h3>SDK Distiller</h3>
-                        <p>Documentation generator. Ingests raw source code to build RAG-enabled docs. Implements a client-side vector store and hybrid search.</p>
-                        <div class="specs"><span class="spec">RAG</span><span class="spec">Vector Store</span></div>
-                    </article>
-                </div>
-            </div>
-
-            <!-- DOMAIN 4: VISUAL -->
-            <div id="visual" class="content-section">
-                <div class="domain-header">
-                    <h2>Graphics & Rendering</h2>
-                    <span>Pixel / Mesh / Canvas</span>
-                </div>
-                <div class="project-grid">
-                    <!-- DITHER PRO -->
-                    <article class="card">
-                        <a href="https://drive.google.com/file/d/1O58cpS1IODfMPHoZBKDXbY9Wv__rUFPr/view" class="card-link"></a>
-                        <div class="card-meta"><span>Processing</span><span>v2.0</span></div>
-                        <h3>Dither Pro 2.0</h3>
-                        <p>Modernist image processor. Implements 15+ algorithms via Web Workers. Features custom serpentine scanning to reduce diagonal artifacts.</p>
-                        <div class="specs"><span class="spec">Web Workers</span><span class="spec">Bit Depth</span></div>
-                    </article>
-
-                    <!-- GENESIS o1 -->
-                    <article class="card">
-                        <div class="card-meta"><span>3D</span><span>v1.0</span></div>
-                        <h3>Genesis o1</h3>
-                        <p>Panoramic generator. Features a custom block material shader for particle transition effects and automated audio stem layering.</p>
-                        <div class="specs"><span class="spec">Three.js</span><span class="spec">Shaders</span></div>
-                    </article>
-                    
-                    <!-- VOXEL COMMAND -->
-                    <article class="card">
-                        <div class="card-meta"><span>Game</span><span>v1.0</span></div>
-                        <h3>Voxel Command</h3>
-                        <p>Browser RTS engine. Renders 2.5D voxels via HTML5 Canvas. Features a hybrid AI combining Behavior Trees and LLM Planning.</p>
-                        <div class="specs"><span class="spec">Canvas 2.5D</span><span class="spec">Flow Fields</span></div>
-                    </article>
-                </div>
-            </div>
-
-            <!-- DOMAIN 5: EXTERNAL -->
-            <div id="external" class="content-section">
-                <div class="domain-header">
-                    <h2>Community & Data</h2>
-                    <span>Open Source / Libraries</span>
-                </div>
-                <div class="ext-grid">
-                    <!-- PIANOBOOK -->
-                    <div class="ext-item">
-                        <div class="card-meta"><span>Sample Library</span></div>
-                        <h3 class="big-stat">18K+ DLs</h3>
-                        <p style="margin-bottom: 20px;">
-                            High-fidelity Kontakt libraries focused on texture and degradation. Includes "The Synths" and "Broken Piano."
-                        </p>
-                        <a href="https://www.pianobook.co.uk/profile/mattwesney/" target="_blank" style="text-decoration: underline;">Access Library -></a>
-                    </div>
-                    
-                    <!-- HUGGING FACE -->
-                    <div class="ext-item">
-                        <div class="card-meta"><span>Dataset</span></div>
-                        <h3 class="big-stat">151K Rows</h3>
-                        <p style="margin-bottom: 20px;">
-                            "Synthetic Reasoning Data." A dataset explicitly tailored for fine-tuning AI in logical reasoning (Chain of Thought).
-                        </p>
-                        <a href="https://huggingface.co/moremilk" target="_blank" style="text-decoration: underline;">View Dataset -></a>
-                    </div>
                 </div>
             </div>
 
@@ -688,14 +283,12 @@
     </div>
 
     <script>
-        // --- CUSTOM CURSOR ---
         const cursor = document.getElementById('cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        // --- DYNAMIC REPO ASSET STREAM ---
         const API_URL = "https://api.github.com/repos/dovvnloading/dovvnloading.github.io/contents/assets";
 
         class KineticStream {
@@ -706,16 +299,7 @@
                 this.lightboxImg = document.getElementById('lightbox-img');
                 this.msgDisplay = document.getElementById('stream-loading-msg');
                 
-                this.state = {
-                    current: 0,
-                    target: 0,
-                    isDragging: false,
-                    startX: 0,
-                    startScroll: 0,
-                    limit: 0,
-                    initialized: false
-                };
-                
+                this.state = { current: 0, target: 0, isDragging: false, startX: 0, startScroll: 0, limit: 0, initialized: false };
                 this.itemsMetrics = []; 
 
                 this.onDown = this.onDown.bind(this);
@@ -727,22 +311,37 @@
                 this.init();
             }
 
+            // Fisher-Yates Shuffle for SOTA Randomization
+            shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
             async init() {
                 try {
-                    const files = await this.fetchAssets();
+                    const response = await fetch(API_URL);
+                    if (!response.ok) throw new Error("API Error");
+                    let files = await response.json();
+                    
+                    const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
+                    files = files.filter(item => {
+                        if (item.type !== 'file') return false;
+                        return imageExtensions.some(ext => item.name.toLowerCase().endsWith(ext));
+                    });
+
+                    // RANDOMIZE ON EACH LOAD
+                    files = this.shuffle(files);
+
                     if (files.length > 0) {
                         this.renderAssets(files);
                         this.msgDisplay.style.display = 'none'; 
-                        
                         setTimeout(() => this.recalculateMetrics(), 500); 
-                        setTimeout(() => this.recalculateMetrics(), 2000); 
-                    } else {
-                        throw new Error("No image assets found.");
                     }
                 } catch (e) {
-                    console.error(e);
                     this.msgDisplay.innerText = "Error loading index";
-                    return;
                 }
 
                 this.viewport.addEventListener('mousedown', this.onDown);
@@ -750,11 +349,68 @@
                 window.addEventListener('mouseup', this.onUp);
                 this.viewport.addEventListener('wheel', this.onWheel, { passive: false });
                 window.addEventListener('resize', () => this.recalculateMetrics());
-
-                document.getElementById('lightbox-close').onclick = () => {
-                    this.lightbox.classList.remove('active');
-                };
+                document.getElementById('lightbox-close').onclick = () => this.lightbox.classList.remove('active');
                 
                 this.state.initialized = true;
                 requestAnimationFrame(this.raf);
             }
+
+            renderAssets(files) {
+                files.forEach((file) => {
+                    const div = document.createElement('div');
+                    div.className = 'stream-item';
+                    const img = document.createElement('img');
+                    img.src = file.download_url;
+                    img.loading = "lazy";
+                    div.appendChild(img);
+                    div.onclick = () => {
+                        if (Math.abs(this.state.current - this.state.target) > 10) return;
+                        this.lightboxImg.src = file.download_url;
+                        this.lightbox.classList.add('active');
+                    };
+                    this.track.appendChild(div);
+                });
+            }
+
+            recalculateMetrics() {
+                const trackWidth = this.track.scrollWidth;
+                const viewWidth = this.viewport.offsetWidth;
+                this.state.limit = trackWidth <= viewWidth ? 0 : -(trackWidth - viewWidth); 
+                const items = Array.from(document.querySelectorAll('.stream-item'));
+                this.itemsMetrics = items.map(item => ({
+                    element: item.querySelector('img'),
+                    center: item.offsetLeft + (item.offsetWidth / 2)
+                }));
+                this.viewportCenter = viewWidth / 2;
+            }
+
+            onDown(e) { this.state.isDragging = true; this.state.startX = e.clientX; this.state.startScroll = this.state.target; }
+            onMove(e) { if (!this.state.isDragging) return; this.state.target = this.state.startScroll + ((e.clientX - this.state.startX) * 1.5); }
+            onUp() { this.state.isDragging = false; }
+            onWheel(e) { e.preventDefault(); this.state.target -= e.deltaY; }
+
+            raf() {
+                if (!this.state.initialized) return;
+                if (!this.state.isDragging) {
+                    if (this.state.target > 0) this.state.target = 0;
+                    if (this.state.target < this.state.limit) this.state.target = this.state.limit;
+                }
+                this.state.current += (this.state.target - this.state.current) * 0.1;
+                this.track.style.transform = `translate3d(${this.state.current}px, 0, 0)`;
+
+                const trackX = this.state.current;
+                const centerPoint = this.viewportCenter; 
+                this.itemsMetrics.forEach(metric => {
+                     const dist = Math.abs((metric.center + trackX) - centerPoint);
+                     let intensity = Math.max(0, 1 - (dist / 500)); 
+                     metric.element.style.filter = `grayscale(${1 - intensity}) opacity(${0.3 + (intensity * 0.7)})`;
+                     metric.element.style.transform = `scale(${0.95 + (intensity * 0.05)})`;
+                });
+                requestAnimationFrame(this.raf);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => new KineticStream());
+    </script>
+</body>
+</html>
