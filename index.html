@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -22,7 +22,7 @@
             
             /* --- TYPOGRAPHY --- */
             --text-main: #e5e5e5;
-            --text-dim: #666;
+            --text-dim: #888;
             --text-accent: #ffffff;
             
             /* --- DOMAIN COLORS --- */
@@ -42,27 +42,27 @@
             font-size: 14px;
         }
 
-        /* --- CUSTOM CURSOR (FIXED Z-INDEX) --- */
+        /* --- CUSTOM CURSOR --- */
         #cursor {
             position: fixed; top: 0; left: 0; width: 12px; height: 12px;
             background: var(--text-accent); transform: translate(-50%, -50%);
             pointer-events: none; 
-            /* CRITICAL FIX: Z-Index higher than lightbox (10000) */
             z-index: 99999; 
             mix-blend-mode: difference;
             transition: width 0.2s, height 0.2s;
+            border-radius: 50%; /* Softer circle */
         }
         body:hover #cursor { opacity: 1; }
         
-        /* STATE: HOVER EXPANSION */
+        /* HOVER STATES */
         a:hover ~ #cursor, 
         .card:hover ~ #cursor, 
         .stream-item:hover ~ #cursor,
-        .control-btn:hover ~ #cursor { 
-            transform: scale(1.5); 
+        .stream-intro:hover ~ #cursor { 
+            transform: scale(2.0); 
             background: #fff; 
             mix-blend-mode: normal; 
-            opacity: 0.2;
+            opacity: 0.1;
         }
 
         /* --- LAYOUT --- */
@@ -115,10 +115,10 @@
             max-width: 600px; font-size: 24px; line-height: 1.4; letter-spacing: -0.02em; color: #888;
         }
 
-        /* --- ASSET STREAM --- */
+        /* --- ASSET STREAM (REFACTORED: GALLERY STYLE) --- */
         .asset-stream-container {
             background: #080808;
-            height: 380px;
+            height: 420px; /* Slightly taller for elegance */
             width: 100%;
             position: relative;
             overflow: hidden;
@@ -127,30 +127,29 @@
             border-bottom: 1px solid var(--border);
         }
 
+        /* HEADER: Minimalist Line */
         .stream-header {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center;
-            background: var(--bg);
+            padding: 24px 60px 0; /* Align with content */
+            display: flex; justify-content: flex-start;
+            background: #080808;
             z-index: 10;
-            min-height: 48px;
         }
-        .stream-meta {
-            font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
-            display: flex; gap: 16px; align-items: center;
+        .stream-label {
+            font-family: 'Inter', sans-serif; 
+            font-size: 11px; 
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--text-dim);
+            text-transform: uppercase;
         }
-        .stream-indicator {
-            width: 8px; height: 8px; background: var(--c-intel); border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        .stream-indicator.offline { background: #ef4444; animation: none; }
-        .stream-indicator.loading { background: #eab308; animation: blink 0.5s infinite; }
 
         .stream-viewport {
             flex-grow: 1;
             position: relative;
             overflow: hidden;
             cursor: grab; 
+            display: flex;
+            align-items: center;
         }
         .stream-viewport:active { cursor: grabbing; }
 
@@ -160,17 +159,63 @@
             height: 100%;
             position: absolute;
             left: 0; top: 0;
-            padding: 0 50vw; /* Center the first item */
+            padding-right: 40vw; 
             will-change: transform;
         }
 
+        /* THE MANIFESTO BLOCK (EDITORIAL STYLE) */
+        .stream-intro {
+            height: 280px;
+            width: 400px; 
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 60px; /* Align with page grid */
+            padding-right: 40px;
+            margin-right: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .stream-intro h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 20px;
+            color: var(--text-main);
+            margin-bottom: 24px;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+        
+        .stream-intro p {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #777;
+            max-width: 300px;
+        }
+
+        /* SEPARATOR LINE IN INTRO */
+        .stream-intro::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 40px;
+            width: 1px;
+            background: #222;
+        }
+
+        /* STREAM IMAGES */
         .stream-item {
-            height: 240px;
-            margin-right: 2px;
+            height: 280px; /* Taller images */
+            margin-right: 4px; /* Clean separation */
             position: relative;
             flex-shrink: 0;
             user-select: none;
-            background: #111;
+            background: #0a0a0a;
             display: flex; align-items: center; justify-content: center;
         }
         .stream-item img {
@@ -178,137 +223,70 @@
             width: auto;
             display: block;
             pointer-events: none;
-            /* Default state is handled via JS, but base style: */
-            filter: grayscale(100%) brightness(0.5);
-            /* Important: Transition must be very fast or removed for per-frame JS updates to look smooth */
+            /* Base state: Desaturated but high fidelity */
+            filter: grayscale(100%) opacity(0.6);
+            transition: filter 0.5s ease; /* Smooth transition instead of abrupt */
             will-change: filter; 
         }
         
-        /* LOADING MESSAGE */
+        /* LOADING MSG */
         .stream-msg {
-            font-family: 'JetBrains Mono', monospace; color: #444; 
+            font-family: 'Inter', sans-serif; font-size: 11px; color: #333; 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             pointer-events: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         /* ASSET LIGHTBOX */
         .lightbox {
             position: fixed; inset: 0; z-index: 10000;
-            background: rgba(5,5,5,0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(0px); /* Clean cut, no blur for performance/style */
             display: flex; justify-content: center; align-items: center;
             opacity: 0; pointer-events: none;
-            transition: opacity 0.3s;
+            transition: opacity 0.4s ease;
         }
         .lightbox.active { opacity: 1; pointer-events: auto; }
         .lightbox img {
             max-width: 90vw; max-height: 90vh;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-            border: 1px solid var(--border-highlight);
+            box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+            border: none; /* Removed border for cleaner look */
         }
         .lightbox-close {
             position: absolute; top: 40px; right: 40px;
-            font-family: 'JetBrains Mono', monospace; color: #fff;
-            font-size: 24px; cursor: pointer;
+            font-family: 'Inter', sans-serif; color: #666;
+            font-size: 14px; cursor: pointer;
+            transition: color 0.2s;
         }
-
+        .lightbox-close:hover { color: #fff; }
 
         /* --- GRID SYSTEM --- */
-        .content-section {
-            background-color: var(--border);
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-        }
-
-        .domain-header {
-            padding: 40px 60px 20px;
-            display: flex; justify-content: space-between; align-items: flex-end;
-            background: var(--bg); 
-            z-index: 40;
-        }
+        .content-section { background: var(--border); display: flex; flex-direction: column; gap: 1px; }
+        .domain-header { padding: 40px 60px 20px; display: flex; justify-content: space-between; align-items: flex-end; background: var(--bg); z-index: 40; }
         .domain-header h2 { font-family: 'Syncopate', sans-serif; font-size: 16px; font-weight: 700; }
         .domain-header span { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-dim); }
-
-        .project-grid {
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 1px;
-            background-color: var(--border); 
-        }
-
-        /* --- PROJECT CARD --- */
-        .card {
-            background-color: var(--bg); 
-            padding: 40px; 
-            position: relative; 
-            transition: background 0.2s;
-            display: flex; 
-            flex-direction: column; 
-            height: 100%; 
-            min-height: 380px; 
-        }
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1px; background-color: var(--border); }
+        .card { background-color: var(--bg); padding: 40px; position: relative; transition: background 0.2s; display: flex; flex-direction: column; height: 100%; min-height: 380px; }
         .card:hover { background: var(--surface-hover); }
-
-        .card.prime-card {
-            background: #080b14;
-            grid-column: 1 / -1; 
-        }
+        .card.prime-card { background: #080b14; grid-column: 1 / -1; }
         .card.prime-card:hover { background: #0c101c; }
         .card.prime-card h3 { color: var(--c-graphite); font-size: 24px; }
-
-        .card-meta {
-            font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim);
-            margin-bottom: 16px; display: flex; justify-content: space-between;
-        }
-        
-        .card h3 {
-            font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 500;
-            margin-bottom: 12px; letter-spacing: -0.03em;
-        }
-        
-        .card p {
-            font-size: 13px; line-height: 1.6; color: #888; max-width: 95%;
-            margin-bottom: 32px; flex-grow: 1;
-        }
-
+        .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); margin-bottom: 16px; display: flex; justify-content: space-between; }
+        .card h3 { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 500; margin-bottom: 12px; letter-spacing: -0.03em; }
+        .card p { font-size: 13px; line-height: 1.6; color: #888; max-width: 95%; margin-bottom: 32px; flex-grow: 1; }
         .specs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
-        .spec {
-            font-family: 'JetBrains Mono', monospace; font-size: 9px; 
-            padding: 4px 8px; border: 1px solid var(--border-highlight);
-            color: #999; text-transform: uppercase;
-        }
-
+        .spec { font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 4px 8px; border: 1px solid var(--border-highlight); color: #999; text-transform: uppercase; }
         .c-graphite h3 { color: var(--c-graphite); }
         .c-audio h3 { color: var(--c-audio); }
         .c-intel h3 { color: var(--c-intel); }
         .c-visual h3 { color: var(--c-visual); }
-
         .card-link { position: absolute; inset: 0; z-index: 2; }
-
-        /* --- EXTERNAL --- */
-        .ext-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 1px;
-            background-color: var(--border);
-        }
-        .ext-item { 
-            background-color: var(--bg);
-            padding: 60px; 
-            transition: background 0.2s;
-        }
+        .ext-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: var(--border); }
+        .ext-item { background-color: var(--bg); padding: 60px; transition: background 0.2s; }
         .ext-item:hover { background: var(--surface-hover); }
         .big-stat { font-family: 'Syncopate', sans-serif; font-size: 48px; line-height: 1; margin: 20px 0; }
-
         .footer { background: var(--bg); padding: 60px; }
-
-        @keyframes pulse {
-            0% { opacity: 0.5; box-shadow: 0 0 0 rgba(16, 185, 129, 0); }
-            50% { opacity: 1; box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
-            100% { opacity: 0.5; box-shadow: 0 0 0 rgba(16, 185, 129, 0); }
-        }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 1024px) {
@@ -319,9 +297,10 @@
             .ext-grid { grid-template-columns: 1fr; }
             #cursor { display: none; }
             * { cursor: auto; }
-            .asset-stream-container { height: 300px; }
-            .stream-item { height: 180px; }
-            .stream-track { padding: 0 20px; }
+            .asset-stream-container { height: 350px; }
+            .stream-header { padding: 16px 20px; }
+            .stream-item, .stream-intro { height: 220px; }
+            .stream-intro { width: 300px; padding-left: 20px; padding-right: 20px; }
         }
     </style>
 </head>
@@ -329,9 +308,8 @@
 
     <div id="cursor"></div>
 
-    <!-- LIGHTBOX OVERLAY -->
     <div class="lightbox" id="lightbox">
-        <div class="lightbox-close" id="lightbox-close">[X]</div>
+        <div class="lightbox-close" id="lightbox-close">CLOSE</div>
         <img id="lightbox-img" src="" alt="Full view">
     </div>
 
@@ -362,16 +340,22 @@
             <!-- ASSET STREAM -->
             <div class="asset-stream-container">
                 <div class="stream-header">
-                    <div class="stream-meta">
-                        <!-- REMOVED TEXT, ONLY STATUS LIGHT -->
-                        <div class="stream-indicator loading" id="stream-status-light"></div>
-                    </div>
+                    <span class="stream-label">Selected Works / Independent Index</span>
                 </div>
                 <div class="stream-viewport" id="stream-viewport">
                     <div class="stream-track" id="stream-track">
-                        <!-- JS WILL INJECT IMAGES HERE -->
+                        <!-- MANIFESTO MODULE: Editorial Style -->
+                        <div class="stream-intro">
+                            <h4>Independent Architecture</h4>
+                            <p>
+                                The following index represents 100% individual output.
+                                <br><br>
+                                Every interface, system, and logic loop visible here was architected and deployed solo. No teams, no corporate dependencies.
+                            </p>
+                        </div>
+                        <!-- DYNAMIC IMAGES APPENDED HERE -->
                     </div>
-                    <div id="stream-loading-msg" class="stream-msg">INITIALIZING UPLINK...</div>
+                    <div id="stream-loading-msg" class="stream-msg">Loading Archive...</div>
                 </div>
             </div>
 
@@ -676,9 +660,6 @@
                 this.viewport = document.getElementById('stream-viewport');
                 this.lightbox = document.getElementById('lightbox');
                 this.lightboxImg = document.getElementById('lightbox-img');
-                
-                // Status Elements
-                this.statusLight = document.getElementById('stream-status-light');
                 this.msgDisplay = document.getElementById('stream-loading-msg');
                 
                 this.state = {
@@ -688,14 +669,11 @@
                     startX: 0,
                     startScroll: 0,
                     limit: 0,
-                    velocity: 0,
                     initialized: false
                 };
                 
-                // Cache for item metrics to avoid layout thrashing in RAF
                 this.itemsMetrics = []; 
 
-                // Bind Methods
                 this.onDown = this.onDown.bind(this);
                 this.onMove = this.onMove.bind(this);
                 this.onUp = this.onUp.bind(this);
@@ -706,15 +684,12 @@
             }
 
             async init() {
-                // 1. Fetch Assets
                 try {
                     const files = await this.fetchAssets();
                     if (files.length > 0) {
                         this.renderAssets(files);
-                        this.setStatus("active");
                         this.msgDisplay.style.display = 'none'; 
                         
-                        // Wait for images to render before calc
                         setTimeout(() => this.recalculateMetrics(), 500); 
                         setTimeout(() => this.recalculateMetrics(), 2000); 
                     } else {
@@ -722,34 +697,29 @@
                     }
                 } catch (e) {
                     console.error(e);
-                    this.setStatus("offline");
-                    this.msgDisplay.innerText = "NO DATA PACKETS FOUND IN /ASSETS";
+                    this.msgDisplay.innerText = "Error loading index";
                     return;
                 }
 
-                // 2. Bind Events
                 this.viewport.addEventListener('mousedown', this.onDown);
                 window.addEventListener('mousemove', this.onMove);
                 window.addEventListener('mouseup', this.onUp);
                 this.viewport.addEventListener('wheel', this.onWheel, { passive: false });
                 window.addEventListener('resize', () => this.recalculateMetrics());
 
-                // Lightbox
                 document.getElementById('lightbox-close').onclick = () => {
                     this.lightbox.classList.remove('active');
                 };
                 
-                // 3. Start Loop
                 this.state.initialized = true;
                 requestAnimationFrame(this.raf);
             }
 
             async fetchAssets() {
                 const response = await fetch(API_URL);
-                if (!response.ok) throw new Error("GitHub API rate limit or network error");
+                if (!response.ok) throw new Error("GitHub API error");
                 
                 const data = await response.json();
-                
                 const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
                 
                 return data.filter(item => {
@@ -760,7 +730,9 @@
             }
 
             renderAssets(files) {
-                this.track.innerHTML = '';
+                // Clear only dynamic items, preserve Intro
+                const dynamicItems = this.track.querySelectorAll('.stream-item');
+                dynamicItems.forEach(el => el.remove());
                 
                 files.forEach((file) => {
                     const div = document.createElement('div');
@@ -771,9 +743,6 @@
                     img.loading = "lazy";
                     img.alt = file.name;
 
-                    // No text overlay requested in latest revision, keeping it clean
-                    // But if you wanted it back, insert here.
-
                     div.appendChild(img);
                     div.onclick = () => this.openLightbox(file.download_url);
                     
@@ -781,16 +750,7 @@
                 });
             }
 
-            setStatus(type) {
-                this.statusLight.className = `stream-indicator ${type === 'offline' ? 'offline' : ''}`;
-                if (type === 'active') {
-                    this.statusLight.style.background = 'var(--c-intel)';
-                    this.statusLight.style.animation = 'pulse 2s infinite';
-                }
-            }
-
             recalculateMetrics() {
-                // 1. Calc Scroll Limit
                 const trackWidth = this.track.scrollWidth;
                 const viewWidth = this.viewport.offsetWidth;
                 const viewCenter = viewWidth / 2;
@@ -798,12 +758,9 @@
                 if (trackWidth <= viewWidth) {
                     this.state.limit = 0;
                 } else {
-                    // Adjust limit to account for center padding
                     this.state.limit = -(trackWidth - viewWidth); 
                 }
 
-                // 2. Cache metrics for every item to perform fast Proximity check
-                // We need the offsetLeft relative to the TRACK, and the width.
                 const items = Array.from(document.querySelectorAll('.stream-item'));
                 this.itemsMetrics = items.map(item => ({
                     element: item.querySelector('img'),
@@ -841,7 +798,8 @@
             }
 
             openLightbox(src) {
-                if (Math.abs(this.state.velocity) > 2) return; 
+                // Prevent accidental clicks during heavy scroll
+                if (Math.abs(this.state.current - this.state.target) > 10) return;
                 this.lightboxImg.src = src;
                 this.lightbox.classList.add('active');
             }
@@ -849,48 +807,36 @@
             raf() {
                 if (!this.state.initialized) return;
 
-                // 1. Physics Engine
                 if (!this.state.isDragging) {
-                    // Elastic borders
                     if (this.state.target > 0) this.state.target = 0;
                     if (this.state.target < this.state.limit) this.state.target = this.state.limit;
                 }
 
-                const oldCurrent = this.state.current;
                 this.state.current += (this.state.target - this.state.current) * 0.1;
-                this.state.velocity = this.state.current - oldCurrent;
                 
-                // 2. Apply Transform
-                const skew = this.state.velocity * 0.15; 
-                this.track.style.transform = `translate3d(${this.state.current}px, 0, 0) skewX(${skew}deg)`;
+                // NO SKEW - Pure Translation for Gallery Feel
+                this.track.style.transform = `translate3d(${this.state.current}px, 0, 0)`;
 
-                // 3. Proximity Focus Engine (The SOTA Part)
-                // We calculate distance from viewport center to item center
-                // To do this: ItemScreenX = ItemTrackX + CurrentScroll
+                // Focus Logic (Center Brightness)
                 const trackX = this.state.current;
-                const centerPoint = this.viewportCenter; // e.g. 500
+                const centerPoint = this.viewportCenter; 
                 
-                // Loop is fast because we use cached metrics, no DOM reads
                 this.itemsMetrics.forEach(metric => {
                      const itemScreenCenter = metric.center + trackX;
                      const dist = Math.abs(itemScreenCenter - centerPoint);
                      
-                     // Thresholds:
-                     // 0px dist = 100% color, 100% brightness
-                     // 400px dist = 0% color, 50% brightness
-                     
-                     let intensity = 1 - (dist / 400); // 400px falloff radius
+                     // 500px falloff radius for smoother transitions
+                     let intensity = 1 - (dist / 500); 
                      if (intensity < 0) intensity = 0;
                      
-                     // Map to CSS filters
-                     // Grayscale: 0 (color) -> 1 (grey)
-                     // Brightness: 1 (bright) -> 0.5 (dim)
+                     // Opacity: 0.3 (dim) -> 1.0 (bright)
+                     const opacity = 0.3 + (intensity * 0.7); 
+                     // Grayscale: 1 (gray) -> 0 (color)
+                     const gray = 1 - intensity;
                      
-                     const gray = 1 - intensity; 
-                     const bright = 0.5 + (intensity * 0.5); 
-                     
-                     metric.element.style.filter = `grayscale(${gray}) brightness(${bright})`;
-                     metric.element.style.transform = `scale(${0.9 + (intensity * 0.1)})`; // Subtle scale up
+                     metric.element.style.filter = `grayscale(${gray}) opacity(${opacity})`;
+                     // Slight scale for active item
+                     metric.element.style.transform = `scale(${0.95 + (intensity * 0.05)})`;
                 });
 
                 requestAnimationFrame(this.raf);
