@@ -302,7 +302,7 @@
         /* --- CARD DESIGN --- */
         .card {
             background-color: var(--bg); 
-            padding: 60px; /* More breathing room */
+            padding: 60px; 
             position: relative; 
             transition: background 0.3s ease;
             display: flex; flex-direction: column; height: 100%; min-height: 420px; 
@@ -503,6 +503,47 @@
                     <span>Synthesis / WebAudio</span>
                 </div>
                 <div class="project-grid">
+                    
+                    <!-- NEW: SONIC ARCHITECT -->
+                    <article class="card">
+                        <div class="card-meta"><span>Workstation</span><span>v1.0</span></div>
+                        <h3>Sonic Architect</h3>
+                        <p>Web-based DAW featuring a lookahead scheduler for precise timing. Includes a multi-core synth engine and a mastering chain with bus compression and saturation.</p>
+                        <div class="specs"><span class="spec">Scheduler</span><span class="spec">Mastering Chain</span><span class="spec">Cloud Engine</span></div>
+                    </article>
+
+                    <!-- NEW: TrKRFT -->
+                    <article class="card">
+                        <div class="card-meta"><span>Synthesizer</span><span>v1.0</span></div>
+                        <h3>TrKRFT</h3>
+                        <p>Browser-based polyphonic synthesizer. Features a three-oscillator architecture, dual-biquad flux filters, and a stereo trance gate. Includes a dedicated piano roll.</p>
+                        <div class="specs"><span class="spec">Flux Filter</span><span class="spec">Trance Gate</span><span class="spec">Piano Roll</span></div>
+                    </article>
+
+                    <!-- NEW: ILLUMINIA 2 -->
+                    <article class="card">
+                        <div class="card-meta"><span>Generative</span><span>v2.0</span></div>
+                        <h3>Illuminia II: Nexus</h3>
+                        <p>Interactive musical system with Gesture Recognition. Detects playing styles (Swarm, Freeze) to trigger reactive FM synthesis and liquid cascade algorithms.</p>
+                        <div class="specs"><span class="spec">Gesture Analysis</span><span class="spec">FM Synthesis</span><span class="spec">Liquid Cascade</span></div>
+                    </article>
+                    
+                    <!-- NEW: EKOS -->
+                    <article class="card">
+                        <div class="card-meta"><span>Algorithm</span><span>v1.0</span></div>
+                        <h3>Ekos</h3>
+                        <p>Semi-generative "Ghost Engine". For every manual note, it generates algorithmic accompaniment patterns. Features entropy control and "Hammer Noise" synthesis.</p>
+                        <div class="specs"><span class="spec">Ghost Notes</span><span class="spec">Entropy</span><span class="spec">Claymorphism</span></div>
+                    </article>
+                    
+                    <!-- NEW: CRYSTALLINE -->
+                    <article class="card">
+                        <div class="card-meta"><span>Atmosphere</span><span>v1.0</span></div>
+                        <h3>Crystalline</h3>
+                        <p>Generative audio engine. Uses a "Harmonic Interpolation" system to derive scales from user input. Features an 8x8 pattern matrix and a particle phase visualizer.</p>
+                        <div class="specs"><span class="spec">Harmonic Math</span><span class="spec">Particle System</span><span class="spec">Cloud Engine</span></div>
+                    </article>
+
                     <!-- ERIN -->
                     <article class="card">
                         <div class="card-meta"><span>Synthesizer</span><span>v3.0</span></div>
@@ -717,130 +758,3 @@
                 this.state.initialized = true;
                 requestAnimationFrame(this.raf);
             }
-
-            async fetchAssets() {
-                const response = await fetch(API_URL);
-                if (!response.ok) throw new Error("GitHub API error");
-                
-                const data = await response.json();
-                const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
-                
-                return data.filter(item => {
-                    if (item.type !== 'file') return false;
-                    const lowerName = item.name.toLowerCase();
-                    return imageExtensions.some(ext => lowerName.endsWith(ext));
-                });
-            }
-
-            renderAssets(files) {
-                const dynamicItems = this.track.querySelectorAll('.stream-item');
-                dynamicItems.forEach(el => el.remove());
-                
-                files.forEach((file) => {
-                    const div = document.createElement('div');
-                    div.className = 'stream-item';
-                    
-                    const img = document.createElement('img');
-                    img.src = file.download_url;
-                    img.loading = "lazy";
-                    img.alt = file.name;
-
-                    div.appendChild(img);
-                    div.onclick = () => this.openLightbox(file.download_url);
-                    
-                    this.track.appendChild(div);
-                });
-            }
-
-            recalculateMetrics() {
-                const trackWidth = this.track.scrollWidth;
-                const viewWidth = this.viewport.offsetWidth;
-                const viewCenter = viewWidth / 2;
-
-                if (trackWidth <= viewWidth) {
-                    this.state.limit = 0;
-                } else {
-                    this.state.limit = -(trackWidth - viewWidth); 
-                }
-
-                const items = Array.from(document.querySelectorAll('.stream-item'));
-                this.itemsMetrics = items.map(item => ({
-                    element: item.querySelector('img'),
-                    left: item.offsetLeft,
-                    width: item.offsetWidth,
-                    center: item.offsetLeft + (item.offsetWidth / 2)
-                }));
-                
-                this.viewportCenter = viewCenter;
-            }
-
-            onDown(e) {
-                if (!this.state.initialized) return;
-                this.state.isDragging = true;
-                this.state.startX = e.clientX;
-                this.state.startScroll = this.state.target;
-                this.viewport.style.cursor = 'grabbing';
-            }
-
-            onMove(e) {
-                if (!this.state.isDragging) return;
-                const delta = e.clientX - this.state.startX;
-                this.state.target = this.state.startScroll + (delta * 1.5); 
-            }
-
-            onUp() {
-                this.state.isDragging = false;
-                this.viewport.style.cursor = 'grab';
-            }
-
-            onWheel(e) {
-                if (!this.state.initialized) return;
-                e.preventDefault();
-                this.state.target -= e.deltaY;
-            }
-
-            openLightbox(src) {
-                if (Math.abs(this.state.current - this.state.target) > 10) return;
-                this.lightboxImg.src = src;
-                this.lightbox.classList.add('active');
-            }
-
-            raf() {
-                if (!this.state.initialized) return;
-
-                if (!this.state.isDragging) {
-                    if (this.state.target > 0) this.state.target = 0;
-                    if (this.state.target < this.state.limit) this.state.target = this.state.limit;
-                }
-
-                this.state.current += (this.state.target - this.state.current) * 0.1;
-                
-                this.track.style.transform = `translate3d(${this.state.current}px, 0, 0)`;
-
-                const trackX = this.state.current;
-                const centerPoint = this.viewportCenter; 
-                
-                this.itemsMetrics.forEach(metric => {
-                     const itemScreenCenter = metric.center + trackX;
-                     const dist = Math.abs(itemScreenCenter - centerPoint);
-                     
-                     let intensity = 1 - (dist / 500); 
-                     if (intensity < 0) intensity = 0;
-                     
-                     const opacity = 0.3 + (intensity * 0.7); 
-                     const gray = 1 - intensity;
-                     
-                     metric.element.style.filter = `grayscale(${gray}) opacity(${opacity})`;
-                     metric.element.style.transform = `scale(${0.95 + (intensity * 0.05)})`;
-                });
-
-                requestAnimationFrame(this.raf);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            new KineticStream();
-        });
-    </script>
-</body>
-</html>
