@@ -11,6 +11,7 @@
     
     <style>
         :root {
+            /* --- SWISS DARK PALETTE --- */
             --bg: #080808;
             --surface: #0f0f0f;
             --surface-hover: #161616;
@@ -19,6 +20,12 @@
             --text-main: #f0f0f0;
             --text-dim: #888;
             --text-accent: #fff;
+            
+            /* --- DOMAIN ACCENTS (Used sparingly for category markers) --- */
+            --c-graphite: #3b82f6; 
+            --c-audio: #eab308;    
+            --c-intel: #10b981;    
+            --c-visual: #ec4899;   
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
@@ -44,6 +51,7 @@
         }
         body:hover #cursor { opacity: 1; }
         
+        /* Interactive States */
         a:hover ~ #cursor, 
         .card:hover ~ #cursor, 
         .stream-item:hover ~ #cursor,
@@ -63,6 +71,7 @@
             background-color: var(--border);
         }
 
+        /* --- SIDEBAR --- */
         .sidebar {
             position: sticky; top: 0; height: 100vh;
             padding: 40px 32px;
@@ -110,6 +119,7 @@
 
         .stream-track { display: flex; align-items: center; height: 100%; position: absolute; left: 0; top: 0; padding-right: 40vw; will-change: transform; }
 
+        /* Manifesto Block */
         .stream-intro {
             height: 300px; width: 420px; flex-shrink: 0; display: flex; flex-direction: column;
             justify-content: center; padding-left: 80px; padding-right: 40px; margin-right: 20px;
@@ -130,30 +140,53 @@
         .lightbox img { max-width: 90vw; max-height: 90vh; box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
         .lightbox-close { position: absolute; top: 40px; right: 40px; color: #666; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
 
-        /* --- GRID --- */
+        /* --- GRID SYSTEM --- */
         .content-section { background: var(--border); display: flex; flex-direction: column; gap: 1px; }
         .domain-header { padding: 60px 80px 30px; display: flex; justify-content: space-between; align-items: flex-end; background: var(--bg); z-index: 40; }
         .domain-header h2 { font-size: 14px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
         .domain-header span { font-size: 11px; color: var(--text-dim); text-transform: uppercase; }
         .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1px; background-color: var(--border); }
+        
         .card { background-color: var(--bg); padding: 60px; position: relative; transition: background 0.3s ease; display: flex; flex-direction: column; height: 100%; min-height: 420px; }
         .card:hover { background: var(--surface-hover); }
         .card.prime-card { background: #0c0c0c; grid-column: 1 / -1; }
         .card h3 { font-size: 20px; font-weight: 500; margin-bottom: 16px; color: var(--text-main); }
+        
+        .card-meta {
+            font-family: 'Inter', sans-serif; 
+            font-size: 11px; color: var(--text-dim);
+            margin-bottom: 24px; display: flex; justify-content: space-between;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+
         .card p { font-size: 14px; line-height: 1.6; color: #777; margin-bottom: 40px; flex-grow: 1; }
         .specs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
         .spec { font-size: 10px; padding: 6px 10px; border: 1px solid var(--border-highlight); color: #666; text-transform: uppercase; }
+        
         .card-link { position: absolute; inset: 0; z-index: 2; }
+        
         .footer { background: var(--bg); padding: 80px; display: flex; justify-content: space-between; align-items: flex-end;}
         .footer a { color: #555; text-decoration: none; font-size: 12px; margin-right: 24px; }
+        
+        /* EXTERNAL GRID */
+        .ext-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: var(--border); }
+        .ext-item { background-color: var(--bg); padding: 80px; transition: background 0.2s; }
+        .ext-item:hover { background: var(--surface-hover); }
+        .big-stat { font-weight: 300; font-size: 56px; line-height: 1; margin: 24px 0; letter-spacing: -0.03em;}
 
         @media (max-width: 1024px) {
             .wrapper { grid-template-columns: 1fr; }
             .sidebar { height: auto; position: relative; border-bottom: 1px solid var(--border); padding: 24px; flex-direction: row; }
             .nav { display: none; }
             .hero { padding: 80px 24px; }
+            .asset-stream-container { height: 350px; }
+            .stream-header { padding: 16px 24px; }
+            .stream-item, .stream-intro { height: 220px; }
+            .stream-intro { width: 300px; padding-left: 24px; padding-right: 20px; }
             .domain-header { padding: 40px 24px 20px; }
             .card { padding: 40px 24px; }
+            .project-grid { grid-template-columns: 1fr; }
+            .ext-grid { grid-template-columns: 1fr; }
             #cursor { display: none; }
             * { cursor: auto; }
         }
@@ -210,28 +243,75 @@
                 </div>
             </div>
 
-            <!-- DOMAIN: SYSTEMS -->
+            <!-- DOMAIN: SYSTEMS (7 ITEMS) -->
             <div id="graphite" class="content-section">
                 <div class="domain-header">
                     <h2>Systems Architecture</h2>
                     <span>Development Environments</span>
                 </div>
                 <div class="project-grid">
+                    <!-- GRAPHITE PRIME -->
                     <article class="card prime-card">
+                         <div class="card-meta"><span>Orchestrator</span><span>v2.1</span></div>
                         <h3>Graphite: Prime</h3>
                         <p>A sovereign node-based workspace. Orchestrates recursive sub-agent swarms capable of local Python execution and native system control via secure local-runtime bridging.</p>
-                        <div class="specs"><span class="spec">Recursive Agents</span><span class="spec">Runtime Bridge</span><span class="spec">IPC</span></div>
+                        <div class="specs"><span class="spec">Recursive Agents</span><span class="spec">Runtime Bridge</span><span class="spec">Spatial Canvas</span><span class="spec">IPC</span></div>
                     </article>
+
+                    <!-- PHLOW -->
                     <article class="card">
                         <a href="https://github.com/dovvnloading/Graphite-Phlow" target="_blank" class="card-link"></a>
+                        <div class="card-meta"><span>IDE</span><span>v1.2</span></div>
                         <h3>Graphite: Phlow</h3>
                         <p>Zero-backend AI IDE. Features a shadow output protocol allowing agents to perform surgical edits on a virtual file system via React 19 fiber nodes.</p>
                         <div class="specs"><span class="spec">Virtual FS</span><span class="spec">Shadow DOM</span><span class="spec">Agent Swarm</span></div>
                     </article>
+
+                    <!-- LOGICA -->
+                    <article class="card">
+                        <div class="card-meta"><span>Logic</span><span>v2.0</span></div>
+                        <h3>Graphite: Logica</h3>
+                        <p>Visual Flow Engineering. Decouples probabilistic LLM inference from deterministic logic loops. Architect workflows via nodes and transpile to Python.</p>
+                        <div class="specs"><span class="spec">Graph Theory</span><span class="spec">Transpiler</span><span class="spec">Visual Scripting</span></div>
+                    </article>
+
+                    <!-- GIT -->
+                    <article class="card">
+                        <a href="https://github.com/dovvnloading/Graphite-Git" target="_blank" class="card-link"></a>
+                        <div class="card-meta"><span>Client</span><span>v1.0</span></div>
+                        <h3>Graphite: Git</h3>
+                        <p>Local-first GitHub head. Integrates a pattern agent for autonomous refactoring via API with bulk network auditing.</p>
+                        <div class="specs"><span class="spec">GitHub API</span><span class="spec">Local Storage</span><span class="spec">ReAct Agent</span></div>
+                    </article>
+
+                    <!-- WEBDEV -->
+                    <article class="card">
+                        <a href="https://www.google.com/search?q=https://github.com/dovvnloading/Graphite-WebDev" target="_blank" class="card-link"></a>
+                        <div class="card-meta"><span>Environment</span><span>v1.5</span></div>
+                        <h3>Graphite: WebDev</h3>
+                        <p>Browser-based OS. Implements smart truncation logic to optimize context windows for large projects. Features real-time React compilation.</p>
+                        <div class="specs"><span class="spec">Context Opt</span><span class="spec">Babel</span><span class="spec">Claymorphism</span></div>
+                    </article>
+                    
+                     <!-- SIGNALFLOW -->
+                     <article class="card">
+                        <div class="card-meta"><span>Analysis</span><span>v1.0</span></div>
+                        <h3>SignalFlow</h3>
+                        <p>Information distillation engine. Generates a surgical log of rhetorical noise removal. Visualizes argument topology via custom vector components.</p>
+                        <div class="specs"><span class="spec">Sankey</span><span class="spec">Diff Logic</span><span class="spec">Gemini Pro</span></div>
+                    </article>
+
+                    <!-- COGNITION -->
+                    <article class="card">
+                        <div class="card-meta"><span>Python</span><span>v0.9</span></div>
+                        <h3>Graphite: Cognition</h3>
+                        <p>Python-specific agentic workspace. Features a custom regex-based tokenizer for syntax highlighting and typo detection.</p>
+                        <div class="specs"><span class="spec">Python</span><span class="spec">Levenshtein</span><span class="spec">ReAct Loop</span></div>
+                    </article>
                 </div>
             </div>
 
-            <!-- DOMAIN: AUDIO & DSP -->
+            <!-- DOMAIN: AUDIO & DSP (11 ITEMS) -->
             <div id="audio" class="content-section">
                 <div class="domain-header">
                     <h2>Audio & DSP</h2>
@@ -239,35 +319,240 @@
                 </div>
                 <div class="project-grid">
                     
-                    <article class="card">
+                    <!-- NEW PROJECT: TRKRFT -->
+                    <article class="card prime-card">
+                        <div class="card-meta"><span>Synthesizer</span><span>v1.0</span></div>
                         <h3>TrKRFT.vst</h3>
-                        <p>Professional-grade browser synthesizer. Features a 3-oscillator architecture, dual-biquad filter, and a stereo trance gate. Includes a custom piano roll MIDI editor and high-precision voice allocation.</p>
-                        <div class="specs"><span class="spec">Web Audio API</span><span class="spec">MIDI Editor</span><span class="spec">Supersaw Unison</span></div>
+                        <p>Professional-grade browser synthesizer architecture. Features a 3-oscillator signal path, dual-biquad flux filter, and stereo trance gate. Implements a custom piano roll MIDI editor and high-precision voice allocation via a centralized SynthEngine singleton.</p>
+                        <div class="specs"><span class="spec">Web Audio API</span><span class="spec">MIDI Editor</span><span class="spec">Supersaw Unison</span><span class="spec">Dual Flux Filter</span></div>
                     </article>
 
+                    <!-- NEW PROJECT: SONIC ARCHITECT -->
                     <article class="card">
+                        <div class="card-meta"><span>Workstation</span><span>v1.0</span></div>
                         <h3>Sonic Architect</h3>
-                        <p>Algorithmic DAW featuring a polyrhythmic "Cloud" engine. Implements a high-resolution lookahead scheduler for precision timing in complex generative sequences.</p>
+                        <p>Algorithmic DAW featuring a polyrhythmic "Cloud" engine. Implements a high-resolution lookahead scheduler to manage 16-step grid sequencing and generative evolution modes with millisecond timing accuracy.</p>
                         <div class="specs"><span class="spec">Algorithmic Seq</span><span class="spec">DAW</span><span class="spec">Cloud Logic</span></div>
                     </article>
 
+                    <!-- NEW PROJECT: ILLUMINIA2 -->
                     <article class="card">
+                        <div class="card-meta"><span>Generative</span><span>v2.0</span></div>
                         <h3>Illuminia2</h3>
-                        <p>Generative FM synthesis system. Features real-time gesture recognition to classify playing styles and reactive tonality detection for harmonically locked counterpoint.</p>
+                        <p>Generative FM synthesis system. Features real-time gesture recognition to classify playing styles (Swarm, Freeze) and reactive tonality detection for harmonically locked counterpoint and liquid cascade effects.</p>
                         <div class="specs"><span class="spec">FM Synthesis</span><span class="spec">Gesture Recognition</span><span class="spec">Tonality AI</span></div>
                     </article>
 
+                    <!-- NEW PROJECT: EKOS -->
                     <article class="card">
+                        <div class="card-meta"><span>System</span><span>v1.0</span></div>
                         <h3>Ekos</h3>
-                        <p>Semi-generative synth with a "Ghost Note" engine. Produces algorithmic accompaniment in real-time, utilizing entropy-based pitch displacement and ADSR evolution.</p>
-                        <div class="specs"><span class="spec">Ghost Engine</span><span class="spec">Entropy Logic</span><span class="spec">ADSR</span></div>
+                        <p>Semi-generative synth with a "Ghost Note" engine. Produces algorithmic accompaniment in real-time, utilizing entropy-based pitch displacement and ADSR evolution cycles.</p>
+                        <div class="specs"><span class="spec">Ghost Engine</span><span class="spec">Entropy Logic</span><span class="spec">Claymorphism</span></div>
                     </article>
 
+                    <!-- NEW PROJECT: CRYSTALLINE -->
                     <article class="card">
+                        <div class="card-meta"><span>Engine</span><span>v1.0</span></div>
                         <h3>Crystalline</h3>
-                        <p>Atmospheric generative engine based on a polyrhythmic synthesis model. Uses an 8x8 pattern matrix and harmonic interpolation to ensure absolute musical coherence.</p>
+                        <p>Atmospheric generative engine based on a polyrhythmic synthesis model. Uses an 8x8 pattern matrix and harmonic interpolation to ensure absolute musical coherence across the StratusEngine.</p>
                         <div class="specs"><span class="spec">Polyrhythmic</span><span class="spec">Matrix Logic</span><span class="spec">Visualizer</span></div>
                     </article>
+
+                    <!-- ORIGINAL PROJECT: ERIN -->
+                    <article class="card">
+                        <div class="card-meta"><span>Synthesizer</span><span>v3.0</span></div>
+                        <h3>Erin Workstation</h3>
+                        <p>Desktop-class polyphonic synth. Implements custom multiband compression and spectral folding. Decouples the AudioGraph from React state.</p>
+                        <div class="specs"><span class="spec">AudioWorklet</span><span class="spec">Bit-Crushing</span><span class="spec">Spectral Folding</span></div>
+                    </article>
+
+                    <!-- ORIGINAL PROJECT: LITEPLAY -->
+                    <article class="card">
+                        <div class="card-meta"><span>VST</span><span>v2.1</span></div>
+                        <h3>Liteplay VST</h3>
+                        <p>Generative Synthesis. Maps natural language to ADSR and Filter parameters via function calling. Features procedural impulse responses.</p>
+                        <div class="specs"><span class="spec">Function Calling</span><span class="spec">Procedural IR</span><span class="spec">Lookahead</span></div>
+                    </article>
+
+                    <!-- ORIGINAL PROJECT: POLY-RHYTHM -->
+                    <article class="card">
+                        <a href="https://github.com/dovvnloading/POLYARBOR-Rhythm-Generator" target="_blank" class="card-link"></a>
+                        <div class="card-meta"><span>Sequencer</span><span>v2.0</span></div>
+                        <h3>Poly-Rhythm 2</h3>
+                        <p>Euclidean Sequencer. Visualizes phase relationships and polyrhythms using radial geometry. Solves main-thread blocking via lookahead scheduling.</p>
+                        <div class="specs"><span class="spec">Euclidean Math</span><span class="spec">Scheduling</span><span class="spec">Canvas</span></div>
+                    </article>
+                    
+                    <!-- ORIGINAL PROJECT: GLASSNODE -->
+                    <article class="card">
+                        <div class="card-meta"><span>Modular</span><span>v1.0</span></div>
+                        <h3>Glassnode</h3>
+                        <p>Visual patching environment. Features a custom HTML5/SVG hybrid engine for rendering bezier cables with cubic interpolation.</p>
+                        <div class="specs"><span class="spec">Wavetable</span><span class="spec">SVG Engine</span><span class="spec">Cubic Interpolation</span></div>
+                    </article>
+
+                    <!-- ORIGINAL PROJECT: SOMNIUM -->
+                    <article class="card">
+                        <div class="card-meta"><span>Ambient</span><span>v1.0</span></div>
+                        <h3>Somnium</h3>
+                        <p>Procedural sleep soundscape. Synthesizes Pink Noise via Paul Kellett's refinement method. Features a "Mastering Chain" to prevent digital clipping artifacts.</p>
+                        <div class="specs"><span class="spec">DSP</span><span class="spec">Noise Gen</span><span class="spec">Mastering</span></div>
+                    </article>
+
+                    <!-- ORIGINAL PROJECT: ERN-DND -->
+                    <article class="card">
+                        <div class="card-meta"><span>Game</span><span>v1.0</span></div>
+                        <h3>ErN-DnD</h3>
+                        <p>DJ Controller & Rhythm Game. Analyzes FFT data to procedurally generate game levels from local audio files. Features physics-based scratch emulation.</p>
+                        <div class="specs"><span class="spec">FFT Analysis</span><span class="spec">Physics</span><span class="spec">Procedural Gen</span></div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- DOMAIN: RESEARCH & AI (6 ITEMS) -->
+            <div id="research" class="content-section">
+                <div class="domain-header">
+                    <h2>Research & AI</h2>
+                    <span>Local Intelligence / Docs</span>
+                </div>
+                <div class="project-grid">
+                    <!-- CORTEX -->
+                    <article class="card">
+                        <a href="https://github.com/dovvnloading/Cortex" target="_blank" class="card-link"></a>
+                        <div class="card-meta"><span>Desktop</span><span>v4.0</span></div>
+                        <h3>Cortex</h3>
+                        <p>Local LLM frontend. Implements a three-tier memory system (Short-term, SQLite History, Permanent Nuggets) to retain user context locally.</p>
+                        <div class="specs"><span class="spec">PySide6</span><span class="spec">SQLite</span><span class="spec">Ollama</span></div>
+                    </article>
+
+                    <!-- OUROBOROS -->
+                    <article class="card">
+                        <div class="card-meta"><span>Runtime</span><span>v3.0</span></div>
+                        <h3>Ouroboros</h3>
+                        <p>Recursive Dashboard. An AI agent writes and hot-loads React widgets into the live runtime. Features a synthetic require loop for dependency injection.</p>
+                        <div class="specs"><span class="spec">Babel</span><span class="spec">Recursive</span><span class="spec">Sandboxing</span></div>
+                    </article>
+                    
+                    <!-- OS-SCHOLAR -->
+                    <article class="card">
+                        <div class="card-meta"><span>Education</span><span>v1.0</span></div>
+                        <h3>OS-Scholar</h3>
+                        <p>Multimodal academic tool. Establishes bi-directional WebSocket connections for voice tutoring. Converts raw Float32 audio to PCM Int16 for Gemini Live streaming.</p>
+                        <div class="specs"><span class="spec">WebSockets</span><span class="spec">PCM Streaming</span><span class="spec">Voice-to-Voice</span></div>
+                    </article>
+
+                    <!-- SDK DISTILLER -->
+                    <article class="card">
+                        <div class="card-meta"><span>Docs</span><span>v1.0</span></div>
+                        <h3>SDK Distiller</h3>
+                        <p>Documentation generator. Ingests raw source code to build RAG-enabled docs. Implements a client-side vector store and hybrid keyword/vector search.</p>
+                        <div class="specs"><span class="spec">RAG</span><span class="spec">Vector Store</span><span class="spec">Hybrid Search</span></div>
+                    </article>
+
+                    <!-- EXILE'S ORACLE -->
+                    <article class="card">
+                        <div class="card-meta"><span>Game AI</span><span>v1.0</span></div>
+                        <h3>Exile's Oracle</h3>
+                        <p>Path of Exile domain expert. Uses strict "Immutable Laws" context injection to prevent hallucination. Features dynamic theming based on selected persona.</p>
+                        <div class="specs"><span class="spec">Context Injection</span><span class="spec">Theming Engine</span></div>
+                    </article>
+                    
+                    <!-- SORTIFY -->
+                    <article class="card">
+                         <div class="card-meta"><span>Education</span><span>v1.0</span></div>
+                        <h3>Sortify</h3>
+                        <p>Algorithm visualizer. Uses JavaScript Generator functions to step through sorting logic without freezing the main thread. Features FM synthesis audio feedback.</p>
+                        <div class="specs"><span class="spec">Generators</span><span class="spec">FM Synthesis</span><span class="spec">Algo Vis</span></div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- DOMAIN: GRAPHICS & RENDERING (6 ITEMS) -->
+            <div id="graphics" class="content-section">
+                <div class="domain-header">
+                    <h2>Graphics & Rendering</h2>
+                    <span>Pixel / Mesh / Canvas</span>
+                </div>
+                <div class="project-grid">
+                    <!-- DITHER PRO -->
+                    <article class="card">
+                        <a href="https://drive.google.com/file/d/1O58cpS1IODfMPHoZBKDXbY9Wv__rUFPr/view" class="card-link"></a>
+                        <div class="card-meta"><span>Processing</span><span>v2.0</span></div>
+                        <h3>Dither Pro 2.0</h3>
+                        <p>Modernist image processor. Implements 15+ algorithms via Web Workers. Features custom serpentine scanning to reduce diagonal artifacts.</p>
+                        <div class="specs"><span class="spec">Web Workers</span><span class="spec">Bit Depth</span><span class="spec">Typed Arrays</span></div>
+                    </article>
+
+                    <!-- GENESIS o1 -->
+                    <article class="card">
+                        <div class="card-meta"><span>3D</span><span>v1.0</span></div>
+                        <h3>Genesis o1</h3>
+                        <p>Panoramic generator. Features a custom block material shader for particle transition effects and automated audio stem layering.</p>
+                        <div class="specs"><span class="spec">Three.js</span><span class="spec">Shaders</span><span class="spec">Equirectangular</span></div>
+                    </article>
+                    
+                    <!-- VOXEL COMMAND -->
+                    <article class="card">
+                        <div class="card-meta"><span>Game</span><span>v1.0</span></div>
+                        <h3>Voxel Command</h3>
+                        <p>Browser RTS engine. Renders 2.5D voxels via HTML5 Canvas. Features a hybrid AI combining Behavior Trees and LLM Planning.</p>
+                        <div class="specs"><span class="spec">Canvas 2.5D</span><span class="spec">Flow Fields</span><span class="spec">Hybrid AI</span></div>
+                    </article>
+                    
+                    <!-- OS-VE -->
+                    <article class="card">
+                         <div class="card-meta"><span>Video</span><span>v1.0</span></div>
+                        <h3>OS-VE</h3>
+                        <p>Client-side video editor. Features a magnetic timeline and a render loop decoupled from React. Exports via MediaRecorder API.</p>
+                        <div class="specs"><span class="spec">Video Compositor</span><span class="spec">MediaRecorder</span></div>
+                    </article>
+
+                    <!-- SHADERS -->
+                    <article class="card">
+                        <div class="card-meta"><span>CSS</span><span>v1.0</span></div>
+                        <h3>Graphite: Shaders</h3>
+                        <p>Procedural Styling Engine. Automates Claymorphism and Neo-brutalism trends using advanced DOM box-shadow layering rather than WebGL.</p>
+                        <div class="specs"><span class="spec">CSS Engine</span><span class="spec">DOM</span><span class="spec">Font Injection</span></div>
+                    </article>
+                    
+                    <!-- ADGENI -->
+                    <article class="card">
+                        <a href="https://dovvnloading.github.io/AdGeni/" target="_blank" class="card-link"></a>
+                         <div class="card-meta"><span>Suite</span><span>v1.0</span></div>
+                        <h3>Graphite: AdGeni</h3>
+                        <p>Creative vertical suite. Features a client-side video composition engine to stitch generated assets. Enforces brand consistency across modalities.</p>
+                        <div class="specs"><span class="spec">Video Comp</span><span class="spec">Brand DNA</span></div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- DOMAIN: COMMUNITY (2 ITEMS) -->
+            <div id="community" class="content-section">
+                <div class="domain-header">
+                    <h2>Community & Data</h2>
+                    <span>Open Source / Libraries</span>
+                </div>
+                <div class="ext-grid">
+                    <!-- PIANOBOOK -->
+                    <div class="ext-item">
+                        <div class="card-meta"><span>Sample Library</span></div>
+                        <h3 class="big-stat">18K+ DLs</h3>
+                        <p style="margin-bottom: 20px;">
+                            High-fidelity Kontakt libraries focused on texture and degradation. Includes "The Synths" and "Broken Piano."
+                        </p>
+                        <a href="https://www.pianobook.co.uk/profile/mattwesney/" target="_blank" style="text-decoration: underline;">Access Library -></a>
+                    </div>
+                    
+                    <!-- HUGGING FACE -->
+                    <div class="ext-item">
+                        <div class="card-meta"><span>Dataset</span></div>
+                        <h3 class="big-stat">151K Rows</h3>
+                        <p style="margin-bottom: 20px;">
+                            "Synthetic Reasoning Data." A dataset explicitly tailored for fine-tuning AI in logical reasoning (Chain of Thought).
+                        </p>
+                        <a href="https://huggingface.co/moremilk" target="_blank" style="text-decoration: underline;">View Dataset -></a>
+                    </div>
                 </div>
             </div>
 
@@ -311,7 +596,7 @@
                 this.init();
             }
 
-            // Fisher-Yates Shuffle for SOTA Randomization
+            // Fisher-Yates Shuffle
             shuffle(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -332,7 +617,6 @@
                         return imageExtensions.some(ext => item.name.toLowerCase().endsWith(ext));
                     });
 
-                    // RANDOMIZE ON EACH LOAD
                     files = this.shuffle(files);
 
                     if (files.length > 0) {
