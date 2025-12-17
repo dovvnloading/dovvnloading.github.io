@@ -21,7 +21,7 @@
             --text-dim: #888;
             --text-accent: #fff;
             
-            /* --- DOMAIN ACCENTS (Used sparingly for category markers) --- */
+            /* --- DOMAIN ACCENTS --- */
             --c-graphite: #3b82f6; 
             --c-audio: #eab308;    
             --c-intel: #10b981;    
@@ -51,7 +51,6 @@
         }
         body:hover #cursor { opacity: 1; }
         
-        /* Interactive States */
         a:hover ~ #cursor, 
         .card:hover ~ #cursor, 
         .stream-item:hover ~ #cursor,
@@ -71,7 +70,6 @@
             background-color: var(--border);
         }
 
-        /* --- SIDEBAR --- */
         .sidebar {
             position: sticky; top: 0; height: 100vh;
             padding: 40px 32px;
@@ -119,7 +117,6 @@
 
         .stream-track { display: flex; align-items: center; height: 100%; position: absolute; left: 0; top: 0; padding-right: 40vw; will-change: transform; }
 
-        /* Manifesto Block */
         .stream-intro {
             height: 300px; width: 420px; flex-shrink: 0; display: flex; flex-direction: column;
             justify-content: center; padding-left: 80px; padding-right: 40px; margin-right: 20px;
@@ -150,6 +147,7 @@
         .card { background-color: var(--bg); padding: 60px; position: relative; transition: background 0.3s ease; display: flex; flex-direction: column; height: 100%; min-height: 420px; }
         .card:hover { background: var(--surface-hover); }
         .card.prime-card { background: #0c0c0c; grid-column: 1 / -1; }
+        
         .card h3 { font-size: 20px; font-weight: 500; margin-bottom: 16px; color: var(--text-main); }
         
         .card-meta {
@@ -159,7 +157,25 @@
             text-transform: uppercase; letter-spacing: 0.05em;
         }
 
-        .card p { font-size: 14px; line-height: 1.6; color: #777; margin-bottom: 40px; flex-grow: 1; }
+        .card p { font-size: 14px; line-height: 1.6; color: #777; margin-bottom: 24px; flex-grow: 1; }
+        
+        /* NEW LINK INDICATOR STYLE */
+        .action-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-main);
+            margin-bottom: 24px; /* Space before specs */
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.6;
+            transition: all 0.2s ease;
+        }
+        .card:hover .action-link {
+            opacity: 1;
+            transform: translateX(4px);
+        }
+
         .specs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
         .spec { font-size: 10px; padding: 6px 10px; border: 1px solid var(--border-highlight); color: #666; text-transform: uppercase; }
         
@@ -168,7 +184,6 @@
         .footer { background: var(--bg); padding: 80px; display: flex; justify-content: space-between; align-items: flex-end;}
         .footer a { color: #555; text-decoration: none; font-size: 12px; margin-right: 24px; }
         
-        /* EXTERNAL GRID */
         .ext-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: var(--border); }
         .ext-item { background-color: var(--bg); padding: 80px; transition: background 0.2s; }
         .ext-item:hover { background: var(--surface-hover); }
@@ -243,7 +258,7 @@
                 </div>
             </div>
 
-            <!-- DOMAIN: SYSTEMS (7 ITEMS) -->
+            <!-- DOMAIN: SYSTEMS -->
             <div id="graphite" class="content-section">
                 <div class="domain-header">
                     <h2>Systems Architecture</h2>
@@ -264,6 +279,7 @@
                         <div class="card-meta"><span>IDE</span><span>v1.2</span></div>
                         <h3>Graphite: Phlow</h3>
                         <p>Zero-backend AI IDE. Features a shadow output protocol allowing agents to perform surgical edits on a virtual file system via React 19 fiber nodes.</p>
+                        <div class="action-link">:: VIEW SOURCE -></div>
                         <div class="specs"><span class="spec">Virtual FS</span><span class="spec">Shadow DOM</span><span class="spec">Agent Swarm</span></div>
                     </article>
 
@@ -281,6 +297,7 @@
                         <div class="card-meta"><span>Client</span><span>v1.0</span></div>
                         <h3>Graphite: Git</h3>
                         <p>Local-first GitHub head. Integrates a pattern agent for autonomous refactoring via API with bulk network auditing.</p>
+                        <div class="action-link">:: VIEW SOURCE -></div>
                         <div class="specs"><span class="spec">GitHub API</span><span class="spec">Local Storage</span><span class="spec">ReAct Agent</span></div>
                     </article>
 
@@ -290,6 +307,7 @@
                         <div class="card-meta"><span>Environment</span><span>v1.5</span></div>
                         <h3>Graphite: WebDev</h3>
                         <p>Browser-based OS. Implements smart truncation logic to optimize context windows for large projects. Features real-time React compilation.</p>
+                        <div class="action-link">:: VIEW QUERY -></div>
                         <div class="specs"><span class="spec">Context Opt</span><span class="spec">Babel</span><span class="spec">Claymorphism</span></div>
                     </article>
                     
@@ -311,7 +329,7 @@
                 </div>
             </div>
 
-            <!-- DOMAIN: AUDIO & DSP (11 ITEMS) -->
+            <!-- DOMAIN: AUDIO & DSP -->
             <div id="audio" class="content-section">
                 <div class="domain-header">
                     <h2>Audio & DSP</h2>
@@ -319,7 +337,7 @@
                 </div>
                 <div class="project-grid">
                     
-                    <!-- NEW PROJECT: TRKRFT -->
+                    <!-- TRKRFT -->
                     <article class="card prime-card">
                         <div class="card-meta"><span>Synthesizer</span><span>v1.0</span></div>
                         <h3>TrKRFT.vst</h3>
@@ -327,7 +345,7 @@
                         <div class="specs"><span class="spec">Web Audio API</span><span class="spec">MIDI Editor</span><span class="spec">Supersaw Unison</span><span class="spec">Dual Flux Filter</span></div>
                     </article>
 
-                    <!-- NEW PROJECT: SONIC ARCHITECT -->
+                    <!-- SONIC ARCHITECT -->
                     <article class="card">
                         <div class="card-meta"><span>Workstation</span><span>v1.0</span></div>
                         <h3>Sonic Architect</h3>
@@ -335,7 +353,7 @@
                         <div class="specs"><span class="spec">Algorithmic Seq</span><span class="spec">DAW</span><span class="spec">Cloud Logic</span></div>
                     </article>
 
-                    <!-- NEW PROJECT: ILLUMINIA2 -->
+                    <!-- ILLUMINIA2 -->
                     <article class="card">
                         <div class="card-meta"><span>Generative</span><span>v2.0</span></div>
                         <h3>Illuminia2</h3>
@@ -343,7 +361,7 @@
                         <div class="specs"><span class="spec">FM Synthesis</span><span class="spec">Gesture Recognition</span><span class="spec">Tonality AI</span></div>
                     </article>
 
-                    <!-- NEW PROJECT: EKOS -->
+                    <!-- EKOS -->
                     <article class="card">
                         <div class="card-meta"><span>System</span><span>v1.0</span></div>
                         <h3>Ekos</h3>
@@ -351,7 +369,7 @@
                         <div class="specs"><span class="spec">Ghost Engine</span><span class="spec">Entropy Logic</span><span class="spec">Claymorphism</span></div>
                     </article>
 
-                    <!-- NEW PROJECT: CRYSTALLINE -->
+                    <!-- CRYSTALLINE -->
                     <article class="card">
                         <div class="card-meta"><span>Engine</span><span>v1.0</span></div>
                         <h3>Crystalline</h3>
@@ -359,7 +377,7 @@
                         <div class="specs"><span class="spec">Polyrhythmic</span><span class="spec">Matrix Logic</span><span class="spec">Visualizer</span></div>
                     </article>
 
-                    <!-- ORIGINAL PROJECT: ERIN -->
+                    <!-- ERIN -->
                     <article class="card">
                         <div class="card-meta"><span>Synthesizer</span><span>v3.0</span></div>
                         <h3>Erin Workstation</h3>
@@ -367,7 +385,7 @@
                         <div class="specs"><span class="spec">AudioWorklet</span><span class="spec">Bit-Crushing</span><span class="spec">Spectral Folding</span></div>
                     </article>
 
-                    <!-- ORIGINAL PROJECT: LITEPLAY -->
+                    <!-- LITEPLAY -->
                     <article class="card">
                         <div class="card-meta"><span>VST</span><span>v2.1</span></div>
                         <h3>Liteplay VST</h3>
@@ -375,16 +393,17 @@
                         <div class="specs"><span class="spec">Function Calling</span><span class="spec">Procedural IR</span><span class="spec">Lookahead</span></div>
                     </article>
 
-                    <!-- ORIGINAL PROJECT: POLY-RHYTHM -->
+                    <!-- POLY-RHYTHM -->
                     <article class="card">
                         <a href="https://github.com/dovvnloading/POLYARBOR-Rhythm-Generator" target="_blank" class="card-link"></a>
                         <div class="card-meta"><span>Sequencer</span><span>v2.0</span></div>
                         <h3>Poly-Rhythm 2</h3>
                         <p>Euclidean Sequencer. Visualizes phase relationships and polyrhythms using radial geometry. Solves main-thread blocking via lookahead scheduling.</p>
+                        <div class="action-link">:: VIEW SOURCE -></div>
                         <div class="specs"><span class="spec">Euclidean Math</span><span class="spec">Scheduling</span><span class="spec">Canvas</span></div>
                     </article>
                     
-                    <!-- ORIGINAL PROJECT: GLASSNODE -->
+                    <!-- GLASSNODE -->
                     <article class="card">
                         <div class="card-meta"><span>Modular</span><span>v1.0</span></div>
                         <h3>Glassnode</h3>
@@ -392,7 +411,7 @@
                         <div class="specs"><span class="spec">Wavetable</span><span class="spec">SVG Engine</span><span class="spec">Cubic Interpolation</span></div>
                     </article>
 
-                    <!-- ORIGINAL PROJECT: SOMNIUM -->
+                    <!-- SOMNIUM -->
                     <article class="card">
                         <div class="card-meta"><span>Ambient</span><span>v1.0</span></div>
                         <h3>Somnium</h3>
@@ -400,7 +419,7 @@
                         <div class="specs"><span class="spec">DSP</span><span class="spec">Noise Gen</span><span class="spec">Mastering</span></div>
                     </article>
 
-                    <!-- ORIGINAL PROJECT: ERN-DND -->
+                    <!-- ERN-DND -->
                     <article class="card">
                         <div class="card-meta"><span>Game</span><span>v1.0</span></div>
                         <h3>ErN-DnD</h3>
@@ -410,7 +429,7 @@
                 </div>
             </div>
 
-            <!-- DOMAIN: RESEARCH & AI (6 ITEMS) -->
+            <!-- DOMAIN: RESEARCH & AI -->
             <div id="research" class="content-section">
                 <div class="domain-header">
                     <h2>Research & AI</h2>
@@ -423,6 +442,7 @@
                         <div class="card-meta"><span>Desktop</span><span>v4.0</span></div>
                         <h3>Cortex</h3>
                         <p>Local LLM frontend. Implements a three-tier memory system (Short-term, SQLite History, Permanent Nuggets) to retain user context locally.</p>
+                        <div class="action-link">:: VIEW SOURCE -></div>
                         <div class="specs"><span class="spec">PySide6</span><span class="spec">SQLite</span><span class="spec">Ollama</span></div>
                     </article>
 
@@ -468,7 +488,7 @@
                 </div>
             </div>
 
-            <!-- DOMAIN: GRAPHICS & RENDERING (6 ITEMS) -->
+            <!-- DOMAIN: GRAPHICS & RENDERING -->
             <div id="graphics" class="content-section">
                 <div class="domain-header">
                     <h2>Graphics & Rendering</h2>
@@ -477,10 +497,11 @@
                 <div class="project-grid">
                     <!-- DITHER PRO -->
                     <article class="card">
-                        <a href="https://drive.google.com/file/d/1O58cpS1IODfMPHoZBKDXbY9Wv__rUFPr/view" class="card-link"></a>
+                        <a href="https://github.com/dovvnloading/Dither-Pro-2" target="_blank" class="card-link"></a>
                         <div class="card-meta"><span>Processing</span><span>v2.0</span></div>
                         <h3>Dither Pro 2.0</h3>
                         <p>Modernist image processor. Implements 15+ algorithms via Web Workers. Features custom serpentine scanning to reduce diagonal artifacts.</p>
+                        <div class="action-link">:: VIEW SOURCE -></div>
                         <div class="specs"><span class="spec">Web Workers</span><span class="spec">Bit Depth</span><span class="spec">Typed Arrays</span></div>
                     </article>
 
@@ -522,12 +543,13 @@
                          <div class="card-meta"><span>Suite</span><span>v1.0</span></div>
                         <h3>Graphite: AdGeni</h3>
                         <p>Creative vertical suite. Features a client-side video composition engine to stitch generated assets. Enforces brand consistency across modalities.</p>
+                        <div class="action-link">:: VIEW PROJECT -></div>
                         <div class="specs"><span class="spec">Video Comp</span><span class="spec">Brand DNA</span></div>
                     </article>
                 </div>
             </div>
 
-            <!-- DOMAIN: COMMUNITY (2 ITEMS) -->
+            <!-- DOMAIN: COMMUNITY -->
             <div id="community" class="content-section">
                 <div class="domain-header">
                     <h2>Community & Data</h2>
@@ -541,7 +563,7 @@
                         <p style="margin-bottom: 20px;">
                             High-fidelity Kontakt libraries focused on texture and degradation. Includes "The Synths" and "Broken Piano."
                         </p>
-                        <a href="https://www.pianobook.co.uk/profile/mattwesney/" target="_blank" style="text-decoration: underline;">Access Library -></a>
+                        <a href="https://www.pianobook.co.uk/profile/mattwesney/" target="_blank" class="action-link" style="text-decoration: none;">:: ACCESS LIBRARY -></a>
                     </div>
                     
                     <!-- HUGGING FACE -->
@@ -551,7 +573,7 @@
                         <p style="margin-bottom: 20px;">
                             "Synthetic Reasoning Data." A dataset explicitly tailored for fine-tuning AI in logical reasoning (Chain of Thought).
                         </p>
-                        <a href="https://huggingface.co/moremilk" target="_blank" style="text-decoration: underline;">View Dataset -></a>
+                        <a href="https://huggingface.co/moremilk" target="_blank" class="action-link" style="text-decoration: none;">:: VIEW DATASET -></a>
                     </div>
                 </div>
             </div>
