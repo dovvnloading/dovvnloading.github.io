@@ -16,7 +16,7 @@
             --surface: #0f0f0f;
             --surface-hover: #161616;
             --border: #222; 
-            --border-highlight: #444; /* Brightened for visibility */
+            --border-highlight: #444; 
             --text-main: #f0f0f0;
             --text-dim: #888;
             --text-accent: #fff;
@@ -51,7 +51,7 @@
         .ext-item:hover ~ #cursor,
         .stream-item:hover ~ #cursor,
         .stream-intro:hover ~ #cursor { 
-            transform: scale(3.5); /* Made larger for better feedback */
+            transform: scale(3.5); 
             background: #fff; 
             mix-blend-mode: normal; 
             opacity: 0.15;
@@ -84,12 +84,11 @@
         }
         .identity span { font-size: 12px; color: var(--text-dim); }
 
-        /* --- UPDATED NAVIGATION HOVER --- */
         .nav { margin-top: 64px; display: flex; flex-direction: column; gap: 8px; }
         .nav a {
             text-decoration: none; color: var(--text-dim); font-size: 13px; 
             transition: all 0.2s ease; padding: 8px 0;
-            border-left: 2px solid transparent; /* Prepare for hover border */
+            border-left: 2px solid transparent; 
             padding-left: 0px;
         }
         .nav a:hover { 
@@ -101,8 +100,29 @@
 
         main { background: var(--border); display: flex; flex-direction: column; gap: 1px; }
 
+        /* --- PROFESSIONAL DISCLAIMER STYLE --- */
+        .notice-banner {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 60px 80px 40px;
+            font-family: 'Inter', sans-serif; /* Reverted to Sans Serif */
+            font-size: 12px;
+            color: #777;
+            line-height: 1.6;
+        }
+        .notice-banner h5 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #fff;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        .notice-banner p { max-width: 800px; }
+        .notice-banner strong { color: #ccc; font-weight: 500; }
+
         /* --- HERO --- */
-        .hero { padding: 140px 80px; background-color: var(--bg); }
+        .hero { padding: 80px 80px 140px; background-color: var(--bg); }
         .hero p { max-width: 640px; font-size: 26px; font-weight: 300; line-height: 1.4; color: #999; }
         .hero strong { color: #eee; font-weight: 400; }
 
@@ -150,18 +170,17 @@
         .domain-header span { font-size: 11px; color: var(--text-dim); text-transform: uppercase; }
         .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1px; background-color: var(--border); }
         
-        /* --- UPDATED CARD HOVER --- */
         .card { 
             background-color: var(--bg); 
             padding: 60px; 
             position: relative; 
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex; flex-direction: column; height: 100%; min-height: 420px; 
-            border: 1px solid transparent; /* Invisible border for layout stability */
+            border: 1px solid transparent; 
         }
         .card:hover { 
             background: var(--surface-hover); 
-            border-color: var(--border-highlight); /* Visible border on hover */
+            border-color: var(--border-highlight);
             z-index: 10;
         }
         .card.prime-card { background: #0c0c0c; grid-column: 1 / -1; }
@@ -179,7 +198,6 @@
         .card p { font-size: 14px; line-height: 1.6; color: #777; margin-bottom: 24px; flex-grow: 1; transition: color 0.2s; }
         .card:hover p { color: #aaa; }
         
-        /* --- UPDATED ACTION LINK HOVER --- */
         .action-link {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
@@ -196,7 +214,7 @@
             opacity: 1;
             color: #fff;
             transform: translateX(8px);
-            text-shadow: 0 0 8px rgba(255,255,255,0.4); /* GLOW EFFECT */
+            text-shadow: 0 0 8px rgba(255,255,255,0.4); 
         }
 
         .specs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
@@ -205,7 +223,6 @@
         
         .card-link { position: absolute; inset: 0; z-index: 2; }
         
-        /* --- UPDATED FOOTER LINKS --- */
         .footer { background: var(--bg); padding: 80px; display: flex; justify-content: space-between; align-items: flex-end;}
         .footer a { 
             color: #555; 
@@ -221,7 +238,6 @@
             border-bottom-color: #fff;
         }
         
-        /* --- EXTERNAL GRID HOVER --- */
         .ext-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: var(--border); }
         .ext-item { 
             background-color: var(--bg); padding: 80px; 
@@ -244,6 +260,7 @@
             .sidebar { height: auto; position: relative; border-bottom: 1px solid var(--border); padding: 24px; flex-direction: row; }
             .nav { display: none; }
             .hero { padding: 80px 24px; }
+            .notice-banner { padding: 32px 24px; }
             .asset-stream-container { height: 350px; }
             .stream-header { padding: 16px 24px; }
             .stream-item, .stream-intro { height: 220px; }
@@ -283,6 +300,16 @@
         </aside>
 
         <main>
+            <!-- PROFESSIONAL DISCLAIMER -->
+            <div class="notice-banner">
+                <h5>Notice of Rebranding</h5>
+                <p>
+                    Effective immediately, the proprietary architecture and umbrella applications previously designated as <strong>"GRAPHITE"</strong> are transitioning to <strong>Legacy Status</strong>. This strategic rebranding is a proactive measure to distinguish this independent codebase from external entities sharing similar nomenclature within the AI sector.
+                    <br><br>
+                    Please note: All visual artifacts, UI demonstrations, and software referencing "Graphite" contained within this archive represent <strong>independent, legacy development</strong> and are strictly <strong>unaffiliated</strong> with "Graphite" (the company) or any associated corporate entities. A new system designation will be announced shortly to ensure absolute clarity and a seamless transition.
+                </p>
+            </div>
+
             <section class="content-section hero">
                 <p>
                     I build <strong>agentic workspaces</strong> and high-fidelity signal processing tools that collapse the gap between intent and action—spanning zero-backend IDEs and generative audio engines.
