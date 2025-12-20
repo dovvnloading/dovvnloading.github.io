@@ -16,16 +16,10 @@
             --surface: #0f0f0f;
             --surface-hover: #161616;
             --border: #222; 
-            --border-highlight: #333;
+            --border-highlight: #444; /* Brightened for visibility */
             --text-main: #f0f0f0;
             --text-dim: #888;
             --text-accent: #fff;
-            
-            /* --- DOMAIN ACCENTS --- */
-            --c-graphite: #3b82f6; 
-            --c-audio: #eab308;    
-            --c-intel: #10b981;    
-            --c-visual: #ec4899;   
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
@@ -46,19 +40,21 @@
             pointer-events: none; 
             z-index: 999999; 
             mix-blend-mode: difference;
-            transition: width 0.2s, height 0.2s;
+            transition: width 0.2s, height 0.2s, opacity 0.2s;
             border-radius: 50%;
         }
         body:hover #cursor { opacity: 1; }
         
+        /* CURSOR INTERACTIONS */
         a:hover ~ #cursor, 
         .card:hover ~ #cursor, 
+        .ext-item:hover ~ #cursor,
         .stream-item:hover ~ #cursor,
         .stream-intro:hover ~ #cursor { 
-            transform: scale(2.5); 
+            transform: scale(3.5); /* Made larger for better feedback */
             background: #fff; 
             mix-blend-mode: normal; 
-            opacity: 0.1;
+            opacity: 0.15;
         }
 
         /* --- LAYOUT --- */
@@ -88,12 +84,20 @@
         }
         .identity span { font-size: 12px; color: var(--text-dim); }
 
+        /* --- UPDATED NAVIGATION HOVER --- */
         .nav { margin-top: 64px; display: flex; flex-direction: column; gap: 8px; }
         .nav a {
             text-decoration: none; color: var(--text-dim); font-size: 13px; 
-            transition: 0.2s; padding: 8px 0;
+            transition: all 0.2s ease; padding: 8px 0;
+            border-left: 2px solid transparent; /* Prepare for hover border */
+            padding-left: 0px;
         }
-        .nav a:hover { color: var(--text-accent); transform: translateX(4px); }
+        .nav a:hover { 
+            color: var(--text-accent); 
+            padding-left: 16px; 
+            border-left: 2px solid var(--text-accent);
+            text-shadow: 0 0 15px rgba(255,255,255,0.2);
+        }
 
         main { background: var(--border); display: flex; flex-direction: column; gap: 1px; }
 
@@ -126,16 +130,18 @@
         .stream-intro p { font-size: 13px; line-height: 1.6; color: #777; max-width: 300px; }
         .stream-intro::after { content: ''; position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 40px; width: 1px; background: #222; }
 
-        .stream-item { height: 300px; margin-right: 4px; flex-shrink: 0; user-select: none; background: #0a0a0a; display: flex; align-items: center; justify-content: center; }
+        .stream-item { height: 300px; margin-right: 4px; flex-shrink: 0; user-select: none; background: #0a0a0a; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .stream-item:hover { background: #1a1a1a; cursor: pointer; }
         .stream-item img { height: 100%; width: auto; display: block; filter: grayscale(100%) opacity(0.5); transition: filter 0.6s ease; will-change: filter; }
         
         .stream-msg { font-size: 10px; color: #444; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-transform: uppercase; letter-spacing: 0.1em; }
 
         /* --- LIGHTBOX --- */
         .lightbox { position: fixed; inset: 0; z-index: 10000; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
-        .lightbox.active { opacity: 1; pointer-events: auto; }
+        .lightbox.active { opacity: 1; pointer-events: auto; cursor: auto; }
         .lightbox img { max-width: 90vw; max-height: 90vh; box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
-        .lightbox-close { position: absolute; top: 40px; right: 40px; color: #666; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; }
+        .lightbox-close { position: absolute; top: 40px; right: 40px; color: #fff; font-size: 12px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid transparent; transition: 0.2s; }
+        .lightbox-close:hover { border-bottom-color: #fff; }
 
         /* --- GRID SYSTEM --- */
         .content-section { background: var(--border); display: flex; flex-direction: column; gap: 1px; }
@@ -144,11 +150,24 @@
         .domain-header span { font-size: 11px; color: var(--text-dim); text-transform: uppercase; }
         .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1px; background-color: var(--border); }
         
-        .card { background-color: var(--bg); padding: 60px; position: relative; transition: background 0.3s ease; display: flex; flex-direction: column; height: 100%; min-height: 420px; }
-        .card:hover { background: var(--surface-hover); }
+        /* --- UPDATED CARD HOVER --- */
+        .card { 
+            background-color: var(--bg); 
+            padding: 60px; 
+            position: relative; 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; flex-direction: column; height: 100%; min-height: 420px; 
+            border: 1px solid transparent; /* Invisible border for layout stability */
+        }
+        .card:hover { 
+            background: var(--surface-hover); 
+            border-color: var(--border-highlight); /* Visible border on hover */
+            z-index: 10;
+        }
         .card.prime-card { background: #0c0c0c; grid-column: 1 / -1; }
         
-        .card h3 { font-size: 20px; font-weight: 500; margin-bottom: 16px; color: var(--text-main); }
+        .card h3 { font-size: 20px; font-weight: 500; margin-bottom: 16px; color: var(--text-main); transition: color 0.2s; }
+        .card:hover h3 { color: #fff; }
         
         .card-meta {
             font-family: 'Inter', sans-serif; 
@@ -157,37 +176,68 @@
             text-transform: uppercase; letter-spacing: 0.05em;
         }
 
-        .card p { font-size: 14px; line-height: 1.6; color: #777; margin-bottom: 24px; flex-grow: 1; }
+        .card p { font-size: 14px; line-height: 1.6; color: #777; margin-bottom: 24px; flex-grow: 1; transition: color 0.2s; }
+        .card:hover p { color: #aaa; }
         
-        /* NEW LINK INDICATOR STYLE */
+        /* --- UPDATED ACTION LINK HOVER --- */
         .action-link {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             color: var(--text-main);
-            margin-bottom: 24px; /* Space before specs */
+            margin-bottom: 24px; 
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            opacity: 0.6;
-            transition: all 0.2s ease;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
         }
         .card:hover .action-link {
             opacity: 1;
-            transform: translateX(4px);
+            color: #fff;
+            transform: translateX(8px);
+            text-shadow: 0 0 8px rgba(255,255,255,0.4); /* GLOW EFFECT */
         }
 
         .specs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
-        .spec { font-size: 10px; padding: 6px 10px; border: 1px solid var(--border-highlight); color: #666; text-transform: uppercase; }
+        .spec { font-size: 10px; padding: 6px 10px; border: 1px solid var(--border-highlight); color: #666; text-transform: uppercase; transition: 0.2s; }
+        .card:hover .spec { border-color: #555; color: #999; background: #111; }
         
         .card-link { position: absolute; inset: 0; z-index: 2; }
         
+        /* --- UPDATED FOOTER LINKS --- */
         .footer { background: var(--bg); padding: 80px; display: flex; justify-content: space-between; align-items: flex-end;}
-        .footer a { color: #555; text-decoration: none; font-size: 12px; margin-right: 24px; }
+        .footer a { 
+            color: #555; 
+            text-decoration: none; 
+            font-size: 12px; 
+            margin-right: 24px; 
+            transition: all 0.2s;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 2px;
+        }
+        .footer a:hover {
+            color: #fff;
+            border-bottom-color: #fff;
+        }
         
+        /* --- EXTERNAL GRID HOVER --- */
         .ext-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background-color: var(--border); }
-        .ext-item { background-color: var(--bg); padding: 80px; transition: background 0.2s; }
+        .ext-item { 
+            background-color: var(--bg); padding: 80px; 
+            transition: background 0.3s; 
+            position: relative;
+        }
         .ext-item:hover { background: var(--surface-hover); }
-        .big-stat { font-weight: 300; font-size: 56px; line-height: 1; margin: 24px 0; letter-spacing: -0.03em;}
+        .ext-item .action-link { pointer-events: auto; }
+        .ext-item:hover .action-link { 
+            opacity: 1; 
+            color: #fff; 
+            transform: translateX(12px); 
+        }
+
+        .big-stat { font-weight: 300; font-size: 56px; line-height: 1; margin: 24px 0; letter-spacing: -0.03em; color: var(--text-main); transition: color 0.2s;}
+        .ext-item:hover .big-stat { color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
 
         @media (max-width: 1024px) {
             .wrapper { grid-template-columns: 1fr; }
@@ -212,7 +262,7 @@
     <div id="cursor"></div>
 
     <div class="lightbox" id="lightbox">
-        <div class="lightbox-close" id="lightbox-close">CLOSE VIEW</div>
+        <div class="lightbox-close" id="lightbox-close">CLOSE VIEW [X]</div>
         <img id="lightbox-img" src="" alt="Full view">
     </div>
 
@@ -558,22 +608,24 @@
                 <div class="ext-grid">
                     <!-- PIANOBOOK -->
                     <div class="ext-item">
+                        <a href="https://www.pianobook.co.uk/profile/mattwesney/" target="_blank" class="card-link"></a>
                         <div class="card-meta"><span>Sample Library</span></div>
                         <h3 class="big-stat">18K+ DLs</h3>
                         <p style="margin-bottom: 20px;">
                             High-fidelity Kontakt libraries focused on texture and degradation. Includes "The Synths" and "Broken Piano."
                         </p>
-                        <a href="https://www.pianobook.co.uk/profile/mattwesney/" target="_blank" class="action-link" style="text-decoration: none;">:: ACCESS LIBRARY -></a>
+                        <div class="action-link" style="opacity: 0.5;">:: ACCESS LIBRARY -></div>
                     </div>
                     
                     <!-- HUGGING FACE -->
                     <div class="ext-item">
+                        <a href="https://huggingface.co/moremilk" target="_blank" class="card-link"></a>
                         <div class="card-meta"><span>Dataset</span></div>
                         <h3 class="big-stat">151K Rows</h3>
                         <p style="margin-bottom: 20px;">
                             "Synthetic Reasoning Data." A dataset explicitly tailored for fine-tuning AI in logical reasoning (Chain of Thought).
                         </p>
-                        <a href="https://huggingface.co/moremilk" target="_blank" class="action-link" style="text-decoration: none;">:: VIEW DATASET -></a>
+                        <div class="action-link" style="opacity: 0.5;">:: VIEW DATASET -></div>
                     </div>
                 </div>
             </div>
