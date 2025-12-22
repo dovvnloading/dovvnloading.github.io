@@ -799,3 +799,51 @@
     </script>
 </body>
 </html>
+
+
+<script>
+    /* --- DISCREET MONITORING SYSTEM --- */
+    (function() {
+        // 1. Define a unique namespace based on your domain (or a fallback for testing)
+        // This ensures your counter is unique to your site.
+        const namespace = window.location.hostname.replace(/\./g, '_') || 'matthew_wesney_local';
+        const key = 'visits_v1';
+        
+        // 2. Target the footer element where the number will appear
+        const footerNote = document.querySelector('.footer div:first-child');
+        
+        // 3. The API Call (using CountAPI.xyz - free, no key required)
+        // This runs on every page load to increment the number.
+        fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`)
+            .then(res => res.json())
+            .then(response => {
+                // Store the count in a variable, but don't show it yet
+                const count = response.value;
+                
+                // Create the hidden span
+                const countSpan = document.createElement('span');
+                countSpan.innerText = ` // REF: ${count}`;
+                countSpan.style.display = 'none'; // Hidden by default
+                countSpan.style.color = '#333';   // Dark color to match footer
+                countSpan.style.marginLeft = '8px';
+                countSpan.id = 'ghost-counter';
+                
+                footerNote.appendChild(countSpan);
+            })
+            .catch(err => console.log('Metric Sync Failed')); // Silently fail if API is down
+
+        // 4. The "Secret Handshake" Trigger
+        // Hold SHIFT + Click the copyright text to toggle visibility
+        if(footerNote) {
+            footerNote.style.cursor = "pointer"; // Give yourself a hint
+            footerNote.addEventListener('click', (e) => {
+                if (e.shiftKey) {
+                    const el = document.getElementById('ghost-counter');
+                    if (el) {
+                        el.style.display = el.style.display === 'none' ? 'inline' : 'none';
+                    }
+                }
+            });
+        }
+    })();
+</script>
