@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATTHEW WESNEY /// SYSTEMS ARCHITECT</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root {
+            /* --- DARK CLAY PALETTE --- */
+            --bg: #222225;
+            --text-main: #e0e0e0;
+            --text-dim: #888890;
+            --text-accent: #ffffff;
+            
+            /* Neumorphic Shadows */
+            --shadow-light: rgba(255, 255, 255, 0.03);
+            --shadow-dark: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: none; /* Hide default cursor */
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg); 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333336; 
+            border-radius: 5px;
+            border: 2px solid var(--bg);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444448; 
+        }
+
+        /* Claymorphic Utilities */
+        .clay-card {
+            background: linear-gradient(145deg, #242428, #1e1e21);
+            box-shadow: 
+                12px 12px 24px #121214, 
+                -12px -12px 24px #323236;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Mobile shadow adjustment to prevent clipping */
+        @media (max-width: 768px) {
+            .clay-card {
+                box-shadow: 
+                    6px 6px 16px #121214, 
+                    -6px -6px 16px #323236;
+            }
+        }
+        
+        /* 
+           FIX: Removed translateY transform. 
+           Hover effect now relies on lighting/border changes for stability. 
+        */
+        .clay-card:hover {
+            background: linear-gradient(145deg, #26262a, #202023);
+            border-color: rgba(255,255,255,0.15);
+            box-shadow: 
+                16px 16px 32px #101012, 
+                -16px -16px 32px #343438;
+        }
+
+        .clay-inset {
+            background: #222225;
+            box-shadow: 
+                inset 6px 6px 12px #161618, 
+                inset -6px -6px 12px #2e2e32;
+            border-radius: 16px;
+        }
+
+        .clay-button {
+            background: linear-gradient(145deg, #242428, #1e1e21);
+            box-shadow: 
+                5px 5px 10px #161618, 
+                -5px -5px 10px #2e2e32;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .clay-button:active, .clay-button.active {
+            background: #222225;
+            box-shadow: 
+                inset 4px 4px 8px #161618, 
+                inset -4px -4px 8px #2e2e32;
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        @media (pointer: coarse) {
+            body { cursor: auto; }
+            #cursor-root { display: none; }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: 'var(--bg)',
+                        'text-main': 'var(--text-main)',
+                        'text-dim': 'var(--text-dim)',
+                        'text-accent': 'var(--text-accent)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    boxShadow: {
+                        'clay': '12px 12px 24px #121214, -12px -12px 24px #323236',
+                        'clay-hover': '16px 16px 32px #101012, -16px -16px 32px #343438',
+                        'clay-sm': '5px 5px 10px #161618, -5px -5px 10px #2e2e32',
+                        'clay-inset': 'inset 6px 6px 12px #161618, inset -6px -6px 12px #2e2e32',
+                        'clay-inset-sm': 'inset 3px 3px 6px #161618, inset -3px -3px 6px #2e2e32',
+                    },
+                    backgroundImage: {
+                        'clay-grad': 'linear-gradient(145deg, #242428, #1e1e21)',
+                        'clay-grad-hover': 'linear-gradient(145deg, #28282c, #222225)',
+                    }
+                }
+            }
+        }
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
