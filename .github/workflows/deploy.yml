@@ -13,7 +13,7 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -29,7 +29,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: 'npm'
+          # Cache removed because package-lock.json is not yet committed
 
       - name: Install dependencies
         run: npm install
@@ -37,8 +37,11 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # If you have an API key, add it to Repo Settings -> Secrets -> Actions as GEMINI_API_KEY
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      # Create .nojekyll to ensure folders starting with _ are not ignored by GitHub Pages
+      - name: Add .nojekyll file
+        run: touch dist/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
