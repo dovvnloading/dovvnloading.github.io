@@ -5,6 +5,10 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
+      // Base URL is required for GitHub Pages. 
+      // For a user site (username.github.io), use '/'.
+      // For a project site (username.github.io/project), use '/project/'.
+      base: '/',
       server: {
         port: 3000,
         host: '0.0.0.0',
