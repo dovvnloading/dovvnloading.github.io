@@ -34,6 +34,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # Fix JSX Syntax Error in Stream.tsx caused by unescaped '->'
+      - name: Patch Stream.tsx
+        run: |
+          if [ -f "components/Stream.tsx" ]; then
+            sed -i 's/View Full Collection ->/View Full Collection →/g' components/Stream.tsx
+            echo "Patched Stream.tsx"
+          else
+            echo "Stream.tsx not found, skipping patch"
+          fi
+
       - name: Build
         run: npm run build
         env:
