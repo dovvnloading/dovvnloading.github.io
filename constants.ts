@@ -847,7 +847,7 @@ export const COMMUNITY_ITEMS: Project[] = [
         metaRight: '',
         tags: [],
         stat: '151K Rows',
-        link: 'https://huggingface.co/moremilk',
+        link: 'https://huggingface.co/mattwesney',
         linkLabel: ':: VIEW DATASET ->'
     }
 ];
